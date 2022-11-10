@@ -1,0 +1,29 @@
+---
+title: "BRFSS Import"
+author: "Ziqing Wang"
+date: "2022-11-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(rio)
+library(haven)
+```
+
+```{r}
+BRFSS2021 = read_xpt(
+  './data/LLCP2021.XPT',
+  col_select = NULL,
+  skip = 0,
+  n_max = Inf,
+  .name_repair = "unique"
+)
+```
+
+```{r}
+head(BRFSS2021)
+```
+
