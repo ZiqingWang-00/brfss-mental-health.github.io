@@ -1,7 +1,5 @@
 ---
 title: "Proposal"
-author: "Yichen Lyu, Ziqing Wang, Zhaoqianyu Xiong, Zirui Zhang"
-date: "2022-11-11"
 output: github_document
 ---
 
