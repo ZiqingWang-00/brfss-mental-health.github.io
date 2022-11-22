@@ -1,0 +1,53 @@
+---
+title: "state-level mental health outcomes"
+author: "Ziqing Wang"
+date: "2022-11-22"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(survey)
+library(srvyr)
+library(readr)
+```
+
+## import data
+```{r}
+brfss21_data = read_csv("./data/cleaned_brfss21.csv") %>%
+  mutate(mh_cat3 = factor(mh_cat3, levels = c("none", "<=15 days", ">15 days")),
+         mh_bin = factor(mh_bin, levels = c("<=15 days", ">15 days")),
+         depression = factor(depression, levels = c("no", "yes")),
+         sex = factor(sex, levels = c("male", "female")),
+         children = factor(children, levels = c("none", "one or two", "three or more")),
+         state = factor(state),
+         race = factor(race, levels = c("white", "black", "asian", "hispanic", "other")),
+         education = factor(education, levels = c("less than high school", "high school or some college", "bachelors or higher")),
+         income = factor(income, levels = c("<=35000", "35000-75000", ">75000")),
+         employment = factor(employment, levels = c("employed", "homemaker/student/retired", "unemployed")),
+         age = factor(age, levels = c("18-29", "30-49", "50-64", "65+")),
+         general_health = factor(general_health, levels = c("excellent", "very good/good", "fair/poor")),
+         exercise = factor(exercise, levels = c("yes", "no")))
+head(brfss21_data)
+```
+
+Next, create a survey design object for incorporating sample weights.
+```{r}
+# Set options for allowing a single observation per stratum 
+options(survey.lonely.psu = "adjust")
+
+# Create survey design 
+brfss_design = as_survey_design(brfss21_data, id = 1, strata = ststr, weight = llcpwt)
+
+```
+
+## State-level age-Adjusted prevalence of depression by gender
+```{r}
+brfss_design %>%
+  group_by(state, sex, depression) %>%
+  summarize(depression_prev = survey_mean(na.rm = T, vartype = c("ci")))
+```
+
+
