@@ -16,7 +16,7 @@ The main goals of this project are to 1) compare age-adjusted state-level differ
 Current literature provide inconsistent evidence on gender difference in mental health outcomes. According to WHO, “women are more likely to be treated for depression than men even though the rates of depression don’t differ greatly between the gender”. However, there are also research studies suggesting that women are more likely than men to have depression. It’s thus important to find out whether there indeed is a gender gap in mental health outcomes, which may in turn supply evidence that help answer other public health questions, such as whether women are overtreated for mental health disorders. Therefore, for our project, we expect the results to show whether there is an inequality between men and women in mental health outcomes such as depression. Additionally, we are also interested in state-level gender differences and factors associated with mental health outcomes. Ultimately, we hope to use these information to construct a comprehensive picture of gender and mental health among US adults.
  
 ### Anticipated data sources
-The dataset we use is “The 2021 BRFSS data”, which was downloaded from https://www.cdc.gov/brfss/annual_data/annual_2021.html.
+The dataset we intend to use is “The 2021 BRFSS data”, which was downloaded from https://www.cdc.gov/brfss/annual_data/annual_2021.html.
  
 ### Planned analyses / visualizations / coding challenges        
 The outcome variables are whether the person has been diagnosed as having depression and the number of days of having negative mental health last month. Both are self-reported.  

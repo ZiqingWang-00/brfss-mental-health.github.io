@@ -38,7 +38,8 @@ health among US adults.
 
 ### Anticipated data sources
 
-The dataset we use is “The 2021 BRFSS data”, which was downloaded from
+The dataset we intend to use is “The 2021 BRFSS data”, which was
+downloaded from
 <https://www.cdc.gov/brfss/annual_data/annual_2021.html>.
 
 ### Planned analyses / visualizations / coding challenges
