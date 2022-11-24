@@ -4,7 +4,6 @@ output:
   flexdashboard::flex_dashboard:
     storyboard: true
     source: embed
-    vertical_layout: scroll
 ---
 
 ```{r setup, include=FALSE}
@@ -65,7 +64,7 @@ depr_prev_bystate_diff = depr_prev_bystate_gender %>%
 
 ```
 
-```{r include = F}
+```{r include = FALSE}
 days_bad_mh_bystate_gender = brfss_design %>%
   group_by(state_code, sex) %>%
   summarize(days = survey_mean(days_bad_mental_health, na.rm = T, vartype = c("ci")))
