@@ -22,21 +22,21 @@ head(BRFSS2021)
 ```
 
     ## # A tibble: 6 × 303
-    ##   state fmonth idate    imonth iday  iyear dispcode seqno    psu ctele…¹ pvtre…² colgh…³ state…⁴ celph…⁵
-    ##   <dbl>  <dbl> <chr>    <chr>  <chr> <chr>    <dbl> <chr>  <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-    ## 1     1      1 01192021 01     19    2021      1100 2021… 2.02e9       1       1      NA       1       2
-    ## 2     1      1 01212021 01     21    2021      1100 2021… 2.02e9       1       1      NA       1       2
-    ## 3     1      1 01212021 01     21    2021      1100 2021… 2.02e9       1       1      NA       1       2
-    ## 4     1      1 01172021 01     17    2021      1100 2021… 2.02e9       1       1      NA       1       2
-    ## 5     1      1 01152021 01     15    2021      1100 2021… 2.02e9       1       1      NA       1       2
-    ## 6     1      1 01142021 01     14    2021      1100 2021… 2.02e9       1       1      NA       1       2
-    ## # … with 289 more variables: ladult1 <dbl>, colgsex <dbl>, numadult <dbl>, landsex <dbl>, nummen <dbl>,
-    ## #   numwomen <dbl>, respslct <dbl>, safetime <dbl>, ctelnum1 <dbl>, cellfon5 <dbl>, cadult1 <dbl>,
-    ## #   cellsex <dbl>, pvtresd3 <dbl>, cclghous <dbl>, cstate1 <dbl>, landline <dbl>, hhadult <dbl>,
-    ## #   sexvar <dbl>, genhlth <dbl>, physhlth <dbl>, menthlth <dbl>, poorhlth <dbl>, priminsr <dbl>,
-    ## #   persdoc3 <dbl>, medcost1 <dbl>, checkup1 <dbl>, exerany2 <dbl>, bphigh6 <dbl>, bpmeds <dbl>,
-    ## #   cholchk3 <dbl>, toldhi3 <dbl>, cholmed3 <dbl>, cvdinfr4 <dbl>, cvdcrhd4 <dbl>, cvdstrk3 <dbl>,
-    ## #   asthma3 <dbl>, asthnow <dbl>, chcscncr <dbl>, chcocncr <dbl>, chccopd3 <dbl>, addepev3 <dbl>, …
+    ##   state fmonth idate    imonth iday  iyear dispcode seqno    psu ctele…¹ pvtre…²
+    ##   <dbl>  <dbl> <chr>    <chr>  <chr> <chr>    <dbl> <chr>  <dbl>   <dbl>   <dbl>
+    ## 1     1      1 01192021 01     19    2021      1100 2021… 2.02e9       1       1
+    ## 2     1      1 01212021 01     21    2021      1100 2021… 2.02e9       1       1
+    ## 3     1      1 01212021 01     21    2021      1100 2021… 2.02e9       1       1
+    ## 4     1      1 01172021 01     17    2021      1100 2021… 2.02e9       1       1
+    ## 5     1      1 01152021 01     15    2021      1100 2021… 2.02e9       1       1
+    ## 6     1      1 01142021 01     14    2021      1100 2021… 2.02e9       1       1
+    ## # … with 292 more variables: colghous <dbl>, statere1 <dbl>, celphon1 <dbl>,
+    ## #   ladult1 <dbl>, colgsex <dbl>, numadult <dbl>, landsex <dbl>, nummen <dbl>,
+    ## #   numwomen <dbl>, respslct <dbl>, safetime <dbl>, ctelnum1 <dbl>,
+    ## #   cellfon5 <dbl>, cadult1 <dbl>, cellsex <dbl>, pvtresd3 <dbl>,
+    ## #   cclghous <dbl>, cstate1 <dbl>, landline <dbl>, hhadult <dbl>, sexvar <dbl>,
+    ## #   genhlth <dbl>, physhlth <dbl>, menthlth <dbl>, poorhlth <dbl>,
+    ## #   priminsr <dbl>, persdoc3 <dbl>, medcost1 <dbl>, checkup1 <dbl>, …
 
 Reduce the data set size by selecting only variables of interest and
 variables necessary for data analysis (e.g., weight variables).
@@ -48,11 +48,16 @@ tidy_brfss21 = BRFSS2021 %>%
          sex, chldcnt, # exposures
          state, race, educa, income3, employ1, marital, ageg5yr, # demographic covariates
          exerany2, genhlth) %>% # health-related covariates
+  filter(!state %in% c(66, 72, 78), 
+         !menthlth %in% c(77, 99), 
+         !addepev3 %in% c(7, 9), !is.na(addepev3)) %>% # remove observations with missing outcome variables and remove observations from US territories
   mutate(mh_cat3 = case_when(menthlth == 88 ~ "none",
                              menthlth %in% seq(1, 15) ~ "<=15 days",
                              menthlth %in% seq(16, 30) ~ ">15 days"),
          mh_bin = case_when(menthlth %in% c(seq(1,15), 88)  ~ "<=15 days",
                             menthlth %in% seq(16, 30) ~ ">15 days"),
+         days_bad_mental_health = recode(menthlth, 
+                                         `88` = 0),
          depression = case_when(addepev3 == 1 ~ "yes",
                                 addepev3 == 2 ~ "no"),
          sex = case_when(sex == 1 ~ "male",
@@ -134,8 +139,7 @@ tidy_brfss21 = BRFSS2021 %>%
                                 state == 53 ~ "WA",
                                 state == 54 ~ "WV",
                                 state == 55 ~ "WI",
-                                state == 56 ~ "WY")) %>%
-  filter(!is.na(state_code), !is.na(depression), !is.na(mh_cat3)) # remove observations with missing outcome variables and remove observations from US territories
+                                state == 56 ~ "WY")) 
 ```
 
 Export the csv with reduced number of variables and observations.

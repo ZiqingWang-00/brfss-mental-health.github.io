@@ -1,9 +1,10 @@
 ---
-title: "State-level prevalence of past depression diagnosis by gender"
+title: "State-level mental health outcome by gender"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: columns
-    vertical_layout: scroll
+    storyboard: true
+    social: menu
+    source: embed
 ---
 
 ```{r setup, include=FALSE}
@@ -33,6 +34,7 @@ brfss21_data = read_csv("./data/cleaned_brfss21.csv") %>%
          general_health = factor(general_health, levels = c("excellent", "very good/good", "fair/poor")),
          exercise = factor(exercise, levels = c("yes", "no")))
 ```
+
 ```{r include = FALSE}
 # Set options for allowing a single observation per stratum 
 options(survey.lonely.psu = "adjust")
@@ -45,6 +47,7 @@ brfss_design = as_survey_design(brfss21_data, id = 1, strata = ststr, weight = l
 depr_prev_bystate_gender = brfss_design %>%
   group_by(state_code, sex, depression) %>%
   summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c("ci")))
+  #summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c("ci"), proportion = T))
 
 depr_prev_bystate_f = depr_prev_bystate_gender %>%
   filter(sex == "female", depression == "yes")
@@ -59,11 +62,33 @@ depr_prev_bystate_diff = depr_prev_bystate_gender %>%
   pivot_wider(names_from = "sex",
               values_from = "depression_prev") %>%
   mutate(difference = female - male)
+
+```
+
+```{r include = F}
+days_bad_mh_bystate_gender = brfss_design %>%
+  group_by(state_code, sex) %>%
+  summarize(days = survey_mean(days_bad_mental_health, na.rm = T, vartype = c("ci")))
+
+days_bad_mh_bystate_f = days_bad_mh_bystate_gender %>%
+  filter(sex == "female")
+
+days_bad_mh_bystate_m = days_bad_mh_bystate_gender %>%
+  filter(sex == "male")
+
+# construct new data frame for plotting
+days_bad_mh_bystate_diff = days_bad_mh_bystate_gender %>%
+  select(state_code, sex, days) %>%
+  pivot_wider(names_from = "sex",
+              values_from = "days") %>%
+  mutate(difference = female - male)
 ```
 
 -----------------------------------------------------------------------
 
-### Prevalence of self-reported past diagnosis of depression (%) among women
+### State-level prevalence of self-reported past diagnosis of depression by gender
+
+#### Prevalence of self-reported past diagnosis of depression (%) among women
 
 ```{r}
 depr_prev_bystate_f_graph = plot_geo(depr_prev_bystate_f, 
@@ -87,7 +112,7 @@ depr_prev_bystate_f_graph
 
 -----------------------------------------------------------------------
 
-### Prevalence of self-reported past diagnosis of depression (%) among men
+#### Prevalence of self-reported past diagnosis of depression (%) among men
 
 ```{r}
 depr_prev_bystate_m_graph = plot_geo(depr_prev_bystate_m, 
@@ -108,7 +133,7 @@ depr_prev_bystate_m_graph = plot_geo(depr_prev_bystate_m,
 depr_prev_bystate_m_graph
 ```
 
-### Difference in prevalence (%) of self-reported past diagnosis of depression (F minus M)
+#### Gender difference in prevalence (%) of self-reported past diagnosis of depression (F minus M)
 
 ```{r}
 depr_prev_bystate_diff_graph = plot_geo(depr_prev_bystate_diff, 
@@ -125,4 +150,61 @@ depr_prev_bystate_diff_graph = plot_geo(depr_prev_bystate_diff,
 
 depr_prev_bystate_diff_graph
 ```
+
+*** 
+INSERT COMMENTS/TAKEAWAYS HERE 
+
+### State-level average self-reported number of days mental health not good in the past 30 days by gender
+
+#### Average number of days of self-reported bad mental health in the past 30 days among women
+
+```{r}
+avg_days_bad_mh_bystate_f_graph = plot_geo(days_bad_mh_bystate_f, 
+                                     locationmode = "USA-states",
+                                     text = ~paste('95% CI: (', 
+                                                   round(days_low, 3),
+                                                   round(days_upp, 3),
+                                                   ")")) %>%
+  add_trace(locations = ~state_code,
+            z = ~round(days, 3),
+            color = ~days,
+            colors = "Purples") %>%
+  layout(geo = list(scope = "usa")) 
+
+avg_days_bad_mh_bystate_f_graph
+```
+
+#### Average number of days of self-reported bad mental health in the past 30 days among men
+```{r}
+avg_days_bad_mh_bystate_m_graph = plot_geo(days_bad_mh_bystate_m, 
+                                     locationmode = "USA-states",
+                                     text = ~paste('95% CI: (', 
+                                                   round(days_low, 3),
+                                                   round(days_upp, 3),
+                                                   ")")) %>%
+  add_trace(locations = ~state_code,
+            z = ~round(days, 3),
+            color = ~days,
+            colors = "Purples") %>%
+  layout(geo = list(scope = "usa")) 
+
+avg_days_bad_mh_bystate_m_graph
+```
+
+#### Gender difference in average number of days of self-reported bad mental health in the past 30 days (F minus M)
+```{r}
+avg_day_bad_mh_bystate_diff_graph = plot_geo(days_bad_mh_bystate_diff, 
+                                     locationmode = "USA-states",
+                                     text = ~paste("Difference in average days: ",
+                                                   round(difference,3))) %>%
+  add_trace(locations = ~state_code,
+            z = ~round(difference,3),
+            color = ~difference,
+            colors = "Purples") %>%
+  layout(geo = list(scope = "usa")) 
+
+
+avg_day_bad_mh_bystate_diff_graph
+```
+
 
