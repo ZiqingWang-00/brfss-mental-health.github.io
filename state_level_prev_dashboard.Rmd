@@ -1,12 +1,13 @@
 ---
-title: "state-level mental health outcomes"
-author: "Ziqing Wang"
-date: "2022-11-22"
-output: html_document
+title: "State-level prevalence of past depression diagnosis by gender"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: scroll
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+library(flexdashboard)
 library(tidyverse)
 library(ggplot2)
 library(survey)
@@ -16,8 +17,7 @@ library(forcats)
 library(plotly)
 ```
 
-## import data
-```{r}
+```{r include = FALSE}
 brfss21_data = read_csv("./data/cleaned_brfss21.csv") %>%
   mutate(mh_cat3 = factor(mh_cat3, levels = c("none", "<=15 days", ">15 days")),
          mh_bin = factor(mh_bin, levels = c("<=15 days", ">15 days")),
@@ -32,34 +32,40 @@ brfss21_data = read_csv("./data/cleaned_brfss21.csv") %>%
          age = factor(age, levels = c("18-29", "30-49", "50-64", "65+")),
          general_health = factor(general_health, levels = c("excellent", "very good/good", "fair/poor")),
          exercise = factor(exercise, levels = c("yes", "no")))
-head(brfss21_data)
 ```
-
-Next, create a survey design object for incorporating sample weights.
-```{r}
+```{r include = FALSE}
 # Set options for allowing a single observation per stratum 
 options(survey.lonely.psu = "adjust")
 
 # Create survey design 
 brfss_design = as_survey_design(brfss21_data, id = 1, strata = ststr, weight = llcpwt)
-
 ```
 
-## State-level prevalence of depression by gender
-
-Overall data frame
-```{r}
+```{r include = FALSE}
 depr_prev_bystate_gender = brfss_design %>%
   group_by(state_code, sex, depression) %>%
   summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c("ci")))
 
-depr_prev_bystate_gender
-```
-Interactive map for women:
-```{r}
 depr_prev_bystate_f = depr_prev_bystate_gender %>%
   filter(sex == "female", depression == "yes")
 
+depr_prev_bystate_m = depr_prev_bystate_gender %>%
+  filter(sex == "male", depression == "yes")
+
+# construct new data frame for plotting
+depr_prev_bystate_diff = depr_prev_bystate_gender %>%
+  select(state_code, depression_prev, sex, depression) %>%
+  filter(depression == "yes") %>%
+  pivot_wider(names_from = "sex",
+              values_from = "depression_prev") %>%
+  mutate(difference = female - male)
+```
+
+-----------------------------------------------------------------------
+
+### Prevalence of self-reported past diagnosis of depression (%) among women
+
+```{r}
 depr_prev_bystate_f_graph = plot_geo(depr_prev_bystate_f, 
                                      locationmode = "USA-states",
                                      text = ~paste('95% CI: (', 
@@ -70,20 +76,20 @@ depr_prev_bystate_f_graph = plot_geo(depr_prev_bystate_f,
             z = ~depression_prev,
             color = ~depression_prev,
             colors = "Purples") %>%
-  layout(geo = list(scope = "usa"),
+  layout(geo = list(scope = "usa")) %>%
          #legend = list(title = list(text = "<b>Cylinders</b>")),
-         title = "Prevalence of diagnosis of depression (%) among women") %>%
+         #title = "Prevalence of diagnosis of depression (%) among women") %>%
   colorbar(ticksuffix = "%") 
 
 
 depr_prev_bystate_f_graph
 ```
 
-Interactive map for men:
-```{r}
-depr_prev_bystate_m = depr_prev_bystate_gender %>%
-  filter(sex == "male", depression == "yes")
+-----------------------------------------------------------------------
 
+### Prevalence of self-reported past diagnosis of depression (%) among men
+
+```{r}
 depr_prev_bystate_m_graph = plot_geo(depr_prev_bystate_m, 
                                      locationmode = "USA-states",
                                      text = ~paste('95% CI: (', 
@@ -94,26 +100,17 @@ depr_prev_bystate_m_graph = plot_geo(depr_prev_bystate_m,
             z = ~depression_prev,
             color = ~depression_prev,
             colors = "Purples") %>%
-  layout(geo = list(scope = "usa"),
+  layout(geo = list(scope = "usa")) %>%
          #legend = list(title = list(text = "<b>Cylinders</b>")),
-         title = "Prevalence of diagnosis of depression (%) among men") %>%
   colorbar(ticksuffix = "%") 
 
 
 depr_prev_bystate_m_graph
 ```
 
-Interactive map for gender difference in prevalence across states
-```{r}
-# construct new data frame for plotting
-depr_prev_bystate_diff = depr_prev_bystate_gender %>%
-  select(state_code, depression_prev, sex, depression) %>%
-  filter(depression == "yes") %>%
-  pivot_wider(names_from = "sex",
-              values_from = "depression_prev") %>%
-  mutate(difference = female - male)
+### Difference in prevalence (%) of self-reported past diagnosis of depression (F minus M)
 
-# construct plot
+```{r}
 depr_prev_bystate_diff_graph = plot_geo(depr_prev_bystate_diff, 
                                      locationmode = "USA-states",
                                      text = ~paste("Difference in prevalence: ",
@@ -122,9 +119,7 @@ depr_prev_bystate_diff_graph = plot_geo(depr_prev_bystate_diff,
             z = ~round(difference,3),
             color = ~difference,
             colors = "Purples") %>%
-  layout(geo = list(scope = "usa"),
-         #legend = list(title = list(text = "<b>Cylinders</b>")),
-         title = "Difference in prevalence (%) of diagnosis of depression (F minus M)") %>%
+  layout(geo = list(scope = "usa")) %>%
   colorbar(ticksuffix = "%") 
 
 

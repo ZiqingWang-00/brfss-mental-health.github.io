@@ -1,0 +1,18 @@
+---
+title: "Gender differences in mental health outcomes"
+author: ""
+date: ""
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: cosmo
+---
+
+### About the project
+
+This project examines the gender differences in mental health outcomes using the BRFSS 2021 data.
+
+### Site navigation
+
+This website contains the following sections...

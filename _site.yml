@@ -1,0 +1,16 @@
+name: "Gender differences in mental health outcomes"
+output_dir: "."
+navbar:
+  title: "Home"
+  right:
+    - text: "About"
+      href: about.html
+    - text: "Dashboard"
+      href: state_level_prev_dashboard.html
+    - icon: fa-envelope fa-lg
+      href: mailto:<zw2899@cumc.columbia.edu>
+    - icon: fa-github fa-lg
+      href: http://github.com/ZiqingWang-00
+output:
+  html_document:
+    theme: cosmo

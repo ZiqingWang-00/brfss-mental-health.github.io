@@ -2,7 +2,7 @@
 title: "BRFSS Import"
 author: "Ziqing Wang"
 date: "2022-11-07"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -12,6 +12,7 @@ library(tidyverse)
 library(rio)
 library(haven)
 library(readr)
+library(forcats)
 ```
 
 Import the raw XPT data file into RStudio. 
