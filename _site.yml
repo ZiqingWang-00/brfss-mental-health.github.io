@@ -3,6 +3,8 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
+    - text: "About"
+      href: about.html
     - text: "Dashboard"
       href: state_level_prev_dashboard.html
     - icon: fa-envelope fa-lg
