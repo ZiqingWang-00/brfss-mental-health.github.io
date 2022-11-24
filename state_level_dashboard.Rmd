@@ -83,7 +83,6 @@ days_bad_mh_bystate_diff = days_bad_mh_bystate_gender %>%
   mutate(difference = female - male)
 ```
 
------------------------------------------------------------------------
 
 ### State-level prevalence of self-reported past diagnosis of depression by gender
 
@@ -109,7 +108,6 @@ depr_prev_bystate_f_graph = plot_geo(depr_prev_bystate_f,
 depr_prev_bystate_f_graph
 ```
 
------------------------------------------------------------------------
 
 #### Prevalence of self-reported past diagnosis of depression (%) among men
 
@@ -150,8 +148,10 @@ depr_prev_bystate_diff_graph = plot_geo(depr_prev_bystate_diff,
 depr_prev_bystate_diff_graph
 ```
 
-*** 
+***
+
 INSERT COMMENTS/TAKEAWAYS HERE 
+
 
 ### State-level average self-reported number of days mental health not good in the past 30 days by gender
 
@@ -172,9 +172,6 @@ avg_days_bad_mh_bystate_f_graph = plot_geo(days_bad_mh_bystate_f,
 
 avg_days_bad_mh_bystate_f_graph
 ```
-
-
------------------------------------------------------------------------
 
 #### Average number of days of self-reported bad mental health in the past 30 days among men
 ```{r}
@@ -209,4 +206,7 @@ avg_day_bad_mh_bystate_diff_graph = plot_geo(days_bad_mh_bystate_diff,
 avg_day_bad_mh_bystate_diff_graph
 ```
 
+***
+
+INSERT COMMENTS/TAKEAWAYS HERE 
 
