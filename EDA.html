@@ -11,7 +11,7 @@
 
 
 
-<title>Gender differences in mental health outcomes</title>
+<title>EDA</title>
 
 <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -33,6 +33,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -228,6 +229,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -358,23 +362,47 @@ div.tocify {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
-<h1 class="title toc-ignore">Gender differences in mental health
-outcomes</h1>
-<h4 class="author"></h4>
+
+<h1 class="title toc-ignore">EDA</h1>
 
 </div>
 
 
-<div id="about-the-project" class="section level3">
-<h3>About the project</h3>
-<p>This project examines the gender differences in mental health
-outcomes using the BRFSS 2021 data.</p>
-</div>
-<div id="site-navigation" class="section level3">
-<h3>Site navigation</h3>
-<p>This website contains the following sections…</p>
+<div id="state-level-gender-differences-in-mental-health-outcomes"
+class="section level3">
+<h3>State-level gender differences in mental health outcomes</h3>
+<p>For a dash board of the geographical distribution of the two mental
+health outcomes, click here (insert link later).</p>
+<p>Below is a grouped barplot of the prevalence of self-reported past
+diagnosis of depression by gender in each US state, arranged in
+descending order by the value of this estimate among women. We can see
+that this prevalence among women is the highest in West Virginia and
+lowest in Hawaii. Interestingly, this prevalence among men did not show
+a decrease as obvious as that among women in this plot.</p>
+<pre class="r"><code>sorted_depr_prev = depr_prev_bystate_gender %&gt;%
+  filter(depression == &quot;yes&quot;, sex == &quot;female&quot;) %&gt;%
+  arrange(desc(depression_prev)) %&gt;%
+  mutate(state_code = factor(state_code))
+
+depr_prev_bystate_gender %&gt;% 
+  filter(depression == &quot;yes&quot;) %&gt;%
+  mutate(state_code = factor(state_code, levels = sorted_depr_prev$state_code, ordered = TRUE)) %&gt;% 
+  ggplot(aes(x = state_code, y = depression_prev, fill = sex), group = state_code) +
+  geom_bar(stat=&quot;identity&quot;, width=.5, position = &quot;dodge&quot;)  +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        legend.position = &quot;bottom&quot;) +
+  labs(x = &quot;state&quot;, y = &quot;prevalence (%)&quot;,
+       title = &quot;Prevalence of self-reported past diagnosis of depression by gender in each US state&quot;)</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 
 
@@ -412,6 +440,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {

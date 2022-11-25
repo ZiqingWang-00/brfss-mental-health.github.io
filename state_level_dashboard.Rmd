@@ -210,35 +210,3 @@ avg_day_bad_mh_bystate_diff_graph
 
 INSERT COMMENTS/TAKEAWAYS HERE 
 
-### Side-by-side comparisons
-
-#### Prevalence of self-reported past diagnosis of depression by gender in each US state
-
-```{r}
-grouped_depr_prev_barplot = depr_prev_bystate_gender %>%
-  filter(depression == "yes") %>%
-  plot_ly(y = ~state_code, x = ~depression_prev, 
-          color = ~sex, type = "bar", colors = "viridis") %>%
-  layout(xaxis = list(title = 'prevalence (%)'), 
-         yaxis = list(title = 'state'))
-
-grouped_depr_prev_barplot
-
-```
-
-#### Average number of days of self-reported bad mental health in the past 30 days by gender in each US state
-
-```{r}
-grouped_avg_days_bad_mh_barplot = days_bad_mh_bystate_gender %>%
-  plot_ly(y = ~state_code, x = ~days, 
-          color = ~sex, type = "bar", colors = "viridis") %>%
-  layout(xaxis = list(title = '# of days'), 
-         yaxis = list(title = 'state'))
-
-grouped_avg_days_bad_mh_barplot
-
-```
-
-***
-
-INSERT COMMENTS/TAKEAWAYS HERE 

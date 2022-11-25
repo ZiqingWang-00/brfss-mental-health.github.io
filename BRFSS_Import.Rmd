@@ -2,7 +2,7 @@
 title: "BRFSS Import"
 author: "Ziqing Wang"
 date: "2022-11-07"
-output: github_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
