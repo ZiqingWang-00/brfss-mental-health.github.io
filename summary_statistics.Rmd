@@ -1,5 +1,5 @@
 ---
-title: "EDA"
+title: "Summary Statistics"
 output: 
   html_document:
     toc: true
@@ -15,6 +15,7 @@ library(survey)
 library(srvyr)
 library(readr)
 library(forcats)
+library(gtsummary)
 ```
 
 ```{r include = FALSE}
@@ -42,32 +43,34 @@ options(survey.lonely.psu = "adjust")
 brfss_design = as_survey_design(brfss21_data, id = 1, strata = ststr, weight = llcpwt)
 ```
 
-```{r include = FALSE}
-depr_prev_bystate_gender = brfss_design %>%
-  group_by(state_code, sex, depression) %>%
-  summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c("ci")))
+### Summary statistics
 
-```
-
-### State-level gender differences in mental health outcomes
-
-For a dash board of the geographical distribution of the two mental health outcomes, click here (insert link later).
-
-Below is a grouped barplot of the prevalence of self-reported past diagnosis of depression by gender in each US state, arranged in descending order by the value of this estimate among women. We can see that this prevalence among women is the highest in West Virginia and lowest in Hawaii. Interestingly, this prevalence among men did not show a decrease as obvious as that among women in this plot.
+Below is the unweighted counts of the all included demographic variables, exposure, and other covariates, grouped by the self-reported number of days with bad mental health in the past 30 days in the following three categories: none, between 1 and 15 days, and more than 15 days. 
 
 ```{r}
-sorted_depr_prev = depr_prev_bystate_gender %>%
-  filter(depression == "yes", sex == "female") %>%
-  arrange(desc(depression_prev)) %>%
-  mutate(state_code = factor(state_code))
+tb1_unweighted =
+  brfss_design$variables %>%
+  tbl_summary(by = mh_cat3, percent = "row", 
+              include = c(sex, race, age, marital_status,
+                             children,
+                             education, income, employment,
+                             general_health, exercise),
+              type = list(exercise ~ "categorical"))
 
-depr_prev_bystate_gender %>% 
-  filter(depression == "yes") %>%
-  mutate(state_code = factor(state_code, levels = sorted_depr_prev$state_code, ordered = TRUE)) %>% 
-  ggplot(aes(x = state_code, y = depression_prev, fill = sex), group = state_code) +
-  geom_bar(stat="identity", width=.5, position = "dodge")  +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),
-        legend.position = "bottom") +
-  labs(x = "state", y = "prevalence (%)",
-       title = "Prevalence of self-reported past diagnosis of depression by gender in each US state")
+tb1_unweighted
 ```
+
+
+```{r weighted summary}
+tb1_weighted =
+  brfss_design %>%
+  tbl_svysummary(by = mh_cat3, percent = "row", 
+                 include = c(sex, race, age, marital_status,
+                             children,
+                             education, income, employment,
+                             general_health, exercise),
+                  type = list(exercise ~ "categorical"))
+
+tb1_weighted
+```
+

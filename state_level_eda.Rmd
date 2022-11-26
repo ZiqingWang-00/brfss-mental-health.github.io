@@ -1,0 +1,74 @@
+---
+title: "State-level Explorations"
+html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(survey)
+library(srvyr)
+library(readr)
+library(forcats)
+library(gtsummary)
+```
+
+```{r include = FALSE}
+brfss21_data = read_csv("./data/cleaned_brfss21.csv") %>%
+  mutate(mh_cat3 = factor(mh_cat3, levels = c("none", "<=15 days", ">15 days")),
+         mh_bin = factor(mh_bin, levels = c("<=15 days", ">15 days")),
+         depression = factor(depression, levels = c("no", "yes")),
+         sex = factor(sex, levels = c("male", "female")),
+         children = factor(children, levels = c("none", "one or two", "three or more")),
+         state = factor(state),
+         race = factor(race, levels = c("white", "black", "asian", "hispanic", "other")),
+         education = factor(education, levels = c("less than high school", "high school or some college", "bachelors or higher")),
+         income = factor(income, levels = c("<=35000", "35000-75000", ">75000")),
+         employment = factor(employment, levels = c("employed", "homemaker/student/retired", "unemployed")),
+         age = factor(age, levels = c("18-29", "30-49", "50-64", "65+")),
+         general_health = factor(general_health, levels = c("excellent", "very good/good", "fair/poor")),
+         exercise = factor(exercise, levels = c("yes", "no")))
+```
+
+```{r include = FALSE}
+# Set options for allowing a single observation per stratum 
+options(survey.lonely.psu = "adjust")
+
+# Create survey design 
+brfss_design = as_survey_design(brfss21_data, id = 1, strata = ststr, weight = llcpwt)
+```
+
+```{r include = FALSE}
+depr_prev_bystate_gender = brfss_design %>%
+  group_by(state_code, sex, depression) %>%
+  summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c("ci")))
+
+```
+
+### State-level gender differences in mental health outcomes
+
+For a dash board of the geographical distribution of the two mental health outcomes, click here (insert link later).
+
+Below is a grouped barplot of the prevalence of self-reported past diagnosis of depression by gender in each US state, arranged in descending order by the value of this estimate among women. We can see that this prevalence among women is the highest in West Virginia and lowest in Hawaii. Interestingly, this prevalence among men did not show a decrease as obvious as that among women in this plot.
+
+```{r}
+sorted_depr_prev = depr_prev_bystate_gender %>%
+  filter(depression == "yes", sex == "female") %>%
+  arrange(desc(depression_prev)) %>%
+  mutate(state_code = factor(state_code))
+
+depr_prev_bystate_gender %>% 
+  filter(depression == "yes") %>%
+  mutate(state_code = factor(state_code, levels = sorted_depr_prev$state_code, ordered = TRUE)) %>% 
+  ggplot(aes(x = state_code, y = depression_prev, fill = sex), group = state_code) +
+  geom_bar(stat="identity", width=.5, position = "dodge")  +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        legend.position = "bottom") +
+  labs(x = "state", y = "prevalence (%)",
+       title = "Prevalence of self-reported past diagnosis of depression by gender in each US state")
+```
+
