@@ -1659,6 +1659,23 @@ tb1_weighted</code></pre>
 </table>
 </div>
 </div>
+<div id="gender-number-of-children-in-family-and-depression"
+class="section level3">
+<h3>Gender, number of children in family, and depression</h3>
+<pre class="r"><code>brfss_design %&gt;%
+  group_by(sex, children, depression) %&gt;%
+  summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c(&quot;ci&quot;))) %&gt;%
+  filter(!is.na(children), depression == &quot;yes&quot;) %&gt;%
+  select(-depression) %&gt;%
+  ggplot(aes(x = children, y = depression_prev, fill = sex)) +
+  geom_bar(position=&quot;dodge&quot;, stat=&quot;identity&quot;) +
+  geom_errorbar(aes(ymin=depression_prev_low, ymax=depression_prev_upp), 
+                width=.2, position=position_dodge(.9))</code></pre>
+<p><img src="summary_statistics_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+Men who have children in the household have significantly lower
+prevalence of self-reported depression while women who have children
+don’t.</p>
+</div>
 
 
 
