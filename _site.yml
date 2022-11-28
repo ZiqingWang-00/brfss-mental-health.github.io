@@ -9,7 +9,7 @@ navbar:
           href: state_level_eda.html
         - text: "Summary Counts"
           href: summary_statistics.html
-
+ 
   right:
     - text: "About"
       href: about.html
