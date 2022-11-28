@@ -88,4 +88,5 @@ brfss_design %>%
                 width=.2, position=position_dodge(.9))
 
 ```
+
 Men who have children in the household have significantly lower prevalence of self-reported depression while women who have children don't. 
