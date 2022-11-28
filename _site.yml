@@ -7,8 +7,10 @@ navbar:
        menu:
         - text: "State-level Explorations"
           href: state_level_eda.html
-        - text: "Summary Counts"
-          href: summary_statistics.html
+        - text: "On prevalence of self-reported depression diagnosis"
+          href: depression_prev_EDA.html
+        - text: "On # of days of bad mental health in the past 30 days"
+          href: bad_mh_days_EDA.html
 
   right:
     - text: "About"

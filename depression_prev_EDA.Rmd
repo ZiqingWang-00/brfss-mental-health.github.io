@@ -1,5 +1,5 @@
 ---
-title: "Summary Statistics"
+title: "On prevalence of self-reported depression diagnosis"
 output: 
   html_document:
     toc: true
@@ -45,33 +45,33 @@ brfss_design = as_survey_design(brfss21_data, id = 1, strata = ststr, weight = l
 
 ### Summary statistics
 
-Below is the unweighted counts of the all included demographic variables, exposure, and other covariates, grouped by the self-reported number of days with bad mental health in the past 30 days in the following three categories: none, between 1 and 15 days, and more than 15 days. 
+Below is the unweighted counts of the all included demographic variables, exposure, and other covariates, dichotomized by whether they self-reported whether they've ever been told by a physician that they had depression.  
 
 ```{r}
-tb1_unweighted =
+tb1_unweighted_depr =
   brfss_design$variables %>%
-  tbl_summary(by = mh_cat3, percent = "row", 
+  tbl_summary(by = depression, percent = "row", 
               include = c(sex, race, age, marital_status,
                              children,
                              education, income, employment,
                              general_health, exercise),
               type = list(exercise ~ "categorical"))
 
-tb1_unweighted
+tb1_unweighted_depr
 ```
 
-
-```{r weighted summary}
-tb1_weighted =
+Below is the weighted summary counts:
+```{r}
+tb1_weighted_depr =
   brfss_design %>%
-  tbl_svysummary(by = mh_cat3, percent = "row", 
+  tbl_svysummary(by = depression, percent = "row", 
                  include = c(sex, race, age, marital_status,
                              children,
                              education, income, employment,
                              general_health, exercise),
                   type = list(exercise ~ "categorical"))
 
-tb1_weighted
+tb1_weighted_depr
 ```
 
 ### Gender, number of children in family, and depression
@@ -90,3 +90,5 @@ brfss_design %>%
 ```
 
 Men who have children in the household have significantly lower prevalence of self-reported depression while women who have children don't. 
+
+
