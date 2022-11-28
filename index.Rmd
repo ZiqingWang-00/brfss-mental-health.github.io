@@ -8,11 +8,30 @@ output:
     toc_float: true
     theme: cosmo
 ---
+<center>
+<img src="images/depression.png" style="width:50%">
+</center>
 
-### About the project
+### *Background*
+Current literature provide inconsistent evidence on gender difference in mental health outcomes. According to WHO, “women are more likely to be treated for depression than men even though the rates of depression don’t differ greatly between the gender”. However, there are also research studies suggesting that women are more likely than men to have depression. It’s thus important to find out whether there indeed is a gender gap in mental health outcomes, which may in turn supply evidence that help answer other public health questions, such as whether women are overtreated for mental health disorders. 
 
-This project examines the gender differences in mental health outcomes using the BRFSS 2021 data.
+### *Motivation*
+The main goals of this project are to 1) compare age-adjusted state-level differences in depression prevalence and average number of days with unwell mental health between US adult men and women and 2) examine factors that potentially affect mental health outcomes. 
 
-### Site navigation
+### *Data Resources*
+The dataset we intend to use is “The 2021 BRFSS data”, which was downloaded from https://www.cdc.gov/brfss/annual_data/annual_2021.html.
 
+### *Site navigation*
 This website contains the following sections...
+
+### *Collaborators*
+Yichen Lyu (yl5220)
+
+Ziqing Wang (zw2899)
+
+Zhaoqianyu Xiong (zx2424)
+
+Zirui Zhang (zz3039)
+
+
+
