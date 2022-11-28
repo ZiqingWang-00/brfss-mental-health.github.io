@@ -2,17 +2,19 @@ name: "Gender differences in mental health outcomes"
 output_dir: "."
 navbar:
   title: "Home"
+  left:
+     - text: "EDA"
+       menu:
+        - text: "State-level Explorations"
+          href: state_level_eda.html
+        - text: "Summary Counts"
+          href: summary_statistics.html
+
   right:
     - text: "About"
       href: about.html
     - text: "Dashboard"
       href: state_level_dashboard.html
-    - text: "EDA"
-      menu:
-        - text: "State-level Explorations"
-          href: state_level_eda.html
-        - text: "Summary Counts"
-          href: summary_statistics.html
     - icon: fa-envelope fa-lg
       href: mailto:<zw2899@cumc.columbia.edu>
     - icon: fa-github fa-lg
