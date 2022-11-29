@@ -349,6 +349,21 @@ div.tocify {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Statistical Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="regression_depr.html">Regression on self-reported depression diagnosis</a>
+    </li>
+    <li>
+      <a href="regression_mh_days.html">Regression on # of days of bad mental health in the past 30 days</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="state_level_dashboard.html">Dashboard</a>
 </li>
@@ -433,9 +448,7 @@ was your mental health not good?”.</p>
 <p>For the first outcome variable, we dichotomized it into a binary
 variable with “yes” and “no” levels (depression). For the second outcome
 variable, we recoded it into a categorical variable with three levels:
-none, between 1 and 15 days, and more than 15 days for calculating
-summary statistics. We recoded it into a numerical variable ranging from
-0 to 30 for fitting Poisson regression models.</p>
+none, between 1 and 15 days, and more than 15 days.</p>
 </div>
 <div id="exposure" class="section level3">
 <h3>Exposure</h3>
@@ -448,7 +461,7 @@ household.</p>
 </div>
 <div id="covariates" class="section level3">
 <h3>Covariates</h3>
-<p>demographic covariates in our analyses include race/ethnicity, age,
+<p>Demographic covariates in our analyses include race/ethnicity, age,
 employment status, and marital status. Socioeconomic cavariates include
 education level and annual income. Health-related covariates include
 self-reported general health and any self-reported exercises in the past
@@ -461,12 +474,16 @@ covariate categories in each level of the mental health outcome
 variables.</p>
 <p>We used the binary logistic regression model to examine the
 association between gender and the self-reported past diagnosis of
-depression We used the Poisson regression model to examine the
-relationship between gender and the categorized number of days of
-self-reported bad mental health in the past 30 days.</p>
+depression and the dichotomized number of days of self-reported bad
+mental health in the past 30 days, respectively.</p>
 <p>For both outcome variables, we added demographic, socioeconomic, and
 health-related variables sequentially in the regression model and used
 cross validation to select the best model, respectively.</p>
+<p>We subsetted the data by gender and ran the best logistic regression
+models selected from above separately on these two subsetted data sets.
+The aim of the subsetted analysis is to check whether the number of
+children in the household differentially impacts the two mental health
+outcomes.</p>
 </div>
 </div>
 <div id="results" class="section level2">

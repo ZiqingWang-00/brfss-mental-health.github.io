@@ -11,6 +11,12 @@ navbar:
           href: depression_prev_EDA.html
         - text: "On # of days of bad mental health in the past 30 days"
           href: bad_mh_days_EDA.html
+     - text: "Statistical Analysis"
+       menu: 
+        - text: "Regression on self-reported depression diagnosis"
+          href: regression_depr.html
+        - text: "Regression on # of days of bad mental health in the past 30 days"
+          href: regression_mh_days.html
      - text: "Dashboard"
        href: state_level_dashboard.html
 

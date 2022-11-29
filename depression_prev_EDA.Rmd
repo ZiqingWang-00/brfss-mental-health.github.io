@@ -59,6 +59,16 @@ tb1_unweighted_depr =
 
 tb1_unweighted_depr
 ```
+We make the following observations about the above summary counts:
+
+* Prevalence of self-reported depression is higher in women than men.
+* Asians are the least likely to self-report depression, while whites and people of race/ethnicities other than white, black, Asian, and Hispanic are the most likely to self-report depression. 
+* Prevalence of self-reported depression among young people is higher than older people.
+* Prevalence of self-reported depression is higher among those who are not married. 
+* It seems like the number of children in the household is not correlated to self-reported depression. 
+* People with higher education level and higher income are less likely to self-report depression.
+* Unemployed people are more likely to report depression than employed people.
+* People who report less than excellent health and who haven't had any physical exercise in the past 30 days have higher prevalence of self-reported depression. 
 
 Below is the weighted summary counts:
 ```{r}
@@ -74,7 +84,12 @@ tb1_weighted_depr =
 tb1_weighted_depr
 ```
 
+We can see that the same observations above hold in the weighted summary counts.
+
+
 ### Gender, number of children in family, and depression
+
+We are interested in the differential impact of the number of children in the household on self-reported depression among men and women. Below is a barplot on this topic:
 
 ```{r}
 brfss_design %>%
@@ -89,6 +104,12 @@ brfss_design %>%
 
 ```
 
-Men who have children in the household have significantly lower prevalence of self-reported depression while women who have children don't. 
+One interesting observation is that men who have children in the household have significantly lower prevalence of self-reported depression while women who have children don't. We do a proportion test incorporating the survey weights to verify this observation:
+```{r}
+
+```
+
+
+### 
 
 
