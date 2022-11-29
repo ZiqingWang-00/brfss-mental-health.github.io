@@ -1,0 +1,53 @@
+---
+title: "Report"
+output: 
+ html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+## Introduction
+
+### Background and related work
+
+### Research questions
+We are interested in the following questions:
+
+* How does the geological distribution of mental health outcomes across US states differ among men and women?
+
+* Do men and women have different mental health outcomes, taking into account of demographic, socioeconomic, and health factors?
+
+* Does the number of children in the household affect the mental health of men and women differently?
+
+## Method
+
+### Data
+We used the 2021 BRFSS data downloaded from the CDC website. [INSERT introduction of the dataset]
+
+### Outcome variables
+We use two variables to measure mental health. The first variable is the self-reportd past diagnosis of depression. The participants were asked if they have everbeen told that they had a depressive disorder (including depression, major depression, dysthymia, or minor depression). The second variable is the self-reported number of days of bad mental health in the past 30 days. The participants were asked: "Now thinking about your mental health, which includes stress, depression, and problems with emotions, for how many days during the past 30 days was your mental health not good?". 
+
+For the first outcome variable, we dichotomized it into a binary variable with "yes" and "no" levels (depression). For the second outcome variable, we recoded it into a categorical variable with three levels: none, between 1 and 15 days, and more than 15 days for calculating summary statistics. We recoded it into a numerical variable ranging from 0 to 30 for fitting Poisson regression models.  
+
+### Exposure
+We are interested in two exposure variables. The first one is the sex of participant coded as female or male based on their answers to whether they were male or female and whether they were male or female at birth. The second one is the number of children in the household, where participants were asked how many children there were in their household. 
+
+### Covariates
+demographic covariates in our analyses include race/ethnicity, age, employment status, and marital status. Socioeconomic cavariates include education level and annual income. Health-related covariates include self-reported general health and any self-reported exercises in the past 30 days.
+
+### Statistical Analysis
+We computed weighted and unweighted summary counts of exposure and covariate categories in each level of the mental health outcome variables. 
+
+We used the binary logistic regression model to examine the association between gender and the self-reported past diagnosis of depression We used the Poisson regression model to examine the relationship between gender and the categorized number of days of self-reported bad mental health in the past 30 days. 
+
+For both outcome variables, we added demographic, socioeconomic, and health-related variables sequentially in the regression model and used cross validation to select the best model, respectively.
+
+
+## Results
+
+
+## Discussion
+
+
+## Conclusion

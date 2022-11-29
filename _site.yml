@@ -11,12 +11,14 @@ navbar:
           href: depression_prev_EDA.html
         - text: "On # of days of bad mental health in the past 30 days"
           href: bad_mh_days_EDA.html
+     - text: "Dashboard"
+       href: state_level_dashboard.html
 
   right:
     - text: "About"
       href: about.html
-    - text: "Dashboard"
-      href: state_level_dashboard.html
+    - text: "Report"
+      href: report.html
     - icon: fa-envelope fa-lg
       href: mailto:<zw2899@cumc.columbia.edu>
     - icon: fa-github fa-lg
