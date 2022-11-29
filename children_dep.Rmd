@@ -1,0 +1,80 @@
+---
+title: "children_data"
+output: html_document
+date: "2022-11-29"
+---
+---
+title: "children_dep"
+output: html_document
+date: "2022-11-26"
+---
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+child_data = 
+  read_csv("./data/cleaned_brfss21.csv") %>% 
+  select(children, chldcnt, depression, menthlth, mh_cat3, mh_bin) %>% 
+  drop_na() %>% 
+   mutate(
+      children01 = 
+        case_when(
+          children %in% c("none") ~ "No",
+          TRUE ~ "Yes"))
+
+child_data['menthlth'][child_data['menthlth'] == 88] <- 0
+```
+
+##Depression: Yes or No?
+
+```{r}
+child1 = 
+  child_data%>% 
+    group_by(children01) %>% 
+    summarise(
+      n = n(),
+      prv = sum(depression == "yes")/n
+    ) 
+
+child1%>% 
+  ggplot(aes(children01, prv)) +
+  geom_col() +
+  geom_text(aes(label=prv), vjust=-.5, size=3.5)
+```
+
+```{r}
+child2 = 
+  child_data %>% 
+  group_by(chldcnt) %>% 
+  summarize(
+    n = n(),
+    prv2 = sum(depression == "yes")/n
+  )
+
+child2 %>% 
+  ggplot(aes(chldcnt, prv2)) +
+  geom_col()
+```
+
+Better do some tests(t-test, anova)
+
+##Depression: How many days?
+
+```{r}
+child3 = 
+  child_data %>% 
+    ggplot(aes(children01, menthlth)) +
+    geom_boxplot()
+
+child3
+```
+
+```{r}
+child_data %>% 
+  mutate(chldcnt = as.factor(chldcnt)) %>% 
+  ggplot(aes(chldcnt, menthlth)) +
+    geom_boxplot()
+```
+
