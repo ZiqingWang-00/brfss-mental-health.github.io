@@ -324,6 +324,14 @@ $(document).ready(function () {
 
 
 <pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
+## ✔ readr   2.1.2      ✔ forcats 0.5.2 
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>child_data = 
   read_csv(&quot;./data/cleaned_brfss21.csv&quot;) %&gt;% 
   select(children, chldcnt, depression, menthlth, mh_cat3, mh_bin) %&gt;% 
@@ -333,21 +341,23 @@ $(document).ready(function () {
         case_when(
           children %in% c(&quot;none&quot;) ~ &quot;No&quot;,
           TRUE ~ &quot;Yes&quot;))</code></pre>
-<pre><code>## Rows: 421724 Columns: 29
-## ── Column specification ───────────────────────────────
+<pre><code>## Rows: 421724 Columns: 28
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (14): sex, race, mh_cat3, mh_bin, depression, children, education, incom...
-## dbl (15): psu, llcpwt, ststr, menthlth, addepev3, chldcnt, state, educa, inc...
+## dbl (14): psu, llcpwt, ststr, menthlth, addepev3, chldcnt, state, educa, inc...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>child_data[&#39;menthlth&#39;][child_data[&#39;menthlth&#39;] == 88] &lt;- 0</code></pre>
-<p>##Depression: Yes or No?</p>
+<div id="depression-yes-or-no" class="section level2">
+<h2>Depression: Yes or No?</h2>
 <pre class="r"><code>child1 = 
   child_data%&gt;% 
     group_by(children01) %&gt;% 
     summarise(
       n = n(),
+      n_dep = sum(depression == &quot;yes&quot;),
       prv = sum(depression == &quot;yes&quot;)/n
     ) 
 
@@ -356,11 +366,69 @@ child1%&gt;%
   geom_col() +
   geom_text(aes(label=prv), vjust=-.5, size=3.5)</code></pre>
 <p><img src="children_dep_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>dep_prp_test = prop.test(c(58799, 22239), n = c(304974, 106791), correct = F)
+
+dep_prp_test</code></pre>
+<pre><code>## 
+##  2-sample test for equality of proportions without continuity correction
+## 
+## data:  c(58799, 22239) out of c(304974, 106791)
+## X-squared = 119.41, df = 1, p-value &lt; 2.2e-16
+## alternative hypothesis: two.sided
+## 95 percent confidence interval:
+##  -0.01825700 -0.01263869
+## sample estimates:
+##    prop 1    prop 2 
+## 0.1928000 0.2082479</code></pre>
+<pre class="r"><code>dep_prp_test %&gt;% 
+  broom::tidy() %&gt;% 
+  knitr::kable()</code></pre>
+<table>
+<colgroup>
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="5%" />
+<col width="6%" />
+<col width="6%" />
+<col width="7%" />
+<col width="47%" />
+<col width="7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">estimate1</th>
+<th align="right">estimate2</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">parameter</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+<th align="left">method</th>
+<th align="left">alternative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0.1928</td>
+<td align="right">0.2082479</td>
+<td align="right">119.4055</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-0.018257</td>
+<td align="right">-0.0126387</td>
+<td align="left">2-sample test for equality of proportions without
+continuity correction</td>
+<td align="left">two.sided</td>
+</tr>
+</tbody>
+</table>
 <pre class="r"><code>child2 = 
   child_data %&gt;% 
   group_by(chldcnt) %&gt;% 
   summarize(
     n = n(),
+    n_dep = sum(depression == &quot;yes&quot;),
     prv2 = sum(depression == &quot;yes&quot;)/n
   )
 
@@ -369,7 +437,9 @@ child2 %&gt;%
   geom_col()</code></pre>
 <p><img src="children_dep_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Better do some tests(t-test, anova)</p>
-<p>##Depression: How many days?</p>
+</div>
+<div id="depression-how-many-days" class="section level2">
+<h2>Depression: How many days?</h2>
 <pre class="r"><code>child3 = 
   child_data %&gt;% 
     ggplot(aes(children01, menthlth)) +
@@ -382,6 +452,7 @@ child3</code></pre>
   ggplot(aes(chldcnt, menthlth)) +
     geom_boxplot()</code></pre>
 <p><img src="children_dep_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
 
 
 

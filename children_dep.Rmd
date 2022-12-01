@@ -27,7 +27,7 @@ child_data =
 child_data['menthlth'][child_data['menthlth'] == 88] <- 0
 ```
 
-##Depression: Yes or No?
+## Depression: Yes or No?
 
 ```{r}
 child1 = 
@@ -35,6 +35,7 @@ child1 =
     group_by(children01) %>% 
     summarise(
       n = n(),
+      n_dep = sum(depression == "yes"),
       prv = sum(depression == "yes")/n
     ) 
 
@@ -42,6 +43,14 @@ child1%>%
   ggplot(aes(children01, prv)) +
   geom_col() +
   geom_text(aes(label=prv), vjust=-.5, size=3.5)
+
+dep_prp_test = prop.test(c(58799, 22239), n = c(304974, 106791), correct = F)
+
+dep_prp_test
+
+dep_prp_test %>% 
+  broom::tidy() %>% 
+  knitr::kable()
 ```
 
 ```{r}
@@ -50,6 +59,7 @@ child2 =
   group_by(chldcnt) %>% 
   summarize(
     n = n(),
+    n_dep = sum(depression == "yes"),
     prv2 = sum(depression == "yes")/n
   )
 
@@ -60,7 +70,7 @@ child2 %>%
 
 Better do some tests(t-test, anova)
 
-##Depression: How many days?
+## Depression: How many days?
 
 ```{r}
 child3 = 
