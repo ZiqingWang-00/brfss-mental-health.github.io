@@ -352,13 +352,16 @@ $(document).ready(function () {
 <pre class="r"><code>child_data[&#39;menthlth&#39;][child_data[&#39;menthlth&#39;] == 88] &lt;- 0</code></pre>
 <div id="depression-yes-or-no" class="section level2">
 <h2>Depression: Yes or No?</h2>
+<div id="children-yes-or-no" class="section level3">
+<h3>Children: Yes or No?</h3>
+<p>barplot</p>
 <pre class="r"><code>child1 = 
   child_data%&gt;% 
     group_by(children01) %&gt;% 
     summarise(
       n = n(),
       n_dep = sum(depression == &quot;yes&quot;),
-      prv = sum(depression == &quot;yes&quot;)/n
+      prv = n_dep/n
     ) 
 
 child1%&gt;% 
@@ -366,6 +369,7 @@ child1%&gt;%
   geom_col() +
   geom_text(aes(label=prv), vjust=-.5, size=3.5)</code></pre>
 <p><img src="children_dep_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>proption test</p>
 <pre class="r"><code>dep_prp_test = prop.test(c(58799, 22239), n = c(304974, 106791), correct = F)
 
 dep_prp_test</code></pre>
@@ -380,63 +384,48 @@ dep_prp_test</code></pre>
 ## sample estimates:
 ##    prop 1    prop 2 
 ## 0.1928000 0.2082479</code></pre>
-<pre class="r"><code>dep_prp_test %&gt;% 
-  broom::tidy() %&gt;% 
-  knitr::kable()</code></pre>
-<table>
-<colgroup>
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="5%" />
-<col width="6%" />
-<col width="6%" />
-<col width="7%" />
-<col width="47%" />
-<col width="7%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="right">estimate1</th>
-<th align="right">estimate2</th>
-<th align="right">statistic</th>
-<th align="right">p.value</th>
-<th align="right">parameter</th>
-<th align="right">conf.low</th>
-<th align="right">conf.high</th>
-<th align="left">method</th>
-<th align="left">alternative</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">0.1928</td>
-<td align="right">0.2082479</td>
-<td align="right">119.4055</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">-0.018257</td>
-<td align="right">-0.0126387</td>
-<td align="left">2-sample test for equality of proportions without
-continuity correction</td>
-<td align="left">two.sided</td>
-</tr>
-</tbody>
-</table>
+</div>
+<div id="children-how-many" class="section level3">
+<h3>Children: How many?</h3>
+<p>barplot</p>
 <pre class="r"><code>child2 = 
   child_data %&gt;% 
   group_by(chldcnt) %&gt;% 
   summarize(
     n = n(),
     n_dep = sum(depression == &quot;yes&quot;),
-    prv2 = sum(depression == &quot;yes&quot;)/n
+    prv2 = n_dep/n
   )
 
 child2 %&gt;% 
   ggplot(aes(chldcnt, prv2)) +
   geom_col()</code></pre>
-<p><img src="children_dep_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>Better do some tests(t-test, anova)</p>
+<p><img src="children_dep_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>chi-square test</p>
+<pre class="r"><code>child2 %&gt;% 
+  mutate(
+    n_non_dep = n - n_dep,
+    chldcnt = as.factor(chldcnt),
+    n_dep = as.numeric(n_dep),
+    n_non_dep = as.numeric(n_non_dep)) %&gt;% 
+  select(chldcnt, n_dep, n_non_dep)</code></pre>
+<pre><code>## # A tibble: 6 × 3
+##   chldcnt n_dep n_non_dep
+##   &lt;fct&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+## 1 1       58799    246175
+## 2 2        9758     34632
+## 3 3        7500     30164
+## 4 4        3144     12701
+## 5 5        1201      4612
+## 6 6         636      2443</code></pre>
+<pre class="r"><code>chisq.test(child2)</code></pre>
+<pre><code>## Warning in chisq.test(child2): Chi-squared approximation may be incorrect</code></pre>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  child2
+## X-squared = 446.75, df = 15, p-value &lt; 2.2e-16</code></pre>
+</div>
 </div>
 <div id="depression-how-many-days" class="section level2">
 <h2>Depression: How many days?</h2>
@@ -446,12 +435,12 @@ child2 %&gt;%
     geom_boxplot()
 
 child3</code></pre>
-<p><img src="children_dep_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="children_dep_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <pre class="r"><code>child_data %&gt;% 
   mutate(chldcnt = as.factor(chldcnt)) %&gt;% 
   ggplot(aes(chldcnt, menthlth)) +
     geom_boxplot()</code></pre>
-<p><img src="children_dep_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="children_dep_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 
 
