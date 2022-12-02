@@ -13,6 +13,7 @@ library(rio)
 library(haven)
 library(readr)
 library(forcats)
+library(srvyr)
 ```
 
 Import the raw XPT data file into RStudio. 
@@ -37,10 +38,11 @@ tidy_brfss21 = BRFSS2021 %>%
   select(psu, llcpwt, ststr, # survey weight variables
          menthlth, addepev3, # mental health outcomes
          sex, chldcnt, # exposures
-         state, race, educa, income3, employ1, marital, ageg5yr, # demographic covariates
+         state, race, educa, income3, employ1, marital, ageg5yr, renthom1, # demographic covariates
          exerany2, genhlth) %>% # health-related covariates
   filter(!state %in% c(66, 72, 78), 
          !menthlth %in% c(77, 99), 
+         !renthom1 %in% c(7, 9),
          !addepev3 %in% c(7, 9), !is.na(addepev3)) %>% # remove observations with missing outcome variables and remove observations from US territories
   mutate(mh_cat3 = case_when(menthlth == 88 ~ "none",
                              menthlth %in% seq(1, 15) ~ "<=15 days",
@@ -72,6 +74,8 @@ tidy_brfss21 = BRFSS2021 %>%
                                 employ1 %in% c(3,4,8) ~ "unemployed"),
          marital_status = case_when(marital == 1 ~ "married",
                                     marital %in% seq(2,6) ~ "not married"),
+         homeownership = case_when(renthom1 == 1 ~ "own",
+                                   renthom1 == 2 ~ "rent"),
          age = case_when(ageg5yr %in% c(1,2) ~ "18-29",
                          ageg5yr %in% c(3,4,5,6) ~ "30-49",
                          ageg5yr %in% c(7,8,9) ~ "50-64",

@@ -357,10 +357,11 @@ variables necessary for data analysis (e.g., weight variables).</p>
   select(psu, llcpwt, ststr, # survey weight variables
          menthlth, addepev3, # mental health outcomes
          sex, chldcnt, # exposures
-         state, race, educa, income3, employ1, marital, ageg5yr, # demographic covariates
+         state, race, educa, income3, employ1, marital, ageg5yr, renthom1, # demographic covariates
          exerany2, genhlth) %&gt;% # health-related covariates
   filter(!state %in% c(66, 72, 78), 
          !menthlth %in% c(77, 99), 
+         !renthom1 %in% c(7, 9),
          !addepev3 %in% c(7, 9), !is.na(addepev3)) %&gt;% # remove observations with missing outcome variables and remove observations from US territories
   mutate(mh_cat3 = case_when(menthlth == 88 ~ &quot;none&quot;,
                              menthlth %in% seq(1, 15) ~ &quot;&lt;=15 days&quot;,
@@ -392,6 +393,8 @@ variables necessary for data analysis (e.g., weight variables).</p>
                                 employ1 %in% c(3,4,8) ~ &quot;unemployed&quot;),
          marital_status = case_when(marital == 1 ~ &quot;married&quot;,
                                     marital %in% seq(2,6) ~ &quot;not married&quot;),
+         homeownership = case_when(renthom1 == 1 ~ &quot;own&quot;,
+                                   renthom1 == 2 ~ &quot;rent&quot;),
          age = case_when(ageg5yr %in% c(1,2) ~ &quot;18-29&quot;,
                          ageg5yr %in% c(3,4,5,6) ~ &quot;30-49&quot;,
                          ageg5yr %in% c(7,8,9) ~ &quot;50-64&quot;,
@@ -471,11 +474,11 @@ reference:</p>
          age = factor(age, levels = c(&quot;18-29&quot;, &quot;30-49&quot;, &quot;50-64&quot;, &quot;65+&quot;)),
          general_health = factor(general_health, levels = c(&quot;excellent&quot;, &quot;very good/good&quot;, &quot;fair/poor&quot;)),
          exercise = factor(exercise, levels = c(&quot;yes&quot;, &quot;no&quot;)))</code></pre>
-<pre><code>## Rows: 421724 Columns: 29
-## ── Column specification ──────────────────────
+<pre><code>## Rows: 417619 Columns: 31
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr (14): sex, race, mh_cat3, mh_bin, depression, children, education, incom...
-## dbl (15): psu, llcpwt, ststr, menthlth, addepev3, chldcnt, state, educa, inc...
+## chr (15): sex, race, mh_cat3, mh_bin, depression, children, education, incom...
+## dbl (16): psu, llcpwt, ststr, menthlth, addepev3, chldcnt, state, educa, inc...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
