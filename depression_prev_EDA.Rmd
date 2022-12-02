@@ -84,11 +84,11 @@ tb1_weighted_depr =
 tb1_weighted_depr
 ```
 
-We can see that the same observations above hold in the weighted summary counts.
+We can see that the same observations above hold in the weighted summary counts.  
 
+We take closer looks at how gender might interact with the following demographic variables to affect self-reported depression:  
 
 ### Gender, number of children in family, and depression
-
 We are interested in the differential impact of the number of children in the household on self-reported depression among men and women. Below is a barplot on this topic:
 
 ```{r}
@@ -104,12 +104,52 @@ brfss_design %>%
 
 ```
 
-One interesting observation is that men who have children in the household have significantly lower prevalence of self-reported depression while women who have children don't. We do a proportion test incorporating the survey weights to verify this observation:
+One interesting observation is that men who have children in the household have significantly lower prevalence of self-reported depression while women who have children don't. We do a chi-square test incorporating the survey weights to verify this observation:
 ```{r}
+# For women
+brfss_design %>%
+  filter(sex == "female") %>% 
+  select(children, depression) %>% 
+  svychisq(~children + depression, . , statistic="adjWald") %>% 
+  broom::tidy()
 
+brfss_design %>%
+  filter(sex == "male") %>% 
+  select(children, depression) %>% 
+  svychisq(~children + depression, . , statistic="adjWald") %>% 
+  broom::tidy()
 ```
+As expected, based on the chi-squared test, the number of children in the household is significantly associated with self-reported depression among men but not women. 
 
+### Gender, race, and depression
+Next, we examine how gender and race together associate with self-reported depression. 
+```{r}
+brfss_design %>%
+  group_by(sex, race, depression) %>%
+  summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c("ci"))) %>%
+  filter(!is.na(race), depression == "yes") %>%
+  select(-depression) %>%
+  ggplot(aes(x = race, y = depression_prev, fill = sex)) +
+  geom_bar(position="dodge", stat="identity") +
+  geom_errorbar(aes(ymin=depression_prev_low, ymax=depression_prev_upp), 
+                width=.2, position=position_dodge(.9))
+```
+We can see that not only is the prevalence of self-reported depression higher in women than men, the same holds true for all race/ethnicities included in the data set.
 
-### 
+### Gender, age, and depression
+```{r}
+brfss_design %>%
+  group_by(sex, age, depression) %>%
+  summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c("ci"))) %>%
+  filter(!is.na(age), depression == "yes") %>%
+  select(-depression) %>%
+  ggplot(aes(x = age, y = depression_prev, fill = sex)) +
+  geom_bar(position="dodge", stat="identity") +
+  geom_errorbar(aes(ymin=depression_prev_low, ymax=depression_prev_upp), 
+                width=.2, position=position_dodge(.9))
+```
+Based on the plot above, it seems that, for women, the prevalence of self-reported depression remains stable between age group 30-49 and 50-64, but decreases significantly between age group 18-29 and 30-49 as well as between age group 50-64 and 65+. The same trend is displayed among men as well but in smaller magnitude.  
+
+This gap in the magnitude of change in prevalence of self-reported depression indicates that aging might affect self-reported depression among women and men differently. 
 
 

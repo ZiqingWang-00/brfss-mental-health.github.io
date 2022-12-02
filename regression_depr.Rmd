@@ -48,42 +48,50 @@ brfss_design = as_survey_design(brfss21_data, id = 1, strata = ststr, weight = l
 
 ### Crude model with exposures only
 ```{r}
-svyglm(depression ~ sex + children, # exposures
+crude_mod_depr = svyglm(depression ~ sex + children, # exposures
        brfss_design,
-       family = quasibinomial()) %>%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+       family = quasibinomial())
+crude_mod_depr %>% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
 ```
 
 ### Model controlling for demographic variables
 ```{r}
-svyglm(depression ~ sex + children + # exposures
+mod2_depr = svyglm(depression ~ sex + children + # exposures
          race + age + marital_status, # demographic covariates
        brfss_design,
-       family = quasibinomial()) %>%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+       family = quasibinomial())
+mod2_depr %>% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
 ```
 
 ### Model controlling for demographic and socioeconomic variables
 ```{r}
-svyglm(depression ~ sex + children + # exposures
+mod3_depr = svyglm(depression ~ sex + children + # exposures
          race + age + marital_status + # demographic covariates
          education + income + employment, # socioeconomic covariates, 
        brfss_design,
-       family = quasibinomial()) %>%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+       family = quasibinomial()) 
+mod3_depr %>% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
 ```
 
 
 ### Model controlling for demographic, socioeconomic, and health variables
 ```{r}
-svyglm(depression ~ sex + children + # exposures
+full_mod_depr = svyglm(depression ~ sex + children + # exposures
            race + age + marital_status + # demographic covariates
            education + income + employment + # socioeconomic covariates
            general_health + exercise, # health-related covariates
        brfss_design,
-       family = quasibinomial())  %>%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+       family = quasibinomial())  
+
+full_mod_depr %>% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
 ```
+
+### Model Comparison
+(AIC for score-based comparison for inference purposes and cross validation for prediction purpose?)
+```{r}
+AIC(full_mod_depr)
+```
+
 
 ### Subsetted analysis by gender
 Here we are intereted in our second exposure, the number of children in the household. Specifically, we are interested in if it affects self-reported depression diagnosis differently for men and women. 

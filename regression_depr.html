@@ -412,10 +412,10 @@ depression diagnosis</h1>
 
 <div id="crude-model-with-exposures-only" class="section level3">
 <h3>Crude model with exposures only</h3>
-<pre class="r"><code>svyglm(depression ~ sex + children, # exposures
+<pre class="r"><code>crude_mod_depr = svyglm(depression ~ sex + children, # exposures
        brfss_design,
-       family = quasibinomial()) %&gt;%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
+       family = quasibinomial())
+crude_mod_depr %&gt;% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
 <pre><code>## # A tibble: 4 × 7
 ##   term                  estimate std.error statistic   p.value conf.low conf.h…¹
 ##   &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -428,11 +428,11 @@ depression diagnosis</h1>
 <div id="model-controlling-for-demographic-variables"
 class="section level3">
 <h3>Model controlling for demographic variables</h3>
-<pre class="r"><code>svyglm(depression ~ sex + children + # exposures
+<pre class="r"><code>mod2_depr = svyglm(depression ~ sex + children + # exposures
          race + age + marital_status, # demographic covariates
        brfss_design,
-       family = quasibinomial()) %&gt;%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
+       family = quasibinomial())
+mod2_depr %&gt;% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
 <pre><code>## # A tibble: 12 × 7
 ##    term                      estimate std.er…¹ stati…²   p.value conf.…³ conf.…⁴
 ##    &lt;chr&gt;                        &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
@@ -454,12 +454,12 @@ class="section level3">
 <div id="model-controlling-for-demographic-and-socioeconomic-variables"
 class="section level3">
 <h3>Model controlling for demographic and socioeconomic variables</h3>
-<pre class="r"><code>svyglm(depression ~ sex + children + # exposures
+<pre class="r"><code>mod3_depr = svyglm(depression ~ sex + children + # exposures
          race + age + marital_status + # demographic covariates
          education + income + employment, # socioeconomic covariates, 
        brfss_design,
-       family = quasibinomial()) %&gt;%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
+       family = quasibinomial()) 
+mod3_depr %&gt;% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
 <pre><code>## # A tibble: 18 × 7
 ##    term                        estim…¹ std.e…² stati…³   p.value conf.…⁴ conf.…⁵
 ##    &lt;chr&gt;                         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
@@ -489,13 +489,14 @@ id="model-controlling-for-demographic-socioeconomic-and-health-variables"
 class="section level3">
 <h3>Model controlling for demographic, socioeconomic, and health
 variables</h3>
-<pre class="r"><code>svyglm(depression ~ sex + children + # exposures
+<pre class="r"><code>full_mod_depr = svyglm(depression ~ sex + children + # exposures
            race + age + marital_status + # demographic covariates
            education + income + employment + # socioeconomic covariates
            general_health + exercise, # health-related covariates
        brfss_design,
-       family = quasibinomial())  %&gt;%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
+       family = quasibinomial())  
+
+full_mod_depr %&gt;% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
 <pre><code>## # A tibble: 21 × 7
 ##    term                  estimate std.error statistic   p.value conf.low conf.…¹
 ##    &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
@@ -510,6 +511,14 @@ variables</h3>
 ##  9 age30-49                 0.844    0.0333     -5.10 3.49e-  7   0.791    0.901
 ## 10 age50-64                 0.569    0.0343    -16.4  1.18e- 60   0.532    0.609
 ## # … with 11 more rows, and abbreviated variable name ¹​conf.high</code></pre>
+</div>
+<div id="model-comparison" class="section level3">
+<h3>Model Comparison</h3>
+<p>(AIC for score-based comparison for inference purposes and cross
+validation for prediction purpose?)</p>
+<pre class="r"><code>AIC(full_mod_depr)</code></pre>
+<pre><code>##        eff.p          AIC     deltabar 
+## 1.079682e+02 2.706705e+05 5.398408e+00</code></pre>
 </div>
 <div id="subsetted-analysis-by-gender" class="section level3">
 <h3>Subsetted analysis by gender</h3>
