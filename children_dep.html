@@ -324,14 +324,6 @@ $(document).ready(function () {
 
 
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
-## ✔ readr   2.1.2      ✔ forcats 0.5.2 
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>child_data = 
   read_csv(&quot;./data/cleaned_brfss21.csv&quot;) %&gt;% 
   select(children, chldcnt, depression, menthlth, mh_cat3, mh_bin) %&gt;% 
@@ -341,16 +333,11 @@ $(document).ready(function () {
         case_when(
           children %in% c(&quot;none&quot;) ~ &quot;No&quot;,
           TRUE ~ &quot;Yes&quot;))</code></pre>
-<<<<<<< HEAD
 <pre><code>## Rows: 421724 Columns: 29
 ## ── Column specification ──────────────────────
-=======
-<pre><code>## Rows: 421724 Columns: 28
-## ── Column specification ────────────────────────────────────────────────────────
->>>>>>> ad654047f9ec49624e7d1d6d4657f721f4ca605a
 ## Delimiter: &quot;,&quot;
 ## chr (14): sex, race, mh_cat3, mh_bin, depression, children, education, incom...
-## dbl (14): psu, llcpwt, ststr, menthlth, addepev3, chldcnt, state, educa, inc...
+## dbl (15): psu, llcpwt, ststr, menthlth, addepev3, chldcnt, state, educa, inc...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>

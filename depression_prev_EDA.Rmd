@@ -16,31 +16,14 @@ library(srvyr)
 library(readr)
 library(forcats)
 library(gtsummary)
-```
 
-```{r include = FALSE}
-brfss21_data = read_csv("./data/cleaned_brfss21.csv") %>%
-  mutate(mh_cat3 = factor(mh_cat3, levels = c("none", "<=15 days", ">15 days")),
-         mh_bin = factor(mh_bin, levels = c("<=15 days", ">15 days")),
-         depression = factor(depression, levels = c("no", "yes")),
-         sex = factor(sex, levels = c("male", "female")),
-         children = factor(children, levels = c("none", "one or two", "three or more")),
-         state = factor(state),
-         race = factor(race, levels = c("white", "black", "asian", "hispanic", "other")),
-         education = factor(education, levels = c("less than high school", "high school or some college", "bachelors or higher")),
-         income = factor(income, levels = c("<=35000", "35000-75000", ">75000")),
-         employment = factor(employment, levels = c("employed", "homemaker/student/retired", "unemployed")),
-         age = factor(age, levels = c("18-29", "30-49", "50-64", "65+")),
-         general_health = factor(general_health, levels = c("excellent", "very good/good", "fair/poor")),
-         exercise = factor(exercise, levels = c("yes", "no")))
-```
-
-```{r include = FALSE}
 # Set options for allowing a single observation per stratum 
 options(survey.lonely.psu = "adjust")
+```
 
-# Create survey design 
-brfss_design = as_survey_design(brfss21_data, id = 1, strata = ststr, weight = llcpwt)
+```{r include = FALSE}
+# load survey design object
+load(file = "./data/brfss_design.Rdata")
 ```
 
 ### Summary statistics

@@ -453,6 +453,40 @@ variables necessary for data analysis (e.g., weight variables).</p>
                                 state == 56 ~ &quot;WY&quot;)) </code></pre>
 <p>Export the csv with reduced number of variables and observations.</p>
 <pre class="r"><code>write_csv(tidy_brfss21, &quot;./data/cleaned_brfss21.csv&quot;)</code></pre>
+<p>Recode variables to factors with comprehensible labels and save the
+cleaned dataframe as an R object for faster loading and future
+reference:</p>
+<pre class="r"><code>brfss21_data = read_csv(&quot;./data/cleaned_brfss21.csv&quot;) %&gt;%
+  mutate(mh_cat3 = factor(mh_cat3, levels = c(&quot;none&quot;, &quot;&lt;=15 days&quot;, &quot;&gt;15 days&quot;)),
+         mh_bin = factor(mh_bin, levels = c(&quot;&lt;=15 days&quot;, &quot;&gt;15 days&quot;)),
+         depression = factor(depression, levels = c(&quot;no&quot;, &quot;yes&quot;)),
+         sex = factor(sex, levels = c(&quot;male&quot;, &quot;female&quot;)),
+         children = factor(children, levels = c(&quot;none&quot;, &quot;one or two&quot;, &quot;three or more&quot;)),
+         state = factor(state),
+         race = factor(race, levels = c(&quot;white&quot;, &quot;black&quot;, &quot;asian&quot;, &quot;hispanic&quot;, &quot;other&quot;)),
+         marital_status = factor(marital_status, levels = c(&quot;married&quot;, &quot;not married&quot;)),
+         education = factor(education, levels = c(&quot;less than high school&quot;, &quot;high school or some college&quot;, &quot;bachelors or higher&quot;)),
+         income = factor(income, levels = c(&quot;&lt;=35000&quot;, &quot;35000-75000&quot;, &quot;&gt;75000&quot;)),
+         employment = factor(employment, levels = c(&quot;employed&quot;, &quot;homemaker/student/retired&quot;, &quot;unemployed&quot;)),
+         age = factor(age, levels = c(&quot;18-29&quot;, &quot;30-49&quot;, &quot;50-64&quot;, &quot;65+&quot;)),
+         general_health = factor(general_health, levels = c(&quot;excellent&quot;, &quot;very good/good&quot;, &quot;fair/poor&quot;)),
+         exercise = factor(exercise, levels = c(&quot;yes&quot;, &quot;no&quot;)))</code></pre>
+<pre><code>## Rows: 421724 Columns: 29
+## ── Column specification ──────────────────────
+## Delimiter: &quot;,&quot;
+## chr (14): sex, race, mh_cat3, mh_bin, depression, children, education, incom...
+## dbl (15): psu, llcpwt, ststr, menthlth, addepev3, chldcnt, state, educa, inc...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code># save to R object
+save(brfss21_data, file = &quot;./data/brfss21_data.Rdata&quot;)</code></pre>
+<p>Next, create survey design for the cleaned and recoded data and save
+it as an R object for fast loading and future reference:</p>
+<pre class="r"><code># Create survey design 
+brfss_design = as_survey_design(brfss21_data, id = 1, strata = ststr, weight = llcpwt)
+
+save(brfss_design, file = &quot;./data/brfss_design.Rdata&quot;)</code></pre>
 
 
 
