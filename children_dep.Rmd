@@ -27,7 +27,11 @@ child_data =
 child_data['menthlth'][child_data['menthlth'] == 88] <- 0
 ```
 
-##Depression: Yes or No?
+## Depression: Yes or No?
+
+### Children: Yes or No? 
+
+barplot
 
 ```{r}
 child1 = 
@@ -35,7 +39,8 @@ child1 =
     group_by(children01) %>% 
     summarise(
       n = n(),
-      prv = sum(depression == "yes")/n
+      n_dep = sum(depression == "yes"),
+      prv = n_dep/n
     ) 
 
 child1%>% 
@@ -44,13 +49,28 @@ child1%>%
   geom_text(aes(label=prv), vjust=-.5, size=3.5)
 ```
 
+proption test
+
+```{r}
+dep_prp_test = prop.test(c(58799, 22239), n = c(304974, 106791), correct = F)
+
+dep_prp_test
+
+```
+
+
+### Children: How many?
+
+barplot
+
 ```{r}
 child2 = 
   child_data %>% 
   group_by(chldcnt) %>% 
   summarize(
     n = n(),
-    prv2 = sum(depression == "yes")/n
+    n_dep = sum(depression == "yes"),
+    prv2 = n_dep/n
   )
 
 child2 %>% 
@@ -58,9 +78,22 @@ child2 %>%
   geom_col()
 ```
 
-Better do some tests(t-test, anova)
+chi-square test
 
-##Depression: How many days?
+```{r}
+child2 %>% 
+  mutate(
+    n_non_dep = n - n_dep,
+    chldcnt = as.factor(chldcnt),
+    n_dep = as.numeric(n_dep),
+    n_non_dep = as.numeric(n_non_dep)) %>% 
+  select(chldcnt, n_dep, n_non_dep)
+
+chisq.test(child2)
+```
+
+
+## Depression: How many days?
 
 ```{r}
 child3 = 

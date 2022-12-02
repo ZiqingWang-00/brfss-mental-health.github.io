@@ -324,6 +324,14 @@ $(document).ready(function () {
 
 
 <pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
+## ✔ readr   2.1.2      ✔ forcats 0.5.2 
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>child_data = 
   read_csv(&quot;./data/cleaned_brfss21.csv&quot;) %&gt;% 
   select(children, chldcnt, depression, menthlth, mh_cat3, mh_bin) %&gt;% 
@@ -333,22 +341,32 @@ $(document).ready(function () {
         case_when(
           children %in% c(&quot;none&quot;) ~ &quot;No&quot;,
           TRUE ~ &quot;Yes&quot;))</code></pre>
+<<<<<<< HEAD
 <pre><code>## Rows: 421724 Columns: 29
 ## ── Column specification ──────────────────────
+=======
+<pre><code>## Rows: 421724 Columns: 28
+## ── Column specification ────────────────────────────────────────────────────────
+>>>>>>> ad654047f9ec49624e7d1d6d4657f721f4ca605a
 ## Delimiter: &quot;,&quot;
 ## chr (14): sex, race, mh_cat3, mh_bin, depression, children, education, incom...
-## dbl (15): psu, llcpwt, ststr, menthlth, addepev3, chldcnt, state, educa, inc...
+## dbl (14): psu, llcpwt, ststr, menthlth, addepev3, chldcnt, state, educa, inc...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>child_data[&#39;menthlth&#39;][child_data[&#39;menthlth&#39;] == 88] &lt;- 0</code></pre>
-<p>##Depression: Yes or No?</p>
+<div id="depression-yes-or-no" class="section level2">
+<h2>Depression: Yes or No?</h2>
+<div id="children-yes-or-no" class="section level3">
+<h3>Children: Yes or No?</h3>
+<p>barplot</p>
 <pre class="r"><code>child1 = 
   child_data%&gt;% 
     group_by(children01) %&gt;% 
     summarise(
       n = n(),
-      prv = sum(depression == &quot;yes&quot;)/n
+      n_dep = sum(depression == &quot;yes&quot;),
+      prv = n_dep/n
     ) 
 
 child1%&gt;% 
@@ -356,32 +374,79 @@ child1%&gt;%
   geom_col() +
   geom_text(aes(label=prv), vjust=-.5, size=3.5)</code></pre>
 <p><img src="children_dep_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>proption test</p>
+<pre class="r"><code>dep_prp_test = prop.test(c(58799, 22239), n = c(304974, 106791), correct = F)
+
+dep_prp_test</code></pre>
+<pre><code>## 
+##  2-sample test for equality of proportions without continuity correction
+## 
+## data:  c(58799, 22239) out of c(304974, 106791)
+## X-squared = 119.41, df = 1, p-value &lt; 2.2e-16
+## alternative hypothesis: two.sided
+## 95 percent confidence interval:
+##  -0.01825700 -0.01263869
+## sample estimates:
+##    prop 1    prop 2 
+## 0.1928000 0.2082479</code></pre>
+</div>
+<div id="children-how-many" class="section level3">
+<h3>Children: How many?</h3>
+<p>barplot</p>
 <pre class="r"><code>child2 = 
   child_data %&gt;% 
   group_by(chldcnt) %&gt;% 
   summarize(
     n = n(),
-    prv2 = sum(depression == &quot;yes&quot;)/n
+    n_dep = sum(depression == &quot;yes&quot;),
+    prv2 = n_dep/n
   )
 
 child2 %&gt;% 
   ggplot(aes(chldcnt, prv2)) +
   geom_col()</code></pre>
-<p><img src="children_dep_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>Better do some tests(t-test, anova)</p>
-<p>##Depression: How many days?</p>
+<p><img src="children_dep_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>chi-square test</p>
+<pre class="r"><code>child2 %&gt;% 
+  mutate(
+    n_non_dep = n - n_dep,
+    chldcnt = as.factor(chldcnt),
+    n_dep = as.numeric(n_dep),
+    n_non_dep = as.numeric(n_non_dep)) %&gt;% 
+  select(chldcnt, n_dep, n_non_dep)</code></pre>
+<pre><code>## # A tibble: 6 × 3
+##   chldcnt n_dep n_non_dep
+##   &lt;fct&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+## 1 1       58799    246175
+## 2 2        9758     34632
+## 3 3        7500     30164
+## 4 4        3144     12701
+## 5 5        1201      4612
+## 6 6         636      2443</code></pre>
+<pre class="r"><code>chisq.test(child2)</code></pre>
+<pre><code>## Warning in chisq.test(child2): Chi-squared approximation may be incorrect</code></pre>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  child2
+## X-squared = 446.75, df = 15, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div id="depression-how-many-days" class="section level2">
+<h2>Depression: How many days?</h2>
 <pre class="r"><code>child3 = 
   child_data %&gt;% 
     ggplot(aes(children01, menthlth)) +
     geom_boxplot()
 
 child3</code></pre>
-<p><img src="children_dep_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="children_dep_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <pre class="r"><code>child_data %&gt;% 
   mutate(chldcnt = as.factor(chldcnt)) %&gt;% 
   ggplot(aes(chldcnt, menthlth)) +
     geom_boxplot()</code></pre>
-<p><img src="children_dep_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="children_dep_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
 
 
 
