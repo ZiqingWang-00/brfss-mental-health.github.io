@@ -333,11 +333,11 @@ $(document).ready(function () {
         case_when(
           children %in% c(&quot;none&quot;) ~ &quot;No&quot;,
           TRUE ~ &quot;Yes&quot;))</code></pre>
-<pre><code>## Rows: 421724 Columns: 29
-## ── Column specification ──────────────────────
+<pre><code>## Rows: 417619 Columns: 31
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr (14): sex, race, mh_cat3, mh_bin, depression, children, education, incom...
-## dbl (15): psu, llcpwt, ststr, menthlth, addepev3, chldcnt, state, educa, inc...
+## chr (15): sex, race, mh_cat3, mh_bin, depression, children, education, incom...
+## dbl (16): psu, llcpwt, ststr, menthlth, addepev3, chldcnt, state, educa, inc...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
@@ -404,19 +404,19 @@ child2 %&gt;%
 <pre><code>## # A tibble: 6 × 3
 ##   chldcnt n_dep n_non_dep
 ##   &lt;fct&gt;   &lt;dbl&gt;     &lt;dbl&gt;
-## 1 1       58799    246175
-## 2 2        9758     34632
-## 3 3        7500     30164
-## 4 4        3144     12701
-## 5 5        1201      4612
-## 6 6         636      2443</code></pre>
+## 1 1       58446    244057
+## 2 2        9714     34417
+## 3 3        7474     30012
+## 4 4        3138     12652
+## 5 5        1200      4595
+## 6 6         630      2428</code></pre>
 <pre class="r"><code>chisq.test(child2)</code></pre>
 <pre><code>## Warning in chisq.test(child2): Chi-squared approximation may be incorrect</code></pre>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test
 ## 
 ## data:  child2
-## X-squared = 446.75, df = 15, p-value &lt; 2.2e-16</code></pre>
+## X-squared = 444, df = 15, p-value &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <div id="depression-how-many-days" class="section level2">

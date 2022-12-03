@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="" />
+
+
+<title>Ecological Analysis</title>
+
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    EDA
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="state_level_eda.html">State-level Explorations</a>
+    </li>
+    <li>
+      <a href="depression_prev_EDA.html">On prevalence of self-reported depression diagnosis</a>
+    </li>
+    <li>
+      <a href="bad_mh_days_EDA.html">On # of days of bad mental health in the past 30 days</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Statistical Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="regression_depr.html">Regression on self-reported depression diagnosis</a>
+    </li>
+    <li>
+      <a href="regression_mh_days.html">Regression on # of days of bad mental health in the past 30 days</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="state_level_dashboard.html">Dashboard</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="report.html">Report</a>
+</li>
+<li>
+  <a href="mailto:&lt;zw2899@cumc.columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/ZiqingWang-00">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Ecological Analysis</h1>
+<h4 class="author"></h4>
+
+</div>
+
+
+<p>We obtained the U.S. Women, Peace and Security (WPS) Index in 2020
+calculated by Georgetown Institute for Women, Peace, and Security
+downloaded from {here}(<a href="https://giwps.georgetown.edu/usa-index/"
+class="uri">https://giwps.georgetown.edu/usa-index/</a>). We import the
+raw data (xlsx) and extract the WPS index below:</p>
+<pre class="r"><code>index_data_colnames = read_excel(&quot;./data/US-Index-Data.xlsx&quot;,
+                        sheet = &quot;Statistical table 3  Key statis&quot;,
+                        n_max = 0) %&gt;%
+  names()
+
+index_data = read_excel(&quot;./data/US-Index-Data.xlsx&quot;,
+                        sheet = &quot;Statistical table 3  Key statis&quot;,
+                        range = &quot;A3:L53&quot;,
+                        col_names = index_data_colnames) %&gt;% 
+  janitor::clean_names()
+
+index_data</code></pre>
+<pre><code>## # A tibble: 51 × 12
+##    overa…¹ state index…² inclu…³ justi…⁴ secur…⁵ resid…⁶ per_c…⁷ racia…⁸ urban…⁹
+##      &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1       1 Mass…   0.709   0.631   0.773   0.730  6.89e6   75258     0.8    92  
+##  2       2 Conn…   0.696   0.614   0.735   0.748  3.57e6   69789     0.9    88  
+##  3       3 Dist…   0.695   0.768   0.647   0.675  7.06e5  178442     1.2   100  
+##  4       4 Verm…   0.690   0.663   0.621   0.799  6.24e5   48855     0.3    38.9
+##  5       5 Rhod…   0.679   0.584   0.657   0.815  1.06e6   51963     0.8    90.7
+##  6       6 New …   0.652   0.667   0.622   0.669  1.36e6   57272     0.4    60.3
+##  7       7 Mary…   0.639   0.719   0.548   0.663  6.05e6   61926     1.1    87.2
+##  8       8 New …   0.634   0.553   0.736   0.627  1.95e7   75131     1.2    87.9
+##  9       9 Maine   0.632   0.561   0.668   0.675  1.34e6   43541     0.3    38.7
+## 10      10 Hawa…   0.626   0.601   0.675   0.605  1.42e6   58981     1.2    91.9
+## # … with 41 more rows, 2 more variables:
+## #   state_government_spending_per_capitac &lt;dbl&gt;,
+## #   state_government_control_by_democratsd &lt;dbl&gt;, and abbreviated variable
+## #   names ¹​overall_index_rank, ²​index_score, ³​inclusion_subindex_score,
+## #   ⁴​justice_subindex_score, ⁵​security_subindex_score, ⁶​resident_population,
+## #   ⁷​per_capita_real_gd_pa, ⁸​racial_diversity_scoreb,
+## #   ⁹​urban_share_of_population</code></pre>
+<p>We only need the overall WPS index and the states, so we select those
+two columns below:</p>
+<pre class="r"><code>index_data = index_data %&gt;% 
+  select(state, index_score) %&gt;%
+  mutate(state_code = c(state.abb, &quot;DC&quot;)[match(state, c(state.name, &quot;District of Columbia&quot;))],
+         scaled_index = 100 * index_score)
+
+index_data</code></pre>
+<pre><code>## # A tibble: 51 × 4
+##    state                index_score state_code scaled_index
+##    &lt;chr&gt;                      &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;
+##  1 Massachusetts              0.709 MA                 70.9
+##  2 Connecticut                0.696 CT                 69.6
+##  3 District of Columbia       0.695 DC                 69.5
+##  4 Vermont                    0.690 VT                 69.0
+##  5 Rhode Island               0.679 RI                 67.9
+##  6 New Hampshire              0.652 NH                 65.2
+##  7 Maryland                   0.639 MD                 63.9
+##  8 New York                   0.634 NY                 63.4
+##  9 Maine                      0.632 ME                 63.2
+## 10 Hawaii                     0.626 HI                 62.6
+## # … with 41 more rows</code></pre>
+<p>We also obtained the per-capita GDP for each US state in 2021 from
+{here}(<a
+href="https://www.statista.com/statistics/248063/per-capita-us-real-gross-domestic-product-gdp-by-state/"
+class="uri">https://www.statista.com/statistics/248063/per-capita-us-real-gross-domestic-product-gdp-by-state/</a>).
+We import the data below:</p>
+<pre class="r"><code>gdp_data = read_excel(&quot;./data/us-per-capita-gdp-2021-by-state.xlsx&quot;,
+                      sheet = &quot;Data&quot;,
+                      skip = 5,
+                      col_names = c(&quot;state&quot;, &quot;gdp&quot;)) %&gt;% 
+  mutate(state_code = c(state.abb, &quot;DC&quot;)[match(state, c(state.name, &quot;District of Columbia&quot;))])
+
+gdp_data</code></pre>
+<pre><code>## # A tibble: 52 × 3
+##    state                   gdp state_code
+##    &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;     
+##  1 District of Columbia 189513 DC        
+##  2 New York              76365 NY        
+##  3 Massachusetts         76324 MA        
+##  4 Washington            74319 WA        
+##  5 California            73264 CA        
+##  6 Alaska                69430 AK        
+##  7 North Dakota          69429 ND        
+##  8 Connecticut           68381 CT        
+##  9 Colorado              64308 CO        
+## 10 Delaware              64187 DE        
+## # … with 42 more rows</code></pre>
+<p>Next, we obtain the data frames on state-level self-reported
+depression prevalence data among women, and the state-level sex
+difference in self-repored depression prevalence, respectively:</p>
+<pre class="r"><code>depr_prev_bystate_gender = brfss_design %&gt;%
+  group_by(state_code, sex, depression) %&gt;%
+  summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c(&quot;ci&quot;)))
+
+depr_prev_bystate_female = depr_prev_bystate_gender %&gt;%
+  filter(sex == &quot;female&quot;, depression == &quot;yes&quot;) %&gt;% 
+  select(state_code, depression_prev)</code></pre>
+<pre><code>## Adding missing grouping variables: `sex`</code></pre>
+<pre class="r"><code>depr_prev_bystate_female</code></pre>
+<pre><code>## # A tibble: 50 × 3
+## # Groups:   state_code, sex [50]
+##    sex    state_code depression_prev
+##    &lt;fct&gt;  &lt;chr&gt;                &lt;dbl&gt;
+##  1 female AK                    24.8
+##  2 female AL                    28.3
+##  3 female AR                    30.1
+##  4 female AZ                    22.5
+##  5 female CA                    18.1
+##  6 female CO                    26.6
+##  7 female CT                    22.2
+##  8 female DC                    23.7
+##  9 female DE                    20.5
+## 10 female GA                    21.9
+## # … with 40 more rows</code></pre>
+<pre class="r"><code>depr_prev_bystate_diff = depr_prev_bystate_gender %&gt;%
+  select(state_code, depression_prev, sex, depression) %&gt;%
+  filter(depression == &quot;yes&quot;) %&gt;%
+  pivot_wider(names_from = &quot;sex&quot;,
+              values_from = &quot;depression_prev&quot;) %&gt;%
+  mutate(difference = female - male) 
+
+depr_prev_bystate_diff</code></pre>
+<pre><code>## # A tibble: 50 × 5
+## # Groups:   state_code [50]
+##    state_code depression  male female difference
+##    &lt;chr&gt;      &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+##  1 AK         yes         14.8   24.8      10.1 
+##  2 AL         yes         15.6   28.3      12.7 
+##  3 AR         yes         18.8   30.1      11.3 
+##  4 AZ         yes         12.5   22.5      10.0 
+##  5 CA         yes         12.0   18.1       6.02
+##  6 CO         yes         14.3   26.6      12.3 
+##  7 CT         yes         13.6   22.2       8.55
+##  8 DC         yes         17.0   23.7       6.73
+##  9 DE         yes         11.7   20.5       8.72
+## 10 GA         yes         13.1   21.9       8.71
+## # … with 40 more rows</code></pre>
+<p>Next, merge the WPS index data and the GDP data with the two above
+data frames, respectively:</p>
+<pre class="r"><code>merged_female_depr_eco = list(depr_prev_bystate_female, index_data, gdp_data) %&gt;% 
+  reduce(left_join, by=&#39;state_code&#39;)
+
+merged_female_depr_eco</code></pre>
+<pre><code>## # A tibble: 50 × 8
+## # Groups:   state_code, sex [50]
+##    sex    state_code depression_prev state.x      index…¹ scale…² state.y    gdp
+##    &lt;fct&gt;  &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+##  1 female AK                    24.8 Alaska         0.482    48.2 Alaska   69430
+##  2 female AL                    28.3 Alabama        0.238    23.8 Alabama  41664
+##  3 female AR                    30.1 Arkansas       0.231    23.1 Arkans…  40764
+##  4 female AZ                    22.5 Arizona        0.453    45.3 Arizona  47779
+##  5 female CA                    18.1 California     0.564    56.4 Califo…  73264
+##  6 female CO                    26.6 Colorado       0.565    56.5 Colora…  64308
+##  7 female CT                    22.2 Connecticut    0.696    69.6 Connec…  68381
+##  8 female DC                    23.7 District of…   0.695    69.5 Distri… 189513
+##  9 female DE                    20.5 Delaware       0.524    52.4 Delawa…  64187
+## 10 female GA                    21.9 Georgia        0.382    38.2 Georgia  53270
+## # … with 40 more rows, and abbreviated variable names ¹​index_score,
+## #   ²​scaled_index</code></pre>
+<p>The following scatterplot shows that there might be a negative
+association between the depression prevalence among women and the WPS
+index:</p>
+<pre class="r"><code>merged_female_depr_eco %&gt;% 
+  ggplot(aes(x = scaled_index, y = depression_prev)) +
+  geom_point()</code></pre>
+<p><img src="ecological_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>We check if the association above is significant by running a
+multiple linear regression of Female depression prevalence in each state
+on the WPS index in each state:</p>
+<pre class="r"><code>index_m11 = lm(depression_prev ~ scaled_index, data = merged_female_depr_eco)
+summary(index_m11) %&gt;% broom::tidy()</code></pre>
+<pre><code>## # A tibble: 2 × 5
+##   term         estimate std.error statistic  p.value
+##   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)    32.6      2.00       16.3  3.24e-21
+## 2 scaled_index   -0.135    0.0400     -3.38 1.45e- 3</code></pre>
+<p>We check if the association between state-level prevalence of
+self-reported depression and the WPS index is still statistically
+significant after adjusting for state per-capita GDP:</p>
+<pre class="r"><code>index_m12 = lm(depression_prev ~ scaled_index + gdp, data = merged_female_depr_eco)
+summary(index_m12) %&gt;% broom::tidy()</code></pre>
+<pre><code>## # A tibble: 3 × 5
+##   term           estimate std.error statistic  p.value
+##   &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)  33.1       2.14         15.5   4.73e-20
+## 2 scaled_index -0.121     0.0453       -2.67  1.05e- 2
+## 3 gdp          -0.0000209 0.0000303    -0.690 4.94e- 1</code></pre>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
