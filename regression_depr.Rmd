@@ -129,7 +129,7 @@ predictions <- predict(model, testing_dataset)
 data.frame( R2 = R2(predictions, testing_dataset $ depr_num),
             RMSE = RMSE(predictions, testing_dataset$depr_num),
             MAE = MAE(predictions, testing_dataset $ depr_num))
-
+ 
 ```
 
 
