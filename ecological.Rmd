@@ -1,0 +1,114 @@
+---
+title: "Ecological Analysis"
+author: ""
+date: ""
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(tidyverse)
+library(ggplot2)
+library(survey)
+library(srvyr)
+
+load(file = "./data/brfss_design.Rdata")
+
+# Set options for allowing a single observation per stratum 
+options(survey.lonely.psu = "adjust")
+```
+
+We obtained the U.S. Women, Peace and Security (WPS) Index in 2020 calculated by Georgetown Institute for Women, Peace, and Security downloaded from {here}(https://giwps.georgetown.edu/usa-index/). We import the raw data (xlsx) and extract the WPS index below:
+
+```{r}
+index_data_colnames = read_excel("./data/US-Index-Data.xlsx",
+                        sheet = "Statistical table 3  Key statis",
+                        n_max = 0) %>%
+  names()
+
+index_data = read_excel("./data/US-Index-Data.xlsx",
+                        sheet = "Statistical table 3  Key statis",
+                        range = "A3:L53",
+                        col_names = index_data_colnames) %>% 
+  janitor::clean_names()
+
+index_data
+```
+
+We only need the overall WPS index and the states, so we select those two columns below:
+```{r}
+index_data = index_data %>% 
+  select(state, index_score) %>%
+  mutate(state_code = c(state.abb, "DC")[match(state, c(state.name, "District of Columbia"))],
+         scaled_index = 100 * index_score)
+
+index_data
+```
+
+We also obtained the per-capita GDP for each US state in 2021 from {here}(https://www.statista.com/statistics/248063/per-capita-us-real-gross-domestic-product-gdp-by-state/). We import the data below:
+```{r}
+gdp_data = read_excel("./data/us-per-capita-gdp-2021-by-state.xlsx",
+                      sheet = "Data",
+                      skip = 5,
+                      col_names = c("state", "gdp")) %>% 
+  mutate(state_code = c(state.abb, "DC")[match(state, c(state.name, "District of Columbia"))])
+
+gdp_data
+```
+
+Next, we obtain the data frames on state-level self-reported depression prevalence data among women, and the state-level sex difference in self-repored depression prevalence, respectively:
+```{r}
+depr_prev_bystate_gender = brfss_design %>%
+  group_by(state_code, sex, depression) %>%
+  summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c("ci")))
+
+depr_prev_bystate_female = depr_prev_bystate_gender %>%
+  filter(sex == "female", depression == "yes") %>% 
+  select(state_code, depression_prev)
+
+depr_prev_bystate_female
+```
+
+```{r}
+depr_prev_bystate_diff = depr_prev_bystate_gender %>%
+  select(state_code, depression_prev, sex, depression) %>%
+  filter(depression == "yes") %>%
+  pivot_wider(names_from = "sex",
+              values_from = "depression_prev") %>%
+  mutate(difference = female - male) 
+
+depr_prev_bystate_diff
+```
+
+Next, merge the WPS index data and the GDP data with the two above data frames, respectively:
+```{r}
+merged_female_depr_eco = list(depr_prev_bystate_female, index_data, gdp_data) %>% 
+  reduce(left_join, by='state_code')
+
+merged_female_depr_eco
+```
+
+The following scatterplot shows that there might be a negative association between the depression prevalence among women and the WPS index:
+```{r}
+merged_female_depr_eco %>% 
+  ggplot(aes(x = scaled_index, y = depression_prev)) +
+  geom_point()
+```
+
+
+We check if the association above is significant by running a multiple linear regression of Female depression prevalence in each state on the WPS index in each state:
+```{r}
+index_m11 = lm(depression_prev ~ scaled_index, data = merged_female_depr_eco)
+summary(index_m11) %>% broom::tidy()
+```
+We check if the association between state-level prevalence of self-reported depression and the WPS index is still statistically significant after adjusting for state per-capita GDP:
+```{r}
+index_m12 = lm(depression_prev ~ scaled_index + gdp, data = merged_female_depr_eco)
+summary(index_m12) %>% broom::tidy()
+```
+
