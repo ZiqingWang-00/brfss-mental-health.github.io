@@ -17,6 +17,10 @@ navbar:
           href: regression_depr.html
         - text: "Regression on # of days of bad mental health in the past 30 days"
           href: regression_mh_days.html
+     - text: "Post-hoc Analysis"
+       menu: 
+        - text: "State-level ecological analysis"
+          href: ecological.html
      - text: "Dashboard"
        href: state_level_dashboard.html
 

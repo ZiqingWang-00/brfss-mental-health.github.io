@@ -11,7 +11,7 @@
 
 
 
-<title>Report</title>
+<title>Ecological Analysis</title>
 
 <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -416,97 +416,197 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Report</h1>
+<h1 class="title toc-ignore">Ecological Analysis</h1>
+<h4 class="author"></h4>
 
 </div>
 
 
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
-<div id="background-and-related-work" class="section level3">
-<h3>Background and related work</h3>
-</div>
-<div id="research-questions" class="section level3">
-<h3>Research questions</h3>
-<p>We are interested in the following questions:</p>
-<ul>
-<li><p>How does the geological distribution of mental health outcomes
-across US states differ among men and women?</p></li>
-<li><p>Do men and women have different mental health outcomes, taking
-into account of demographic, socioeconomic, and health factors?</p></li>
-<li><p>Does the number of children in the household affect the mental
-health of men and women differently?</p></li>
-</ul>
-</div>
-</div>
-<div id="method" class="section level2">
-<h2>Method</h2>
-<div id="data" class="section level3">
-<h3>Data</h3>
-<p>We used the 2021 BRFSS data downloaded from the CDC website. [INSERT
-introduction of the dataset]</p>
-</div>
-<div id="outcome-variables" class="section level3">
-<h3>Outcome variables</h3>
-<p>We use two variables to measure mental health. The first variable is
-the self-reportd past diagnosis of depression. The participants were
-asked if they have everbeen told that they had a depressive disorder
-(including depression, major depression, dysthymia, or minor
-depression). The second variable is the self-reported number of days of
-bad mental health in the past 30 days. The participants were asked: “Now
-thinking about your mental health, which includes stress, depression,
-and problems with emotions, for how many days during the past 30 days
-was your mental health not good?”.</p>
-<p>For the first outcome variable, we dichotomized it into a binary
-variable with “yes” and “no” levels (depression). For the second outcome
-variable, we recoded it into a categorical variable with three levels:
-none, between 1 and 15 days, and more than 15 days.</p>
-</div>
-<div id="exposure" class="section level3">
-<h3>Exposure</h3>
-<p>We are interested in two exposure variables. The first one is the sex
-of participant coded as female or male based on their answers to whether
-they were male or female and whether they were male or female at birth.
-The second one is the number of children in the household, where
-participants were asked how many children there were in their
-household.</p>
-</div>
-<div id="covariates" class="section level3">
-<h3>Covariates</h3>
-<p>Demographic covariates in our analyses include race/ethnicity, age,
-employment status, and marital status. Socioeconomic cavariates include
-education level and annual income. Health-related covariates include
-self-reported general health and any self-reported exercises in the past
-30 days.</p>
-</div>
-<div id="statistical-analysis" class="section level3">
-<h3>Statistical Analysis</h3>
-<p>We computed weighted and unweighted summary counts of exposure and
-covariate categories in each level of the mental health outcome
-variables.</p>
-<p>We used the binary logistic regression model to examine the
-association between gender and the self-reported past diagnosis of
-depression and the dichotomized number of days of self-reported bad
-mental health in the past 30 days, respectively.</p>
-<p>For both outcome variables, we added demographic, socioeconomic, and
-health-related variables sequentially in the regression model and used
-cross validation to select the best model, respectively.</p>
-<p>We subsetted the data by gender and ran the best logistic regression
-models selected from above separately on these two subsetted data sets.
-The aim of the subsetted analysis is to check whether the number of
-children in the household differentially impacts the two mental health
-outcomes.</p>
-</div>
-</div>
-<div id="results" class="section level2">
-<h2>Results</h2>
-</div>
-<div id="discussion" class="section level2">
-<h2>Discussion</h2>
-</div>
-<div id="conclusion" class="section level2">
-<h2>Conclusion</h2>
-</div>
+<p>We obtained the U.S. Women, Peace and Security (WPS) Index in 2020
+calculated by Georgetown Institute for Women, Peace, and Security
+downloaded from {here}(<a href="https://giwps.georgetown.edu/usa-index/"
+class="uri">https://giwps.georgetown.edu/usa-index/</a>). We import the
+raw data (xlsx) and extract the WPS index below:</p>
+<pre class="r"><code>index_data_colnames = read_excel(&quot;./data/US-Index-Data.xlsx&quot;,
+                        sheet = &quot;Statistical table 3  Key statis&quot;,
+                        n_max = 0) %&gt;%
+  names()
+
+index_data = read_excel(&quot;./data/US-Index-Data.xlsx&quot;,
+                        sheet = &quot;Statistical table 3  Key statis&quot;,
+                        range = &quot;A3:L53&quot;,
+                        col_names = index_data_colnames) %&gt;% 
+  janitor::clean_names()
+
+index_data</code></pre>
+<pre><code>## # A tibble: 51 × 12
+##    overa…¹ state index…² inclu…³ justi…⁴ secur…⁵ resid…⁶ per_c…⁷ racia…⁸ urban…⁹
+##      &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1       1 Mass…   0.709   0.631   0.773   0.730  6.89e6   75258     0.8    92  
+##  2       2 Conn…   0.696   0.614   0.735   0.748  3.57e6   69789     0.9    88  
+##  3       3 Dist…   0.695   0.768   0.647   0.675  7.06e5  178442     1.2   100  
+##  4       4 Verm…   0.690   0.663   0.621   0.799  6.24e5   48855     0.3    38.9
+##  5       5 Rhod…   0.679   0.584   0.657   0.815  1.06e6   51963     0.8    90.7
+##  6       6 New …   0.652   0.667   0.622   0.669  1.36e6   57272     0.4    60.3
+##  7       7 Mary…   0.639   0.719   0.548   0.663  6.05e6   61926     1.1    87.2
+##  8       8 New …   0.634   0.553   0.736   0.627  1.95e7   75131     1.2    87.9
+##  9       9 Maine   0.632   0.561   0.668   0.675  1.34e6   43541     0.3    38.7
+## 10      10 Hawa…   0.626   0.601   0.675   0.605  1.42e6   58981     1.2    91.9
+## # … with 41 more rows, 2 more variables:
+## #   state_government_spending_per_capitac &lt;dbl&gt;,
+## #   state_government_control_by_democratsd &lt;dbl&gt;, and abbreviated variable
+## #   names ¹​overall_index_rank, ²​index_score, ³​inclusion_subindex_score,
+## #   ⁴​justice_subindex_score, ⁵​security_subindex_score, ⁶​resident_population,
+## #   ⁷​per_capita_real_gd_pa, ⁸​racial_diversity_scoreb,
+## #   ⁹​urban_share_of_population</code></pre>
+<p>We only need the overall WPS index and the states, so we select those
+two columns below:</p>
+<pre class="r"><code>index_data = index_data %&gt;% 
+  select(state, index_score) %&gt;%
+  mutate(state_code = c(state.abb, &quot;DC&quot;)[match(state, c(state.name, &quot;District of Columbia&quot;))],
+         scaled_index = 100 * index_score)
+
+index_data</code></pre>
+<pre><code>## # A tibble: 51 × 4
+##    state                index_score state_code scaled_index
+##    &lt;chr&gt;                      &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;
+##  1 Massachusetts              0.709 MA                 70.9
+##  2 Connecticut                0.696 CT                 69.6
+##  3 District of Columbia       0.695 DC                 69.5
+##  4 Vermont                    0.690 VT                 69.0
+##  5 Rhode Island               0.679 RI                 67.9
+##  6 New Hampshire              0.652 NH                 65.2
+##  7 Maryland                   0.639 MD                 63.9
+##  8 New York                   0.634 NY                 63.4
+##  9 Maine                      0.632 ME                 63.2
+## 10 Hawaii                     0.626 HI                 62.6
+## # … with 41 more rows</code></pre>
+<p>We also obtained the per-capita GDP for each US state in 2021 from
+{here}(<a
+href="https://www.statista.com/statistics/248063/per-capita-us-real-gross-domestic-product-gdp-by-state/"
+class="uri">https://www.statista.com/statistics/248063/per-capita-us-real-gross-domestic-product-gdp-by-state/</a>).
+We import the data below:</p>
+<pre class="r"><code>gdp_data = read_excel(&quot;./data/us-per-capita-gdp-2021-by-state.xlsx&quot;,
+                      sheet = &quot;Data&quot;,
+                      skip = 5,
+                      col_names = c(&quot;state&quot;, &quot;gdp&quot;)) %&gt;% 
+  mutate(state_code = c(state.abb, &quot;DC&quot;)[match(state, c(state.name, &quot;District of Columbia&quot;))])
+
+gdp_data</code></pre>
+<pre><code>## # A tibble: 52 × 3
+##    state                   gdp state_code
+##    &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;     
+##  1 District of Columbia 189513 DC        
+##  2 New York              76365 NY        
+##  3 Massachusetts         76324 MA        
+##  4 Washington            74319 WA        
+##  5 California            73264 CA        
+##  6 Alaska                69430 AK        
+##  7 North Dakota          69429 ND        
+##  8 Connecticut           68381 CT        
+##  9 Colorado              64308 CO        
+## 10 Delaware              64187 DE        
+## # … with 42 more rows</code></pre>
+<p>Next, we obtain the data frames on state-level self-reported
+depression prevalence data among women, and the state-level sex
+difference in self-repored depression prevalence, respectively:</p>
+<pre class="r"><code>depr_prev_bystate_gender = brfss_design %&gt;%
+  group_by(state_code, sex, depression) %&gt;%
+  summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c(&quot;ci&quot;)))
+
+depr_prev_bystate_female = depr_prev_bystate_gender %&gt;%
+  filter(sex == &quot;female&quot;, depression == &quot;yes&quot;) %&gt;% 
+  select(state_code, depression_prev)</code></pre>
+<pre><code>## Adding missing grouping variables: `sex`</code></pre>
+<pre class="r"><code>depr_prev_bystate_female</code></pre>
+<pre><code>## # A tibble: 50 × 3
+## # Groups:   state_code, sex [50]
+##    sex    state_code depression_prev
+##    &lt;fct&gt;  &lt;chr&gt;                &lt;dbl&gt;
+##  1 female AK                    24.8
+##  2 female AL                    28.3
+##  3 female AR                    29.9
+##  4 female AZ                    22.4
+##  5 female CA                    18.1
+##  6 female CO                    26.5
+##  7 female CT                    22.0
+##  8 female DC                    23.5
+##  9 female DE                    20.3
+## 10 female GA                    21.7
+## # … with 40 more rows</code></pre>
+<pre class="r"><code>depr_prev_bystate_diff = depr_prev_bystate_gender %&gt;%
+  select(state_code, depression_prev, sex, depression) %&gt;%
+  filter(depression == &quot;yes&quot;) %&gt;%
+  pivot_wider(names_from = &quot;sex&quot;,
+              values_from = &quot;depression_prev&quot;) %&gt;%
+  mutate(difference = female - male) 
+
+depr_prev_bystate_diff</code></pre>
+<pre><code>## # A tibble: 50 × 5
+## # Groups:   state_code [50]
+##    state_code depression  male female difference
+##    &lt;chr&gt;      &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+##  1 AK         yes         14.7   24.8      10.1 
+##  2 AL         yes         15.6   28.3      12.7 
+##  3 AR         yes         18.8   29.9      11.1 
+##  4 AZ         yes         12.4   22.4       9.99
+##  5 CA         yes         12.0   18.1       6.11
+##  6 CO         yes         14.3   26.5      12.2 
+##  7 CT         yes         13.5   22.0       8.52
+##  8 DC         yes         16.9   23.5       6.62
+##  9 DE         yes         11.5   20.3       8.84
+## 10 GA         yes         13.0   21.7       8.62
+## # … with 40 more rows</code></pre>
+<p>Next, merge the WPS index data and the GDP data with the two above
+data frames, respectively:</p>
+<pre class="r"><code>merged_female_depr_eco = list(depr_prev_bystate_female, index_data, gdp_data) %&gt;% 
+  reduce(left_join, by=&#39;state_code&#39;)
+
+merged_female_depr_eco</code></pre>
+<pre><code>## # A tibble: 50 × 8
+## # Groups:   state_code, sex [50]
+##    sex    state_code depression_prev state.x      index…¹ scale…² state.y    gdp
+##    &lt;fct&gt;  &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+##  1 female AK                    24.8 Alaska         0.482    48.2 Alaska   69430
+##  2 female AL                    28.3 Alabama        0.238    23.8 Alabama  41664
+##  3 female AR                    29.9 Arkansas       0.231    23.1 Arkans…  40764
+##  4 female AZ                    22.4 Arizona        0.453    45.3 Arizona  47779
+##  5 female CA                    18.1 California     0.564    56.4 Califo…  73264
+##  6 female CO                    26.5 Colorado       0.565    56.5 Colora…  64308
+##  7 female CT                    22.0 Connecticut    0.696    69.6 Connec…  68381
+##  8 female DC                    23.5 District of…   0.695    69.5 Distri… 189513
+##  9 female DE                    20.3 Delaware       0.524    52.4 Delawa…  64187
+## 10 female GA                    21.7 Georgia        0.382    38.2 Georgia  53270
+## # … with 40 more rows, and abbreviated variable names ¹​index_score,
+## #   ²​scaled_index</code></pre>
+<p>The following scatterplot shows that there might be a negative
+association between the depression prevalence among women and the WPS
+index:</p>
+<pre class="r"><code>merged_female_depr_eco %&gt;% 
+  ggplot(aes(x = scaled_index, y = depression_prev)) +
+  geom_point()</code></pre>
+<p><img src="ecological_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>We check if the association above is significant by running a
+multiple linear regression of Female depression prevalence in each state
+on the WPS index in each state:</p>
+<pre class="r"><code>index_m11 = lm(depression_prev ~ scaled_index, data = merged_female_depr_eco)
+summary(index_m11) %&gt;% broom::tidy()</code></pre>
+<pre><code>## # A tibble: 2 × 5
+##   term         estimate std.error statistic  p.value
+##   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)    32.4      2.00       16.2  4.24e-21
+## 2 scaled_index   -0.134    0.0401     -3.35 1.58e- 3</code></pre>
+<p>We check if the association between state-level prevalence of
+self-reported depression and the WPS index is still statistically
+significant after adjusting for state per-capita GDP:</p>
+<pre class="r"><code>index_m12 = lm(depression_prev ~ scaled_index + gdp, data = merged_female_depr_eco)
+summary(index_m12) %&gt;% broom::tidy()</code></pre>
+<pre><code>## # A tibble: 3 × 5
+##   term           estimate std.error statistic  p.value
+##   &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)  33.0       2.14         15.4   5.73e-20
+## 2 scaled_index -0.119     0.0454       -2.62  1.18e- 2
+## 3 gdp          -0.0000223 0.0000303    -0.734 4.66e- 1</code></pre>
 
 
 
