@@ -33,7 +33,7 @@ Below is the unweighted counts of the all included demographic variables, exposu
 ```{r}
 tb1_unweighted =
   brfss_design$variables %>%
-  tbl_summary(by = mh_bin, percent = "row", 
+  tbl_summary(by = mh_cat3, percent = "row", 
               include = c(sex, race, age, marital_status,
                              children,
                              education, income, employment,
@@ -42,6 +42,7 @@ tb1_unweighted =
 
 tb1_unweighted
 ```
+<<<<<<< HEAD
 
 We make the following observations about the above summary counts:
 
@@ -50,12 +51,14 @@ We make the following observations about the above summary counts:
 * It seems that people of older age, married, higher education level, higher income, better general health status and doing more exercise are less likely to be in bad mood for over half a month.
 * It seems that the number of children does not influence the length of time people are in bad mood.
 * The employed  are less likely to report longer period with bad mental health, while those are unemployed are much more likely to be in bad mood for over half a month.
+=======
+>>>>>>> 4f084f4a155a309bb8a36fbcfe6a4e67900adc41
 
 
 ```{r weighted summary}
 tb1_weighted =
   brfss_design %>%
-  tbl_svysummary(by = mh_bin, percent = "row", 
+  tbl_svysummary(by = mh_cat3, percent = "row", 
                  include = c(sex, race, age, marital_status,
                              children,
                              education, income, employment,
@@ -65,9 +68,6 @@ tb1_weighted =
 tb1_weighted
 ```
 
-We can see that the same observations above hold in the weighted summary counts.  
-
-We take closer looks at how gender might interact with the following demographic variables to affect self-reported depression:  
 
 ### Gender, number of children in family, and #of days of bad mental health in the past 30 days
 We are interested in the differential impact of the number of children in the household on self-reported over 15 days of bad mental health in the past 30 days among men and women. Below is a barplot on this topic:
