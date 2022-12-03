@@ -152,6 +152,7 @@ brfss21_data = read_csv("./data/cleaned_brfss21.csv") %>%
          sex = factor(sex, levels = c("male", "female")),
          children = factor(children, levels = c("none", "one or two", "three or more")),
          state = factor(state),
+         homeownership - factor(homeownership, levels = c("own", "rent")),
          race = factor(race, levels = c("white", "black", "asian", "hispanic", "other")),
          marital_status = factor(marital_status, levels = c("married", "not married")),
          education = factor(education, levels = c("less than high school", "high school or some college", "bachelors or higher")),
