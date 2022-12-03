@@ -42,7 +42,6 @@ tb1_unweighted =
 
 tb1_unweighted
 ```
-<<<<<<< HEAD
 
 We make the following observations about the above summary counts:
 
@@ -51,8 +50,6 @@ We make the following observations about the above summary counts:
 * It seems that people of older age, married, higher education level, higher income, better general health status and doing more exercise are less likely to be in bad mood for over half a month.
 * It seems that the number of children does not influence the length of time people are in bad mood.
 * The employed  are less likely to report longer period with bad mental health, while those are unemployed are much more likely to be in bad mood for over half a month.
-=======
->>>>>>> 4f084f4a155a309bb8a36fbcfe6a4e67900adc41
 
 
 ```{r weighted summary}
