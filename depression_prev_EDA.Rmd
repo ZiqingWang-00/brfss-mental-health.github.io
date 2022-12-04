@@ -135,4 +135,20 @@ Based on the plot above, it seems that, for women, the prevalence of self-report
 
 This gap in the magnitude of change in prevalence of self-reported depression indicates that aging might affect self-reported depression among women and men differently. 
 
+### Gender, exercise and depression
+
+Next, we want to examine the influence of exercise on depression in among women and men.
+
+```{r}
+brfss_design %>%
+  group_by(sex, exercise, depression) %>%
+  summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c("ci"))) %>%
+  filter(!is.na(exercise), depression == "yes") %>%
+  select(-depression) %>%
+  ggplot(aes(x = exercise, y = depression_prev, fill = sex)) +
+  geom_bar(position="dodge", stat="identity") +
+  geom_errorbar(aes(ymin=depression_prev_low, ymax=depression_prev_upp), 
+                width=.2, position=position_dodge(.9))
+
+```
 

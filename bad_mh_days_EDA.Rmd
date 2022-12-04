@@ -90,6 +90,7 @@ brfss_design %>%
   svychisq(~children + mh_bin, . , statistic="adjWald") %>% 
   broom::tidy()
 
+# For men
 brfss_design %>%
   filter(sex == "male") %>% 
   select(children, mh_bin) %>% 
