@@ -28,7 +28,7 @@ load(file = "./data/brfss_design.Rdata")
 
 ### Summary statistics
 
-Below is the unweighted counts of the all included demographic variables, exposure, and other covariates, grouped by the self-reported number of days with bad mental health in the past 30 days in the following three categories: none, between 1 and 15 days, and more than 15 days. 
+Below is the unweighted counts of the all included demographic variables, exposure, and other covariates, grouped by the self-reported number of days with bad mental health in the past 30 days in the following two categories: fewer than 15 days, and more than 15 days. 
 
 ```{r}
 tb1_unweighted =
@@ -42,6 +42,14 @@ tb1_unweighted =
 
 tb1_unweighted
 ```
+
+We make the following observations about the above summary counts:
+
+* Female are more likely to report longer period with bad mental health.
+* Asian are less likely to report longer period with bad mental health, while the proportion for other races are similar.
+* It seems that people of older age, married, higher education level, higher income, better general health status and doing more exercise are less likely to be in bad mood for over half a month.
+* It seems that the number of children does not influence the length of time people are in bad mood.
+* The employed  are less likely to report longer period with bad mental health, while those are unemployed are much more likely to be in bad mood for over half a month.
 
 
 ```{r weighted summary}
@@ -58,4 +66,70 @@ tb1_weighted
 ```
 
 
+### Gender, number of children in family, and #of days of bad mental health in the past 30 days
+We are interested in the differential impact of the number of children in the household on self-reported over 15 days of bad mental health in the past 30 days among men and women. Below is a barplot on this topic:
+```{r}
+brfss_design %>%
+  group_by(sex, children, mh_bin) %>%
+  summarize(mh_prev = 100*survey_mean(na.rm = T, vartype = c("ci"))) %>%
+  filter(!is.na(children), mh_bin == ">15 days") %>%
+  select(-mh_bin) %>%
+  ggplot(aes(x = children, y = mh_prev, fill = sex)) +
+  geom_bar(position="dodge", stat="identity") +
+  geom_errorbar(aes(ymin= mh_prev_low, ymax= mh_prev_upp), 
+                width=.2, position=position_dodge(.9))
+```
 
+One interesting observation is that same as depression, men who have children in the household have significantly lower prevalence of self-reported over 15 days of bad mental health while women who have children don't. We do a chi-square test incorporating the survey weights to verify this observation:
+
+```{r}
+# For women
+brfss_design %>%
+  filter(sex == "female") %>% 
+  select(children, mh_bin) %>% 
+  svychisq(~children + mh_bin, . , statistic="adjWald") %>% 
+  broom::tidy()
+
+brfss_design %>%
+  filter(sex == "male") %>% 
+  select(children, mh_bin) %>% 
+  svychisq(~children + mh_bin, . , statistic="adjWald") %>% 
+  broom::tidy()
+```
+
+As expected, based on the chi-squared test, the number of children in the household is significantly associated with self-reported over 15 days of bad mental health in the past 30 days among men but not women. 
+
+### Gender, race, and # of days of bad mental health in the past 30 days
+Next, we examine how gender and race together associate with self-reported over 15 days of bad mental health in the past 30 days.
+```{r}
+brfss_design %>%
+  group_by(sex, race, mh_bin) %>%
+  summarize(mh_prev = 100*survey_mean(na.rm = T, vartype = c("ci"))) %>%
+  filter(!is.na(race), mh_bin == ">15 days") %>%
+  select(-mh_bin) %>%
+  ggplot(aes(x = race, y = mh_prev, fill = sex)) +
+  geom_bar(position="dodge", stat="identity") +
+  geom_errorbar(aes(ymin=mh_prev_low, ymax=mh_prev_upp), 
+                width=.2, position=position_dodge(.9))
+```
+
+We can see that not only is the reported number of days in the past 30 days being in bad mental health is larger in women than men, the same holds true for all race/ethnicities included in the data set.
+
+### Gender, age, and # of days of bad mental health in the past 30 days
+```{r}
+brfss_design %>%
+  group_by(sex, age, mh_bin) %>%
+  summarize(mh_prev = 100*survey_mean(na.rm = T, vartype = c("ci"))) %>%
+  filter(!is.na(age), mh_bin == ">15 days") %>%
+  select(-mh_bin) %>%
+  ggplot(aes(x = age, y = mh_prev, fill = sex)) +
+  geom_bar(position="dodge", stat="identity") +
+  geom_errorbar(aes(ymin=mh_prev_low, ymax=mh_prev_upp), 
+                width=.2, position=position_dodge(.9))
+```
+
+Based on the plot above, it seems that, for women, the prevalence of self-reported over 15 days of bad mental in past 30 days drops slightly between age group 30-49 and 50-64, but decreases significantly between age group 18-29 and 30-49 as well as between age group 50-64 and 65+. The same trend is displayed among men as well but in smaller magnitude.  
+
+This gap in the magnitude of change in prevalence of self-reported number of days in bad mental in the past 30 days indicates that aging might affect self-reported it among women and men differently. 
+
+As a conclusion, all factors we chose influence self-reported number of days in bad mental in the past 30 days in the similar way to depression. We presume that it is because longer periods of being in bad mental health will lead to depression. Correspondingly, those in depression are much more likely to be in bad mental health for longer period.
