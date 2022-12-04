@@ -71,7 +71,7 @@ We can see that the same observations above hold in the weighted summary counts.
 
 We take closer looks at how gender might interact with the following demographic variables to affect self-reported depression:  
 
-### Gender, number of children in family, and depression
+### Gender, number of children in family, and depression**74**
 We are interested in the differential impact of the number of children in the household on self-reported depression among men and women. Below is a barplot on this topic:
 
 ```{r}
@@ -85,6 +85,15 @@ brfss_design %>%
   geom_errorbar(aes(ymin=depression_prev_low, ymax=depression_prev_upp), 
                 width=.2, position=position_dodge(.9))
 
+```
+
+```{r chunk_chi-square}
+# for women
+brfss_design %>%
+  filter(sex == "female") %>%
+  select(children, depression) %>% 
+  svychisq(~children + depression, . , statistic="adjWald") %>% 
+  broom::tidy()
 ```
 
 One interesting observation is that men who have children in the household have significantly lower prevalence of self-reported depression while women who have children don't. We do a chi-square test incorporating the survey weights to verify this observation:
@@ -104,7 +113,7 @@ brfss_design %>%
 ```
 As expected, based on the chi-squared test, the number of children in the household is significantly associated with self-reported depression among men but not women. 
 
-### Gender, race, and depression
+### Gender, race, and depression**107**
 Next, we examine how gender and race together associate with self-reported depression. 
 ```{r}
 brfss_design %>%
@@ -119,7 +128,7 @@ brfss_design %>%
 ```
 We can see that not only is the prevalence of self-reported depression higher in women than men, the same holds true for all race/ethnicities included in the data set.
 
-### Gender, age, and depression
+### Gender, age, and depression**122**
 ```{r}
 brfss_design %>%
   group_by(sex, age, depression) %>%
@@ -135,7 +144,7 @@ Based on the plot above, it seems that, for women, the prevalence of self-report
 
 This gap in the magnitude of change in prevalence of self-reported depression indicates that aging might affect self-reported depression among women and men differently. 
 
-### Gender, exercise and depression
+### Gender, exercise and depression**138**
 
 Next, we want to examine the influence of exercise on depression in among women and men.
 
