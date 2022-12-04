@@ -87,15 +87,6 @@ brfss_design %>%
 
 ```
 
-```{r chunk_chi-square}
-# for women
-brfss_design %>%
-  filter(sex == "female") %>%
-  select(children, depression) %>% 
-  svychisq(~children + depression, . , statistic="adjWald") %>% 
-  broom::tidy()
-```
-
 One interesting observation is that men who have children in the household have significantly lower prevalence of self-reported depression while women who have children don't. We do a chi-square test incorporating the survey weights to verify this observation:
 ```{r}
 # For women
