@@ -1,20 +1,17 @@
 #author: Ziqing Wang
 #date: "12/04/2022"
 
-
 # Import packages
-library(shiny)
 library(tidyverse)
-library(srvyr)
-library(survey)
 library(shinycssloaders)
 library(shiny)
+library(rsconnect)
 
 # Setup: Import data sets
-ind_depr = readRDS("./data/shiny_ind_data.rds") # outcome: depression
-ind_mh_days = readRDS("./data/shiny_ind_data2.rds") # outcome: days of bad mental health
-group_depr = readRDS("./data/shiny_group_data.rds") # outcome: depression
-group_mh_days = readRDS("./data/shiny_group_data2.rds") # outcome: days of bad mental health
+ind_depr = readRDS("shiny_ind_data.rds") # outcome: depression
+ind_mh_days = readRDS("shiny_ind_data2.rds") # outcome: days of bad mental health
+group_depr = readRDS("shiny_group_data.rds") # outcome: depression
+group_mh_days = readRDS("shiny_group_data2.rds") # outcome: days of bad mental health
 
 # Define UI for app 
 ui <- fluidPage(
@@ -223,6 +220,5 @@ server <- function(input, output) {
 
 # Create Shiny app ----
 shinyApp(ui = ui, server = server)
-
 
 

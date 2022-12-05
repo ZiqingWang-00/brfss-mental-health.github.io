@@ -1,12 +1,6 @@
----
-title: "BRFSS Import"
-author: "Ziqing Wang"
-date: "2022-11-07"
-output: html_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+# title: "BRFSS Import"
+# author: "Ziqing Wang"
+# date: "2022-11-07"
 
 library(tidyverse)
 library(rio)
@@ -14,10 +8,8 @@ library(haven)
 library(readr)
 library(forcats)
 library(srvyr)
-```
 
-Import the raw XPT data file into RStudio. 
-```{r}
+# Import the raw XPT data file into RStudio. 
 BRFSS2021 = read_xpt(
   './data/LLCP2021.XPT',
   col_select = NULL,
@@ -25,15 +17,12 @@ BRFSS2021 = read_xpt(
   n_max = Inf,
   .name_repair = "unique"
 ) %>% janitor::clean_names()
-```
 
-Preview the data. 
-```{r}
+# preview the data
 head(BRFSS2021)
-```
 
-Reduce the data set size by selecting only variables of interest and variables necessary for data analysis (e.g., weight variables). 
-```{r}
+# Reduce the data set size by selecting only variables of interest 
+# and variables necessary for data analysis (e.g., weight variables). 
 tidy_brfss21 = BRFSS2021 %>%
   select(psu, llcpwt, ststr, # survey weight variables
          menthlth, addepev3, # mental health outcomes
@@ -136,15 +125,12 @@ tidy_brfss21 = BRFSS2021 %>%
                                 state == 55 ~ "WI",
                                 state == 56 ~ "WY")) 
 
-```
-
-Export the csv with reduced number of variables and observations.
-```{r}
+# Export the csv with reduced number of variables and observations.
 write_csv(tidy_brfss21, "./data/cleaned_brfss21.csv")
-```
 
-Recode variables to factors with comprehensible labels and save the cleaned dataframe as an R object for faster loading and future reference:
-```{r}
+
+# Recode variables to factors with comprehensible labels 
+# and save the cleaned dataframe as an R object for faster loading and future reference
 brfss21_data = read_csv("./data/cleaned_brfss21.csv") %>%
   mutate(mh_cat3 = factor(mh_cat3, levels = c("none", "<=15 days", ">15 days")),
          mh_bin = factor(mh_bin, levels = c("<=15 days", ">15 days")),
@@ -164,15 +150,11 @@ brfss21_data = read_csv("./data/cleaned_brfss21.csv") %>%
 
 # save to R object
 save(brfss21_data, file = "./data/brfss21_data.Rdata")
-```
 
-Next, create survey design for the cleaned and recoded data and save it as an R object for fast loading and future reference:
-```{r}
-# Create survey design 
+# Next, create survey design for the cleaned and recoded data 
+# and save it as an R object for fast loading and future reference.
 brfss_design = as_survey_design(brfss21_data, id = 1, strata = ststr, weight = llcpwt)
-
 save(brfss_design, file = "./data/brfss_design.Rdata")
-```
 
 
 

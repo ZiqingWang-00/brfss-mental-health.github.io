@@ -17,8 +17,12 @@ navbar:
           href: regression_depr.html
         - text: "Regression on # of days of bad mental health in the past 30 days"
           href: regression_mh_days.html
-     - text: "Dashboard"
+        - text: "Ecological analysis on state-level mental health outcomes"
+          href: ecological.html
+     - text: "Geographic Distribution"
        href: state_level_dashboard.html
+     - text: "Predictions"
+       href: https://ziqingwang.shinyapps.io/shiny/
 
   right:
     - text: "About"
