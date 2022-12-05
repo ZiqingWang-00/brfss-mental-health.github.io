@@ -58,7 +58,7 @@ svyglm(mh_bin ~ sex + children + # exposures
 
 ### Model controlling for demographic, socioeconomic, and health variables
 ```{r}
-svyglm(mh_cat3 ~ sex + children + # exposures
+svyglm(mh_bin ~ sex + children + # exposures
            race + age + marital_status + # demographic covariates
            education + income + employment + # socioeconomic covariates
            general_health + exercise, # health-related covariates
@@ -75,7 +75,7 @@ For male:
  brfss_male = brfss_design %>%
    filter(sex == "male")
  
- svyglm(mh_cat3 ~ children + # exposures
+ svyglm(mh_bin ~ children + # exposures
             race + age + marital_status + # demographic covariates
             education + income + employment + # socioeconomic covariates
             general_health + exercise, # health-related covariates
@@ -89,7 +89,7 @@ For female:
  brfss_female = brfss_design %>%
    filter(sex == "female")
  
- svyglm(mh_cat3 ~ children + # exposures
+ svyglm(mh_bin ~ children + # exposures
             race + age + marital_status + # demographic covariates
             education + income + employment + # socioeconomic covariates
             general_health + exercise, # health-related covariates
