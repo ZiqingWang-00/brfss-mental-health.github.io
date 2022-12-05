@@ -14,16 +14,9 @@ library(ggplot2)
 library(survey)
 library(srvyr)
 #library(svyVGAM)
-library(purrr)
-library(dplyr)
 library(readr)
 library(forcats)
 library(gtsummary)
-library(surveyCV)
-library(modelr)
-library(caret)
-
-
 
 # Set options for allowing a single observation per stratum 
 options(survey.lonely.psu = "adjust")
@@ -78,17 +71,46 @@ full_mod_depr %>% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
 ### Model Comparison
 (AIC for score-based comparison for inference purposes and cross validation for prediction purpose?)
 ```{r}
-AIC(crude_mod_depr)
-AIC(mod2_depr)
-AIC(mod3_depr)
 AIC(full_mod_depr)
 ```
 
 
 ### Subsetted analysis by gender
-Here we are interested in our second exposure, the number of children in the household. Specifically, we are interested in if it affects self-reported depression diagnosis differently for men and women. 
+Here we are intereted in our second exposure, the number of children in the household. Specifically, we are interested in if it affects self-reported depression diagnosis differently for men and women. 
 
+<<<<<<< HEAD
 ### Cross validation (Buggy)
+=======
+For male: 
+```{r}
+ brfss_male = brfss_design %>%
+   filter(sex == "male")
+ 
+ svyglm(depression ~ children + # exposures
+            race + age + marital_status + # demographic covariates
+            education + income + employment + # socioeconomic covariates
+            general_health + exercise, # health-related covariates
+        brfss_male,
+        family = quasibinomial())  %>%
+   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+```
+
+For female:
+```{r}
+ brfss_female = brfss_design %>%
+   filter(sex == "female")
+ 
+ svyglm(depression ~ children + # exposures
+            race + age + marital_status + # demographic covariates
+            education + income + employment + # socioeconomic covariates
+            general_health + exercise, # health-related covariates
+        brfss_female,
+        family = quasibinomial())  %>%
+   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+```
+>>>>>>> 28c0ae635da32293b969f86d8e85169ec03520eb
+
+From subsetted regression, we can conclude that the number of children influences women and men in different ways because the p value for men now is much less than 0.05.
 
 
 
