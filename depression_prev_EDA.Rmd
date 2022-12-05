@@ -142,7 +142,18 @@ brfss_design %>%
 ```
 We can see that not only is the prevalence of self-reported depression higher in women than men, the same holds true for all race/ethnicities included in the data set. This is the result of the chi-squared test we did to verify this observation:
 ```{r}
-
+# For women
+brfss_design %>%
+  filter(sex == "female") %>% 
+  select(race, depression) %>% 
+  svychisq(~race + depression, . , statistic="adjWald") %>% 
+  broom::tidy()
+# For men
+brfss_design %>%
+  filter(sex == "male") %>% 
+  select(race, depression) %>% 
+  svychisq(~race + depression, . , statistic="adjWald") %>% 
+  broom::tidy()
 ```
 
 
