@@ -87,7 +87,8 @@ brfss_design %>%
 
 ```
 
-One interesting observation is that men who have children in the household have significantly lower prevalence of self-reported depression while women who have children don't. We do a chi-square test incorporating the survey weights to verify this observation:
+One interesting observation is that men who have children in the household have noticeably lower prevalence of self-reported depression while women who have children don't. We do a chi-square test incorporating the survey weights to verify this observation:
+
 ```{r}
 # For women
 brfss_design %>%
@@ -102,10 +103,32 @@ brfss_design %>%
   svychisq(~children + depression, . , statistic="adjWald") %>% 
   broom::tidy()
 ```
-As expected, based on the chi-squared test, the number of children in the household is significantly associated with self-reported depression among men but not women. 
+As expected, based on the chi-squared test, self-reported depression is significantly associated with the number of children in the household among men but not women.   
+
+Also, we draw the confidence interval for the self-reported prevalence of depression among men with different numbers of children in the household.
+
+```{r}
+brfss_design %>%
+  group_by(sex, children, depression) %>%
+  summarize(depression_prev = survey_mean(na.rm = T, vartype = c("ci"))) %>%
+  filter(!is.na(children), sex == "male", depression == "yes") %>% 
+  ggplot() + 
+  geom_segment(aes(x = depression_prev_low, xend = depression_prev_upp,
+                   y = children, yend = children, color = children),
+               size = 2) +
+  labs(
+    title = "Confidence Interval for the Self-Reported Prevalence of Depression of Men",
+    x = "Confidence Interval",
+    y = "Number of Children in the Household"
+  ) 
+```
+
+As can be seen from the plot, the CI of the group with none children doesn't have overlapping part with and is entirely higher than the CI of other two groups, indicating the self-reported prevalence of depression is significantly higher among men with no child in household compared with those with children.
 
 ### Gender, race, and depression
+
 Next, we examine how gender and race together associate with self-reported depression. 
+
 ```{r}
 brfss_design %>%
   group_by(sex, race, depression) %>%
@@ -117,9 +140,14 @@ brfss_design %>%
   geom_errorbar(aes(ymin=depression_prev_low, ymax=depression_prev_upp), 
                 width=.2, position=position_dodge(.9))
 ```
-We can see that not only is the prevalence of self-reported depression higher in women than men, the same holds true for all race/ethnicities included in the data set.
+We can see that not only is the prevalence of self-reported depression higher in women than men, the same holds true for all race/ethnicities included in the data set. This is the result of the chi-squared test we did to verify this observation:
+```{r}
+
+```
+
 
 ### Gender, age, and depression
+
 ```{r}
 brfss_design %>%
   group_by(sex, age, depression) %>%
