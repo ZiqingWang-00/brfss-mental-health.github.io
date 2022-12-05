@@ -78,8 +78,35 @@ AIC(full_mod_depr)
 ### Subsetted analysis by gender
 Here we are intereted in our second exposure, the number of children in the household. Specifically, we are interested in if it affects self-reported depression diagnosis differently for men and women. 
 
+For male: 
+```{r}
+ brfss_male = brfss_design %>%
+   filter(sex == "male")
+ 
+ svyglm(depression ~ children + # exposures
+            race + age + marital_status + # demographic covariates
+            education + income + employment + # socioeconomic covariates
+            general_health + exercise, # health-related covariates
+        brfss_male,
+        family = quasibinomial())  %>%
+   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+```
 
+For female:
+```{r}
+ brfss_female = brfss_design %>%
+   filter(sex == "female")
+ 
+ svyglm(depression ~ children + # exposures
+            race + age + marital_status + # demographic covariates
+            education + income + employment + # socioeconomic covariates
+            general_health + exercise, # health-related covariates
+        brfss_female,
+        family = quasibinomial())  %>%
+   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+```
 
+From subsetted regression, we can conclude that the number of children influences women and men in different ways because the p value for men now is much less than 0.05.
 
 
 
