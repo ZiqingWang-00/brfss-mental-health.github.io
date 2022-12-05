@@ -516,6 +516,81 @@ variables</h3>
 in the household. Specifically, we are interested in if it affects the
 self-reported number of days with bad mental health days differently for
 men and women.</p>
+<p>For male:</p>
+<pre class="r"><code> brfss_male = brfss_design %&gt;%
+   filter(sex == &quot;male&quot;)
+ 
+ svyglm(mh_cat3 ~ children + # exposures
+            race + age + marital_status + # demographic covariates
+            education + income + employment + # socioeconomic covariates
+            general_health + exercise, # health-related covariates
+        brfss_male,
+        family = quasibinomial())  %&gt;%
+   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
+<pre><code>## # A tibble: 20 × 7
+##    term                        estim…¹ std.e…² stati…³   p.value conf.…⁴ conf.…⁵
+##    &lt;chr&gt;                         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 (Intercept)                   0.377  0.0753 -12.9   2.48e- 38   0.325   0.437
+##  2 childrenone or two            0.950  0.0351  -1.46  1.43e-  1   0.887   1.02 
+##  3 childrenthree or more         0.845  0.0587  -2.86  4.21e-  3   0.753   0.948
+##  4 raceblack                     0.797  0.0459  -4.93  8.22e-  7   0.729   0.873
+##  5 raceasian                     0.638  0.0772  -5.82  6.07e-  9   0.549   0.743
+##  6 racehispanic                  0.645  0.0466  -9.40  5.40e- 21   0.589   0.707
+##  7 raceother                     1.01   0.0560   0.251 8.02e-  1   0.909   1.13 
+##  8 age30-49                      0.627  0.0397 -11.8   6.74e- 32   0.580   0.678
+##  9 age50-64                      0.297  0.0422 -28.8   6.98e-182   0.273   0.322
+## 10 age65+                        0.153  0.0516 -36.4   1.44e-288   0.138   0.169
+## 11 marital_statusnot married     1.42   0.0299  11.8   2.56e- 32   1.34    1.51 
+## 12 educationhigh school or so…   1.43   0.0518   6.85  7.17e- 12   1.29    1.58 
+## 13 educationbachelors or high…   1.81   0.0548  10.9   1.78e- 27   1.63    2.02 
+## 14 income35000-75000             0.866  0.0368  -3.90  9.69e-  5   0.806   0.931
+## 15 income&gt;75000                  0.918  0.0404  -2.12  3.41e-  2   0.848   0.994
+## 16 employmenthomemaker/studen…   1.17   0.0418   3.67  2.39e-  4   1.07    1.27 
+## 17 employmentunemployed          1.81   0.0487  12.1   6.18e- 34   1.64    1.99 
+## 18 general_healthvery good/go…   2.08   0.0373  19.6   2.62e- 85   1.93    2.23 
+## 19 general_healthfair/poor       4.98   0.0503  31.9   1.59e-222   4.51    5.50 
+## 20 exerciseno                    0.979  0.0328  -0.645 5.19e-  1   0.918   1.04 
+## # … with abbreviated variable names ¹​estimate, ²​std.error, ³​statistic,
+## #   ⁴​conf.low, ⁵​conf.high</code></pre>
+<p>For female:</p>
+<pre class="r"><code> brfss_female = brfss_design %&gt;%
+   filter(sex == &quot;female&quot;)
+ 
+ svyglm(mh_cat3 ~ children + # exposures
+            race + age + marital_status + # demographic covariates
+            education + income + employment + # socioeconomic covariates
+            general_health + exercise, # health-related covariates
+        brfss_female,
+        family = quasibinomial())  %&gt;%
+   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
+<pre><code>## # A tibble: 20 × 7
+##    term                        estim…¹ std.e…² stati…³   p.value conf.…⁴ conf.…⁵
+##    &lt;chr&gt;                         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 (Intercept)                   0.762  0.0794  -3.42  6.20e-  4   0.652   0.890
+##  2 childrenone or two            0.865  0.0342  -4.23  2.33e-  5   0.809   0.925
+##  3 childrenthree or more         0.779  0.0525  -4.75  2.04e-  6   0.703   0.864
+##  4 raceblack                     0.700  0.0395  -9.05  1.49e- 19   0.648   0.756
+##  5 raceasian                     0.666  0.108   -3.76  1.72e-  4   0.539   0.823
+##  6 racehispanic                  0.510  0.0464 -14.5   1.43e- 47   0.466   0.559
+##  7 raceother                     0.948  0.0594  -0.894 3.71e-  1   0.844   1.07 
+##  8 age30-49                      0.582  0.0447 -12.1   8.91e- 34   0.533   0.635
+##  9 age50-64                      0.287  0.0451 -27.7   4.13e-168   0.263   0.313
+## 10 age65+                        0.146  0.0533 -36.0   6.07e-283   0.132   0.163
+## 11 marital_statusnot married     1.31   0.0298   9.08  1.08e- 19   1.24    1.39 
+## 12 educationhigh school or so…   1.48   0.0555   7.09  1.35e- 12   1.33    1.65 
+## 13 educationbachelors or high…   1.69   0.0605   8.70  3.43e- 18   1.50    1.90 
+## 14 income35000-75000             1.07   0.0351   1.92  5.52e-  2   0.999   1.15 
+## 15 income&gt;75000                  1.14   0.0426   3.12  1.82e-  3   1.05    1.24 
+## 16 employmenthomemaker/studen…   1.00   0.0355   0.114 9.09e-  1   0.937   1.08 
+## 17 employmentunemployed          1.51   0.0454   9.03  1.78e- 19   1.38    1.65 
+## 18 general_healthvery good/go…   2.09   0.0366  20.1   2.02e- 89   1.94    2.24 
+## 19 general_healthfair/poor       5.27   0.0499  33.3   1.40e-242   4.78    5.81 
+## 20 exerciseno                    0.951  0.0313  -1.60  1.09e-  1   0.894   1.01 
+## # … with abbreviated variable names ¹​estimate, ²​std.error, ³​statistic,
+## #   ⁴​conf.low, ⁵​conf.high</code></pre>
+<p>From subsetted regression, we can conclude that the number of
+children influences women and men in different ways because the p value
+for women now is much less than 0.05.</p>
 </div>
 
 

@@ -70,7 +70,35 @@ svyglm(mh_cat3 ~ sex + children + # exposures
 ### Subsetted analysis by gender
 Here we are intereted in our second exposure, the number of children in the household. Specifically, we are interested in if it affects the self-reported number of days with bad mental health days differently for men and women. 
 
+For male: 
+```{r}
+ brfss_male = brfss_design %>%
+   filter(sex == "male")
+ 
+ svyglm(mh_cat3 ~ children + # exposures
+            race + age + marital_status + # demographic covariates
+            education + income + employment + # socioeconomic covariates
+            general_health + exercise, # health-related covariates
+        brfss_male,
+        family = quasibinomial())  %>%
+   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+```
 
+For female:
+```{r}
+ brfss_female = brfss_design %>%
+   filter(sex == "female")
+ 
+ svyglm(mh_cat3 ~ children + # exposures
+            race + age + marital_status + # demographic covariates
+            education + income + employment + # socioeconomic covariates
+            general_health + exercise, # health-related covariates
+        brfss_female,
+        family = quasibinomial())  %>%
+   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+```
+
+From subsetted regression, we can conclude that the number of children influences women and men in different ways because the p value for women now is much less than 0.05.
 
 
 
