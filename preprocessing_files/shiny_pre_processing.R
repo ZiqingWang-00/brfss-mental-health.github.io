@@ -156,7 +156,7 @@ pred_marg_means
 ### make svystat objects to more useable form
 clean_svypredmean_output = function(pred_marg_means){
   no_rownames = rbind(coef(pred_marg_means), sqrt(diag(vcov(pred_marg_means))))
-  rownames(no_rownames) = c("Predicted Probability", "SE")
+  rownames(no_rownames) = c("Predictive Marginal Mean", "SE")
   return(no_rownames)
 }
 

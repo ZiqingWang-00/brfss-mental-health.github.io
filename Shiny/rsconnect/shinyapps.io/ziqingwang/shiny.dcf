@@ -5,7 +5,7 @@ account: ziqingwang
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 7812895
-bundleId: 6591642
+bundleId: 6601037
 url: https://ziqingwang.shinyapps.io/shiny/
-when: 1670213232.78785
-lastSyncTime: 1670213232.78787
+when: 1670360913.81277
+lastSyncTime: 1670360913.81279
