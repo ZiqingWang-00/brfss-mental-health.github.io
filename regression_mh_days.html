@@ -418,9 +418,10 @@ bad mental health</h1>
 
 <div id="crude-model-with-exposures-only" class="section level3">
 <h3>Crude model with exposures only</h3>
-<pre class="r"><code>svyglm(mh_bin ~ sex + children, # exposures
+<pre class="r"><code>crude_mod_mh = svyglm(mh_bin ~ sex + children, # exposures
        brfss_design,
-       family = quasibinomial()) %&gt;%
+       family = quasibinomial()) 
+crude_mod_mh %&gt;%
   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
 <pre><code>## # A tibble: 4 × 7
 ##   term                  estimate std.error statistic  p.value conf.low conf.high
@@ -433,10 +434,11 @@ bad mental health</h1>
 <div id="model-controlling-for-demographic-variables"
 class="section level3">
 <h3>Model controlling for demographic variables</h3>
-<pre class="r"><code>svyglm(mh_bin ~ sex + children + # exposures
+<pre class="r"><code>mod2_mh = svyglm(mh_bin ~ sex + children + # exposures
          race + age + marital_status, # demographic covariates
        brfss_design,
-       family = quasibinomial()) %&gt;%
+       family = quasibinomial())
+mod2_mh %&gt;%
   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
 <pre><code>## # A tibble: 12 × 7
 ##    term                      estimate std.er…¹ stati…²   p.value conf.…³ conf.…⁴
@@ -459,11 +461,12 @@ class="section level3">
 <div id="model-controlling-for-demographic-and-socioeconomic-variables"
 class="section level3">
 <h3>Model controlling for demographic and socioeconomic variables</h3>
-<pre class="r"><code>svyglm(mh_bin ~ sex + children + # exposures
+<pre class="r"><code>mod3_mh = svyglm(mh_bin ~ sex + children + # exposures
          race + age + marital_status + # demographic covariates
          education + income + employment, # socioeconomic covariates, 
        brfss_design,
-       family = quasibinomial()) %&gt;%
+       family = quasibinomial())
+mod3_mh %&gt;%
   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
 <pre><code>## # A tibble: 18 × 7
 ##    term                       estim…¹ std.e…² statis…³   p.value conf.…⁴ conf.…⁵
@@ -494,27 +497,87 @@ id="model-controlling-for-demographic-socioeconomic-and-health-variables"
 class="section level3">
 <h3>Model controlling for demographic, socioeconomic, and health
 variables</h3>
-<pre class="r"><code>svyglm(mh_cat3 ~ sex + children + # exposures
+<pre class="r"><code>full_mod_mh = svyglm(mh_bin ~ sex + children + # exposures
            race + age + marital_status + # demographic covariates
            education + income + employment + # socioeconomic covariates
            general_health + exercise, # health-related covariates
        brfss_design,
-       family = quasibinomial())  %&gt;%
+       family = quasibinomial())  
+full_mod_mh %&gt;%
   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
 <pre><code>## # A tibble: 21 × 7
 ##    term                  estimate std.error statistic   p.value conf.low conf.…¹
 ##    &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-##  1 (Intercept)              0.389    0.0552   -17.1   2.20e- 65    0.350   0.434
-##  2 sexfemale                1.87     0.0187    33.3   3.56e-243    1.80    1.94 
-##  3 childrenone or two       0.892    0.0244    -4.70  2.58e-  6    0.850   0.935
-##  4 childrenthree or more    0.791    0.0390    -6.01  1.90e-  9    0.733   0.854
-##  5 raceblack                0.741    0.0300    -9.96  2.19e- 23    0.699   0.786
-##  6 raceasian                0.655    0.0682    -6.21  5.43e- 10    0.573   0.748
-##  7 racehispanic             0.571    0.0331   -16.9   4.20e- 64    0.535   0.610
-##  8 raceother                0.983    0.0408    -0.410 6.82e-  1    0.908   1.07 
-##  9 age30-49                 0.604    0.0298   -16.9   3.42e- 64    0.570   0.641
-## 10 age50-64                 0.295    0.0308   -39.7   0            0.278   0.313
+##  1 (Intercept)             0.0639    0.0839   -32.8   2.04e-235   0.0542  0.0753
+##  2 sexfemale               1.55      0.0298    14.7   8.44e- 49   1.46    1.64  
+##  3 childrenone or two      0.893     0.0365    -3.11  1.85e-  3   0.831   0.959 
+##  4 childrenthree or more   0.906     0.0599    -1.65  9.94e-  2   0.806   1.02  
+##  5 raceblack               0.740     0.0486    -6.19  6.04e- 10   0.673   0.814 
+##  6 raceasian               0.619     0.138     -3.48  5.03e-  4   0.472   0.811 
+##  7 racehispanic            0.545     0.0534   -11.4   6.76e- 30   0.491   0.606 
+##  8 raceother               1.03      0.0588     0.473 6.36e-  1   0.916   1.15  
+##  9 age30-49                0.744     0.0418    -7.08  1.40e- 12   0.685   0.807 
+## 10 age50-64                0.436     0.0431   -19.2   1.74e- 82   0.401   0.475 
 ## # … with 11 more rows, and abbreviated variable name ¹​conf.high</code></pre>
+</div>
+<div id="model-comparison" class="section level3">
+<h3>Model Comparison</h3>
+<p>(AIC for score-based comparison for inference purposes and cross
+validation for prediction purpose?)</p>
+<pre class="r"><code>getAIC = function(m){
+  AIC(m) %&gt;%
+  broom::tidy() %&gt;%
+  filter(names == &quot;AIC&quot;) %&gt;%
+    pull(x)}
+
+variables = c(&quot;Exposures only&quot;, &quot;Controlling for demographic variables&quot;, &quot;Controlling for demographic and socioeconomic variables&quot;, &quot;Controlling for demographic, socioeconomic, and health variables&quot;)
+model_name = c(&quot;crude_mod_mh&quot;, &quot;mod2_mh&quot;, &quot;mod3_mh&quot;, &quot;full_mod_mh&quot;)
+AIC = c(getAIC(crude_mod_mh), getAIC(mod2_mh), getAIC(mod3_mh), getAIC(full_mod_mh))
+df = data.frame(model_name, AIC, variables)
+
+df %&gt;%
+  knitr::kable()</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="10%" />
+<col width="74%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">model_name</th>
+<th align="right">AIC</th>
+<th align="left">variables</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">crude_mod_mh</td>
+<td align="right">269586.8</td>
+<td align="left">Exposures only</td>
+</tr>
+<tr class="even">
+<td align="left">mod2_mh</td>
+<td align="right">251648.9</td>
+<td align="left">Controlling for demographic variables</td>
+</tr>
+<tr class="odd">
+<td align="left">mod3_mh</td>
+<td align="right">189028.7</td>
+<td align="left">Controlling for demographic and socioeconomic
+variables</td>
+</tr>
+<tr class="even">
+<td align="left">full_mod_mh</td>
+<td align="right">178201.3</td>
+<td align="left">Controlling for demographic, socioeconomic, and health
+variables</td>
+</tr>
+</tbody>
+</table>
+<p>From the results of models comparison, we can conclude that the full
+model (model controlling for demographic, socioeconomic, and health
+variables) is the best model.</p>
 </div>
 <div id="subsetted-analysis-by-gender" class="section level3">
 <h3>Subsetted analysis by gender</h3>
@@ -526,7 +589,7 @@ men and women.</p>
 <pre class="r"><code> brfss_male = brfss_design %&gt;%
    filter(sex == &quot;male&quot;)
  
- svyglm(mh_cat3 ~ children + # exposures
+ svyglm(mh_bin ~ children + # exposures
             race + age + marital_status + # demographic covariates
             education + income + employment + # socioeconomic covariates
             general_health + exercise, # health-related covariates
@@ -536,33 +599,33 @@ men and women.</p>
 <pre><code>## # A tibble: 20 × 7
 ##    term                        estim…¹ std.e…² stati…³   p.value conf.…⁴ conf.…⁵
 ##    &lt;chr&gt;                         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 (Intercept)                   0.377  0.0753 -12.9   2.48e- 38   0.325   0.437
-##  2 childrenone or two            0.950  0.0351  -1.46  1.43e-  1   0.887   1.02 
-##  3 childrenthree or more         0.845  0.0587  -2.86  4.21e-  3   0.753   0.948
-##  4 raceblack                     0.797  0.0459  -4.93  8.22e-  7   0.729   0.873
-##  5 raceasian                     0.638  0.0772  -5.82  6.07e-  9   0.549   0.743
-##  6 racehispanic                  0.645  0.0466  -9.40  5.40e- 21   0.589   0.707
-##  7 raceother                     1.01   0.0560   0.251 8.02e-  1   0.909   1.13 
-##  8 age30-49                      0.627  0.0397 -11.8   6.74e- 32   0.580   0.678
-##  9 age50-64                      0.297  0.0422 -28.8   6.98e-182   0.273   0.322
-## 10 age65+                        0.153  0.0516 -36.4   1.44e-288   0.138   0.169
-## 11 marital_statusnot married     1.42   0.0299  11.8   2.56e- 32   1.34    1.51 
-## 12 educationhigh school or so…   1.43   0.0518   6.85  7.17e- 12   1.29    1.58 
-## 13 educationbachelors or high…   1.81   0.0548  10.9   1.78e- 27   1.63    2.02 
-## 14 income35000-75000             0.866  0.0368  -3.90  9.69e-  5   0.806   0.931
-## 15 income&gt;75000                  0.918  0.0404  -2.12  3.41e-  2   0.848   0.994
-## 16 employmenthomemaker/studen…   1.17   0.0418   3.67  2.39e-  4   1.07    1.27 
-## 17 employmentunemployed          1.81   0.0487  12.1   6.18e- 34   1.64    1.99 
-## 18 general_healthvery good/go…   2.08   0.0373  19.6   2.62e- 85   1.93    2.23 
-## 19 general_healthfair/poor       4.98   0.0503  31.9   1.59e-222   4.51    5.50 
-## 20 exerciseno                    0.979  0.0328  -0.645 5.19e-  1   0.918   1.04 
+##  1 (Intercept)                  0.0674  0.118  -22.8   1.37e-114  0.0534  0.0850
+##  2 childrenone or two           0.933   0.0586  -1.18  2.39e-  1  0.832   1.05  
+##  3 childrenthree or more        1.02    0.0983   0.170 8.65e-  1  0.839   1.23  
+##  4 raceblack                    0.858   0.0757  -2.03  4.25e-  2  0.739   0.995 
+##  5 raceasian                    0.506   0.149   -4.57  4.78e-  6  0.378   0.677 
+##  6 racehispanic                 0.600   0.0791  -6.45  1.12e- 10  0.514   0.701 
+##  7 raceother                    0.986   0.0862  -0.169 8.66e-  1  0.832   1.17  
+##  8 age30-49                     0.742   0.0632  -4.72  2.36e-  6  0.655   0.840 
+##  9 age50-64                     0.407   0.0681 -13.2   8.62e- 40  0.356   0.465 
+## 10 age65+                       0.251   0.0840 -16.4   1.14e- 60  0.213   0.296 
+## 11 marital_statusnot married    1.32    0.0527   5.29  1.26e-  7  1.19    1.46  
+## 12 educationhigh school or so…  1.09    0.0753   1.17  2.44e-  1  0.942   1.27  
+## 13 educationbachelors or high…  0.964   0.0846  -0.439 6.61e-  1  0.816   1.14  
+## 14 income35000-75000            0.755   0.0572  -4.91  9.15e-  7  0.675   0.845 
+## 15 income&gt;75000                 0.711   0.0708  -4.82  1.43e-  6  0.619   0.817 
+## 16 employmenthomemaker/studen…  1.06    0.0744   0.829 4.07e-  1  0.919   1.23  
+## 17 employmentunemployed         2.11    0.0616  12.2   5.13e- 34  1.87    2.39  
+## 18 general_healthvery good/go…  1.74    0.0803   6.93  4.18e- 12  1.49    2.04  
+## 19 general_healthfair/poor      6.39    0.0859  21.6   3.19e-103  5.40    7.56  
+## 20 exerciseno                   1.36    0.0505   6.11  9.92e- 10  1.23    1.50  
 ## # … with abbreviated variable names ¹​estimate, ²​std.error, ³​statistic,
 ## #   ⁴​conf.low, ⁵​conf.high</code></pre>
 <p>For female:</p>
 <pre class="r"><code> brfss_female = brfss_design %&gt;%
    filter(sex == &quot;female&quot;)
  
- svyglm(mh_cat3 ~ children + # exposures
+ svyglm(mh_bin ~ children + # exposures
             race + age + marital_status + # demographic covariates
             education + income + employment + # socioeconomic covariates
             general_health + exercise, # health-related covariates
@@ -572,26 +635,26 @@ men and women.</p>
 <pre><code>## # A tibble: 20 × 7
 ##    term                        estim…¹ std.e…² stati…³   p.value conf.…⁴ conf.…⁵
 ##    &lt;chr&gt;                         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 (Intercept)                   0.762  0.0794  -3.42  6.20e-  4   0.652   0.890
-##  2 childrenone or two            0.865  0.0342  -4.23  2.33e-  5   0.809   0.925
-##  3 childrenthree or more         0.779  0.0525  -4.75  2.04e-  6   0.703   0.864
-##  4 raceblack                     0.700  0.0395  -9.05  1.49e- 19   0.648   0.756
-##  5 raceasian                     0.666  0.108   -3.76  1.72e-  4   0.539   0.823
-##  6 racehispanic                  0.510  0.0464 -14.5   1.43e- 47   0.466   0.559
-##  7 raceother                     0.948  0.0594  -0.894 3.71e-  1   0.844   1.07 
-##  8 age30-49                      0.582  0.0447 -12.1   8.91e- 34   0.533   0.635
-##  9 age50-64                      0.287  0.0451 -27.7   4.13e-168   0.263   0.313
-## 10 age65+                        0.146  0.0533 -36.0   6.07e-283   0.132   0.163
-## 11 marital_statusnot married     1.31   0.0298   9.08  1.08e- 19   1.24    1.39 
-## 12 educationhigh school or so…   1.48   0.0555   7.09  1.35e- 12   1.33    1.65 
-## 13 educationbachelors or high…   1.69   0.0605   8.70  3.43e- 18   1.50    1.90 
-## 14 income35000-75000             1.07   0.0351   1.92  5.52e-  2   0.999   1.15 
-## 15 income&gt;75000                  1.14   0.0426   3.12  1.82e-  3   1.05    1.24 
-## 16 employmenthomemaker/studen…   1.00   0.0355   0.114 9.09e-  1   0.937   1.08 
-## 17 employmentunemployed          1.51   0.0454   9.03  1.78e- 19   1.38    1.65 
-## 18 general_healthvery good/go…   2.09   0.0366  20.1   2.02e- 89   1.94    2.24 
-## 19 general_healthfair/poor       5.27   0.0499  33.3   1.40e-242   4.78    5.81 
-## 20 exerciseno                    0.951  0.0313  -1.60  1.09e-  1   0.894   1.01 
+##  1 (Intercept)                  0.0938  0.112  -21.2   3.23e- 99  0.0753   0.117
+##  2 childrenone or two           0.880   0.0467  -2.75  5.98e-  3  0.803    0.964
+##  3 childrenthree or more        0.868   0.0756  -1.87  6.20e-  2  0.749    1.01 
+##  4 raceblack                    0.674   0.0627  -6.29  3.16e- 10  0.596    0.762
+##  5 raceasian                    0.693   0.195   -1.89  5.94e-  2  0.473    1.01 
+##  6 racehispanic                 0.509   0.0720  -9.37  7.16e- 21  0.442    0.586
+##  7 raceother                    1.06    0.0800   0.673 5.01e-  1  0.902    1.23 
+##  8 age30-49                     0.744   0.0556  -5.32  1.02e-  7  0.667    0.830
+##  9 age50-64                     0.450   0.0560 -14.3   4.38e- 46  0.403    0.502
+## 10 age65+                       0.238   0.0858 -16.8   5.34e- 63  0.201    0.281
+## 11 marital_statusnot married    1.29    0.0449   5.75  9.01e-  9  1.19     1.41 
+## 12 educationhigh school or so…  1.25    0.0649   3.39  6.92e-  4  1.10     1.42 
+## 13 educationbachelors or high…  0.976   0.0760  -0.325 7.45e-  1  0.841    1.13 
+## 14 income35000-75000            0.852   0.0492  -3.25  1.17e-  3  0.774    0.939
+## 15 income&gt;75000                 0.762   0.0662  -4.11  3.90e-  5  0.669    0.867
+## 16 employmenthomemaker/studen…  0.906   0.0577  -1.71  8.80e-  2  0.809    1.01 
+## 17 employmentunemployed         1.70    0.0511  10.4   1.84e- 25  1.54     1.88 
+## 18 general_healthvery good/go…  2.08    0.0652  11.2   2.50e- 29  1.83     2.36 
+## 19 general_healthfair/poor      7.06    0.0727  26.9   9.91e-159  6.12     8.14 
+## 20 exerciseno                   1.28    0.0426   5.71  1.10e-  8  1.17     1.39 
 ## # … with abbreviated variable names ¹​estimate, ²​std.error, ³​statistic,
 ## #   ⁴​conf.low, ⁵​conf.high</code></pre>
 <p>From subsetted regression, we can conclude that the number of

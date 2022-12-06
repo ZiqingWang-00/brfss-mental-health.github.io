@@ -70,10 +70,23 @@ full_mod_depr %>% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
 
 ### Model Comparison
 (AIC for score-based comparison for inference purposes and cross validation for prediction purpose?)
-```{r}
-AIC(full_mod_depr)
+```{r, warning = FALSE}
+getAIC = function(m){
+  AIC(m) %>%
+  broom::tidy() %>%
+  filter(names == "AIC") %>%
+    pull(x)}
+
+variables = c("Exposures only", "Controlling for demographic variables", "Controlling for demographic and socioeconomic variables", "Controlling for demographic, socioeconomic, and health variables")
+model_name = c("crude_mod_depr", "mod2_depr", "mod3_depr", "full_mod_depr")
+AIC = c(getAIC(crude_mod_depr), getAIC(mod2_depr), getAIC(mod3_depr), getAIC(full_mod_depr))
+df = data.frame(model_name, AIC, variables)
+
+df %>%
+  knitr::kable()
 ```
 
+From the results of models comparison, we can conclude that the full model (model controlling for demographic, socioeconomic, and health variables) is the best model.
 
 ### Subsetted analysis by gender
 Here we are intereted in our second exposure, the number of children in the household. Specifically, we are interested in if it affects self-reported depression diagnosis differently for men and women. 
