@@ -522,9 +522,60 @@ full_mod_depr %&gt;% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)<
 <h3>Model Comparison</h3>
 <p>(AIC for score-based comparison for inference purposes and cross
 validation for prediction purpose?)</p>
-<pre class="r"><code>AIC(full_mod_depr)</code></pre>
-<pre><code>##        eff.p          AIC     deltabar 
-## 1.083543e+02 2.705068e+05 5.417714e+00</code></pre>
+<pre class="r"><code>getAIC = function(m){
+  AIC(m) %&gt;%
+  broom::tidy() %&gt;%
+  filter(names == &quot;AIC&quot;) %&gt;%
+    pull(x)}
+
+variables = c(&quot;Exposures only&quot;, &quot;Controlling for demographic variables&quot;, &quot;Controlling for demographic and socioeconomic variables&quot;, &quot;Controlling for demographic, socioeconomic, and health variables&quot;)
+model_name = c(&quot;crude_mod_depr&quot;, &quot;mod2_depr&quot;, &quot;mod3_depr&quot;, &quot;full_mod_depr&quot;)
+AIC = c(getAIC(crude_mod_depr), getAIC(mod2_depr), getAIC(mod3_depr), getAIC(full_mod_depr))
+df = data.frame(model_name, AIC, variables)
+
+df %&gt;%
+  knitr::kable()</code></pre>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="10%" />
+<col width="73%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">model_name</th>
+<th align="right">AIC</th>
+<th align="left">variables</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">crude_mod_depr</td>
+<td align="right">396110.7</td>
+<td align="left">Exposures only</td>
+</tr>
+<tr class="even">
+<td align="left">mod2_depr</td>
+<td align="right">370597.7</td>
+<td align="left">Controlling for demographic variables</td>
+</tr>
+<tr class="odd">
+<td align="left">mod3_depr</td>
+<td align="right">280968.4</td>
+<td align="left">Controlling for demographic and socioeconomic
+variables</td>
+</tr>
+<tr class="even">
+<td align="left">full_mod_depr</td>
+<td align="right">270506.8</td>
+<td align="left">Controlling for demographic, socioeconomic, and health
+variables</td>
+</tr>
+</tbody>
+</table>
+<p>From the results of models comparison, we can conclude that the full
+model (model controlling for demographic, socioeconomic, and health
+variables) is the best model.</p>
 </div>
 <div id="subsetted-analysis-by-gender" class="section level3">
 <h3>Subsetted analysis by gender</h3>
