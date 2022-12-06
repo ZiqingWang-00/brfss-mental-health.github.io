@@ -16,6 +16,7 @@ library(tidyverse)
 library(ggplot2)
 library(survey)
 library(srvyr)
+library(plotly)
 
 load(file = "./data/brfss_design.Rdata")
 
@@ -23,7 +24,11 @@ load(file = "./data/brfss_design.Rdata")
 options(survey.lonely.psu = "adjust")
 ```
 
-We obtained the U.S. Women, Peace and Security (WPS) Index in 2020 calculated by Georgetown Institute for Women, Peace, and Security downloaded from {here}(https://giwps.georgetown.edu/usa-index/). We import the raw data (xlsx) and extract the WPS index below:
+## Data description, importing, and cleaning
+In this section, we briefly go over where we got the data and how we processed it for this ecological analysis. 
+
+### Gender (in)equality index
+We obtained the U.S. Women, Peace and Security (WPS) Index in 2020 calculated by Georgetown Institute for Women, Peace, and Security downloaded from {here}(https://giwps.georgetown.edu/usa-index/). We import the raw data (xlsx) and extract the WPS index below. We only need the overall WPS index and the states, so we select those two columns. We scaled the original index data by multiplying a factor of 100 for better readability.
 
 ```{r}
 index_data_colnames = read_excel("./data/US-Index-Data.xlsx",
@@ -35,21 +40,15 @@ index_data = read_excel("./data/US-Index-Data.xlsx",
                         sheet = "Statistical table 3  Key statis",
                         range = "A3:L53",
                         col_names = index_data_colnames) %>% 
-  janitor::clean_names()
-
-index_data
-```
-
-We only need the overall WPS index and the states, so we select those two columns below:
-```{r}
-index_data = index_data %>% 
+  janitor::clean_names() %>% 
   select(state, index_score) %>%
   mutate(state_code = c(state.abb, "DC")[match(state, c(state.name, "District of Columbia"))],
          scaled_index = 100 * index_score)
 
-index_data
+head(index_data) %>% knitr::kable()
 ```
 
+### GDP per capita by US state
 We also obtained the per-capita GDP for each US state in 2021 from {here}(https://www.statista.com/statistics/248063/per-capita-us-real-gross-domestic-product-gdp-by-state/). We import the data below:
 ```{r}
 gdp_data = read_excel("./data/us-per-capita-gdp-2021-by-state.xlsx",
@@ -58,11 +57,14 @@ gdp_data = read_excel("./data/us-per-capita-gdp-2021-by-state.xlsx",
                       col_names = c("state", "gdp")) %>% 
   mutate(state_code = c(state.abb, "DC")[match(state, c(state.name, "District of Columbia"))])
 
-gdp_data
+head(gdp_data) %>%  knitr::kable()
 ```
 
-Next, we obtain the data frames on state-level self-reported depression prevalence data among women, and the state-level sex difference in self-repored depression prevalence, respectively:
-```{r}
+## Outcome variable 1: Prevalence of self-reported past depression among women
+
+We are interested in whether the level of gender inequality accross US states is associated with the prevalence of self-reported past depression among womenn. We first obtain the data frames on state-level self-reported depression prevalence data among women. This will be the response variable of interest. Next, we merge the WPS index data and the GDP data with the two data frames that contains the WPS index and the GDP per capita, respectively:
+
+```{r message = FALSE}
 depr_prev_bystate_gender = brfss_design %>%
   group_by(state_code, sex, depression) %>%
   summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c("ci")))
@@ -71,44 +73,95 @@ depr_prev_bystate_female = depr_prev_bystate_gender %>%
   filter(sex == "female", depression == "yes") %>% 
   select(state_code, depression_prev)
 
-depr_prev_bystate_female
-```
-
-```{r}
-depr_prev_bystate_diff = depr_prev_bystate_gender %>%
-  select(state_code, depression_prev, sex, depression) %>%
-  filter(depression == "yes") %>%
-  pivot_wider(names_from = "sex",
-              values_from = "depression_prev") %>%
-  mutate(difference = female - male) 
-
-depr_prev_bystate_diff
-```
-
-Next, merge the WPS index data and the GDP data with the two above data frames, respectively:
-```{r}
 merged_female_depr_eco = list(depr_prev_bystate_female, index_data, gdp_data) %>% 
-  reduce(left_join, by='state_code')
+  reduce(left_join, by='state_code') %>% 
+  select(state_code, depression_prev, scaled_index, gdp)
 
-merged_female_depr_eco
+merged_female_depr_eco %>% knitr::kable()
+
 ```
+
+### Scatterplot for spotting assoiation
 
 The following scatterplot shows that there might be a negative association between the depression prevalence among women and the WPS index:
 ```{r}
-merged_female_depr_eco %>% 
-  ggplot(aes(x = scaled_index, y = depression_prev)) +
-  geom_point()
+plot_ly(merged_female_depr_eco, 
+        x = ~scaled_index, y = ~depression_prev,
+        type = "scatter", mode = "markers",
+        text = ~state_code) %>% 
+  layout(title = '% Self-reported past depression vs WPS index, by state',
+         xaxis = list(title = 'WPS index'),
+         yaxis = list(title = '% Self-reported past depression')) 
+
 ```
 
+### Regression analysis on the association between depression prevalence among women and gender inequality
 
-We check if the association above is significant by running a multiple linear regression of Female depression prevalence in each state on the WPS index in each state:
+We check if the association above is significant by first running a simple linear regression of prevalence of self-reported depression among women in each state on the WPS index in each state:
+
 ```{r}
 index_m11 = lm(depression_prev ~ scaled_index, data = merged_female_depr_eco)
-summary(index_m11) %>% broom::tidy()
+summary(index_m11) %>% broom::tidy() %>%  knitr::kable()
 ```
-We check if the association between state-level prevalence of self-reported depression and the WPS index is still statistically significant after adjusting for state per-capita GDP:
+
+We check if the association between state-level prevalence of self-reported depression and the WPS index is still statistically significant after adjusting for state per-capita GDP, which is a measure of economic development:
+
 ```{r}
 index_m12 = lm(depression_prev ~ scaled_index + gdp, data = merged_female_depr_eco)
-summary(index_m12) %>% broom::tidy()
+summary(index_m12) %>% broom::tidy() %>% knitr::kable()
 ```
+After adjusting for per-capita GDP, the negative association between prevalence of self-reported depression among women and the gender inequality index remains statistically significant. Therefore, we conclude that, on a state-level, the self-reported depression among women may indeed be associated with the level of gender inequality in their state of residence. 
+
+## Mental health outcome 2: self-reported >15 days mental health not good in the past 30 days
+
+We run the same analyses as above using our second mental health outcome. First, we prepare the data frame.
+
+```{r message = FALSE}
+badmh_prev_bystate_gender = brfss_design %>%
+  group_by(state_code, sex, mh_bin) %>%
+  summarize(badmh_prev = 100*survey_mean(na.rm = T, vartype = c("ci")))
+
+badmh_prev_bystate_female = badmh_prev_bystate_gender %>%
+  filter(sex == "female", mh_bin == ">15 days") %>% 
+  select(state_code, badmh_prev)
+
+merged_female_badmh_eco = list(badmh_prev_bystate_female, index_data, gdp_data) %>% 
+  reduce(left_join, by='state_code') %>% 
+  select(state_code, badmh_prev, scaled_index, gdp)
+
+merged_female_badmh_eco %>% knitr::kable()
+```
+
+### Scatterplot for spotting assoiation
+
+The following scatterplot shows that there might be a negative association between having >15 days mental health not good in the past 30 days among women and the WPS index:
+
+```{r}
+plot_ly(merged_female_badmh_eco, 
+        x = ~scaled_index, y = ~badmh_prev,
+        type = "scatter", mode = "markers",
+        text = ~state_code) %>% 
+  layout(title = '% >15 days mental health not good in the past 30 days vs WPS index, by state',
+         xaxis = list(title = 'WPS index'),
+         yaxis = list(title = '% >15 days mental health not good in the past 30 days')) 
+
+```
+
+### Regression analysis on the association between % >15 days mental health not good in the past 30 days among women and gender inequality
+
+We check if the association above is significant by first running a simple linear regression against the WPS index in each state:
+
+```{r}
+index_m21 = lm(badmh_prev ~ scaled_index, data = merged_female_badmh_eco)
+summary(index_m21) %>% broom::tidy() %>%  knitr::kable()
+``` 
+
+We check if the association between our second mental health outcome and the WPS index is still statistically significant after adjusting for state per-capita GDP.
+
+```{r}
+index_m22 = lm(badmh_prev ~ scaled_index + gdp, data = merged_female_badmh_eco)
+summary(index_m22) %>% broom::tidy() %>% knitr::kable()
+```
+
+We can see that the WPS index remains statistically significant. Therefore, recent bad mental health may be associated with gender inequality on the state level as well. 
 

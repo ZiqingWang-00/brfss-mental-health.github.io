@@ -36,6 +36,13 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -416,11 +423,21 @@ div.tocify {
 </div>
 
 
+<div id="data-description-importing-and-cleaning"
+class="section level2">
+<h2>Data description, importing, and cleaning</h2>
+<p>In this section, we briefly go over where we got the data and how we
+processed it for this ecological analysis.</p>
+<div id="gender-inequality-index" class="section level3">
+<h3>Gender (in)equality index</h3>
 <p>We obtained the U.S. Women, Peace and Security (WPS) Index in 2020
 calculated by Georgetown Institute for Women, Peace, and Security
 downloaded from {here}(<a href="https://giwps.georgetown.edu/usa-index/"
 class="uri">https://giwps.georgetown.edu/usa-index/</a>). We import the
-raw data (xlsx) and extract the WPS index below:</p>
+raw data (xlsx) and extract the WPS index below. We only need the
+overall WPS index and the states, so we select those two columns. We
+scaled the original index data by multiplying a factor of 100 for better
+readability.</p>
 <pre class="r"><code>index_data_colnames = read_excel(&quot;./data/US-Index-Data.xlsx&quot;,
                         sheet = &quot;Statistical table 3  Key statis&quot;,
                         n_max = 0) %&gt;%
@@ -430,51 +447,63 @@ index_data = read_excel(&quot;./data/US-Index-Data.xlsx&quot;,
                         sheet = &quot;Statistical table 3  Key statis&quot;,
                         range = &quot;A3:L53&quot;,
                         col_names = index_data_colnames) %&gt;% 
-  janitor::clean_names()
-
-index_data</code></pre>
-<pre><code>## # A tibble: 51 × 12
-##    overa…¹ state index…² inclu…³ justi…⁴ secur…⁵ resid…⁶ per_c…⁷ racia…⁸ urban…⁹
-##      &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1       1 Mass…   0.709   0.631   0.773   0.730  6.89e6   75258     0.8    92  
-##  2       2 Conn…   0.696   0.614   0.735   0.748  3.57e6   69789     0.9    88  
-##  3       3 Dist…   0.695   0.768   0.647   0.675  7.06e5  178442     1.2   100  
-##  4       4 Verm…   0.690   0.663   0.621   0.799  6.24e5   48855     0.3    38.9
-##  5       5 Rhod…   0.679   0.584   0.657   0.815  1.06e6   51963     0.8    90.7
-##  6       6 New …   0.652   0.667   0.622   0.669  1.36e6   57272     0.4    60.3
-##  7       7 Mary…   0.639   0.719   0.548   0.663  6.05e6   61926     1.1    87.2
-##  8       8 New …   0.634   0.553   0.736   0.627  1.95e7   75131     1.2    87.9
-##  9       9 Maine   0.632   0.561   0.668   0.675  1.34e6   43541     0.3    38.7
-## 10      10 Hawa…   0.626   0.601   0.675   0.605  1.42e6   58981     1.2    91.9
-## # … with 41 more rows, 2 more variables:
-## #   state_government_spending_per_capitac &lt;dbl&gt;,
-## #   state_government_control_by_democratsd &lt;dbl&gt;, and abbreviated variable
-## #   names ¹​overall_index_rank, ²​index_score, ³​inclusion_subindex_score,
-## #   ⁴​justice_subindex_score, ⁵​security_subindex_score, ⁶​resident_population,
-## #   ⁷​per_capita_real_gd_pa, ⁸​racial_diversity_scoreb,
-## #   ⁹​urban_share_of_population</code></pre>
-<p>We only need the overall WPS index and the states, so we select those
-two columns below:</p>
-<pre class="r"><code>index_data = index_data %&gt;% 
+  janitor::clean_names() %&gt;% 
   select(state, index_score) %&gt;%
   mutate(state_code = c(state.abb, &quot;DC&quot;)[match(state, c(state.name, &quot;District of Columbia&quot;))],
          scaled_index = 100 * index_score)
 
-index_data</code></pre>
-<pre><code>## # A tibble: 51 × 4
-##    state                index_score state_code scaled_index
-##    &lt;chr&gt;                      &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;
-##  1 Massachusetts              0.709 MA                 70.9
-##  2 Connecticut                0.696 CT                 69.6
-##  3 District of Columbia       0.695 DC                 69.5
-##  4 Vermont                    0.690 VT                 69.0
-##  5 Rhode Island               0.679 RI                 67.9
-##  6 New Hampshire              0.652 NH                 65.2
-##  7 Maryland                   0.639 MD                 63.9
-##  8 New York                   0.634 NY                 63.4
-##  9 Maine                      0.632 ME                 63.2
-## 10 Hawaii                     0.626 HI                 62.6
-## # … with 41 more rows</code></pre>
+head(index_data) %&gt;% knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">state</th>
+<th align="right">index_score</th>
+<th align="left">state_code</th>
+<th align="right">scaled_index</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Massachusetts</td>
+<td align="right">0.7091</td>
+<td align="left">MA</td>
+<td align="right">70.91</td>
+</tr>
+<tr class="even">
+<td align="left">Connecticut</td>
+<td align="right">0.6963</td>
+<td align="left">CT</td>
+<td align="right">69.63</td>
+</tr>
+<tr class="odd">
+<td align="left">District of Columbia</td>
+<td align="right">0.6949</td>
+<td align="left">DC</td>
+<td align="right">69.49</td>
+</tr>
+<tr class="even">
+<td align="left">Vermont</td>
+<td align="right">0.6905</td>
+<td align="left">VT</td>
+<td align="right">69.05</td>
+</tr>
+<tr class="odd">
+<td align="left">Rhode Island</td>
+<td align="right">0.6787</td>
+<td align="left">RI</td>
+<td align="right">67.87</td>
+</tr>
+<tr class="even">
+<td align="left">New Hampshire</td>
+<td align="right">0.6520</td>
+<td align="left">NH</td>
+<td align="right">65.20</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="gdp-per-capita-by-us-state" class="section level3">
+<h3>GDP per capita by US state</h3>
 <p>We also obtained the per-capita GDP for each US state in 2021 from
 {here}(<a
 href="https://www.statista.com/statistics/248063/per-capita-us-real-gross-domestic-product-gdp-by-state/"
@@ -486,121 +515,1017 @@ We import the data below:</p>
                       col_names = c(&quot;state&quot;, &quot;gdp&quot;)) %&gt;% 
   mutate(state_code = c(state.abb, &quot;DC&quot;)[match(state, c(state.name, &quot;District of Columbia&quot;))])
 
-gdp_data</code></pre>
-<pre><code>## # A tibble: 52 × 3
-##    state                   gdp state_code
-##    &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;     
-##  1 District of Columbia 189513 DC        
-##  2 New York              76365 NY        
-##  3 Massachusetts         76324 MA        
-##  4 Washington            74319 WA        
-##  5 California            73264 CA        
-##  6 Alaska                69430 AK        
-##  7 North Dakota          69429 ND        
-##  8 Connecticut           68381 CT        
-##  9 Colorado              64308 CO        
-## 10 Delaware              64187 DE        
-## # … with 42 more rows</code></pre>
-<p>Next, we obtain the data frames on state-level self-reported
-depression prevalence data among women, and the state-level sex
-difference in self-repored depression prevalence, respectively:</p>
+head(gdp_data) %&gt;%  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">state</th>
+<th align="right">gdp</th>
+<th align="left">state_code</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">District of Columbia</td>
+<td align="right">189513</td>
+<td align="left">DC</td>
+</tr>
+<tr class="even">
+<td align="left">New York</td>
+<td align="right">76365</td>
+<td align="left">NY</td>
+</tr>
+<tr class="odd">
+<td align="left">Massachusetts</td>
+<td align="right">76324</td>
+<td align="left">MA</td>
+</tr>
+<tr class="even">
+<td align="left">Washington</td>
+<td align="right">74319</td>
+<td align="left">WA</td>
+</tr>
+<tr class="odd">
+<td align="left">California</td>
+<td align="right">73264</td>
+<td align="left">CA</td>
+</tr>
+<tr class="even">
+<td align="left">Alaska</td>
+<td align="right">69430</td>
+<td align="left">AK</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div
+id="outcome-variable-1-prevalence-of-self-reported-past-depression-among-women"
+class="section level2">
+<h2>Outcome variable 1: Prevalence of self-reported past depression
+among women</h2>
+<p>We are interested in whether the level of gender inequality accross
+US states is associated with the prevalence of self-reported past
+depression among womenn. We first obtain the data frames on state-level
+self-reported depression prevalence data among women. This will be the
+response variable of interest. Next, we merge the WPS index data and the
+GDP data with the two data frames that contains the WPS index and the
+GDP per capita, respectively:</p>
 <pre class="r"><code>depr_prev_bystate_gender = brfss_design %&gt;%
   group_by(state_code, sex, depression) %&gt;%
   summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c(&quot;ci&quot;)))
 
 depr_prev_bystate_female = depr_prev_bystate_gender %&gt;%
   filter(sex == &quot;female&quot;, depression == &quot;yes&quot;) %&gt;% 
-  select(state_code, depression_prev)</code></pre>
-<pre><code>## Adding missing grouping variables: `sex`</code></pre>
-<pre class="r"><code>depr_prev_bystate_female</code></pre>
-<pre><code>## # A tibble: 50 × 3
-## # Groups:   state_code, sex [50]
-##    sex    state_code depression_prev
-##    &lt;fct&gt;  &lt;chr&gt;                &lt;dbl&gt;
-##  1 female AK                    24.8
-##  2 female AL                    28.3
-##  3 female AR                    30.1
-##  4 female AZ                    22.5
-##  5 female CA                    18.1
-##  6 female CO                    26.6
-##  7 female CT                    22.2
-##  8 female DC                    23.7
-##  9 female DE                    20.5
-## 10 female GA                    21.9
-## # … with 40 more rows</code></pre>
-<pre class="r"><code>depr_prev_bystate_diff = depr_prev_bystate_gender %&gt;%
-  select(state_code, depression_prev, sex, depression) %&gt;%
-  filter(depression == &quot;yes&quot;) %&gt;%
-  pivot_wider(names_from = &quot;sex&quot;,
-              values_from = &quot;depression_prev&quot;) %&gt;%
-  mutate(difference = female - male) 
+  select(state_code, depression_prev)
 
-depr_prev_bystate_diff</code></pre>
-<pre><code>## # A tibble: 50 × 5
-## # Groups:   state_code [50]
-##    state_code depression  male female difference
-##    &lt;chr&gt;      &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
-##  1 AK         yes         14.8   24.8      10.1 
-##  2 AL         yes         15.6   28.3      12.7 
-##  3 AR         yes         18.8   30.1      11.3 
-##  4 AZ         yes         12.5   22.5      10.0 
-##  5 CA         yes         12.0   18.1       6.02
-##  6 CO         yes         14.3   26.6      12.3 
-##  7 CT         yes         13.6   22.2       8.55
-##  8 DC         yes         17.0   23.7       6.73
-##  9 DE         yes         11.7   20.5       8.72
-## 10 GA         yes         13.1   21.9       8.71
-## # … with 40 more rows</code></pre>
-<p>Next, merge the WPS index data and the GDP data with the two above
-data frames, respectively:</p>
-<pre class="r"><code>merged_female_depr_eco = list(depr_prev_bystate_female, index_data, gdp_data) %&gt;% 
-  reduce(left_join, by=&#39;state_code&#39;)
+merged_female_depr_eco = list(depr_prev_bystate_female, index_data, gdp_data) %&gt;% 
+  reduce(left_join, by=&#39;state_code&#39;) %&gt;% 
+  select(state_code, depression_prev, scaled_index, gdp)
 
-merged_female_depr_eco</code></pre>
-<pre><code>## # A tibble: 50 × 8
-## # Groups:   state_code, sex [50]
-##    sex    state_code depression_prev state.x      index…¹ scale…² state.y    gdp
-##    &lt;fct&gt;  &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
-##  1 female AK                    24.8 Alaska         0.482    48.2 Alaska   69430
-##  2 female AL                    28.3 Alabama        0.238    23.8 Alabama  41664
-##  3 female AR                    30.1 Arkansas       0.231    23.1 Arkans…  40764
-##  4 female AZ                    22.5 Arizona        0.453    45.3 Arizona  47779
-##  5 female CA                    18.1 California     0.564    56.4 Califo…  73264
-##  6 female CO                    26.6 Colorado       0.565    56.5 Colora…  64308
-##  7 female CT                    22.2 Connecticut    0.696    69.6 Connec…  68381
-##  8 female DC                    23.7 District of…   0.695    69.5 Distri… 189513
-##  9 female DE                    20.5 Delaware       0.524    52.4 Delawa…  64187
-## 10 female GA                    21.9 Georgia        0.382    38.2 Georgia  53270
-## # … with 40 more rows, and abbreviated variable names ¹​index_score,
-## #   ²​scaled_index</code></pre>
+merged_female_depr_eco %&gt;% knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">sex</th>
+<th align="left">state_code</th>
+<th align="right">depression_prev</th>
+<th align="right">scaled_index</th>
+<th align="right">gdp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">AK</td>
+<td align="right">24.83118</td>
+<td align="right">48.23</td>
+<td align="right">69430</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">AL</td>
+<td align="right">28.25065</td>
+<td align="right">23.82</td>
+<td align="right">41664</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">AR</td>
+<td align="right">30.08091</td>
+<td align="right">23.09</td>
+<td align="right">40764</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">AZ</td>
+<td align="right">22.48704</td>
+<td align="right">45.30</td>
+<td align="right">47779</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">CA</td>
+<td align="right">18.05821</td>
+<td align="right">56.42</td>
+<td align="right">73264</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">CO</td>
+<td align="right">26.57513</td>
+<td align="right">56.51</td>
+<td align="right">64308</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">CT</td>
+<td align="right">22.16207</td>
+<td align="right">69.63</td>
+<td align="right">68381</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">DC</td>
+<td align="right">23.73827</td>
+<td align="right">69.49</td>
+<td align="right">189513</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">DE</td>
+<td align="right">20.46057</td>
+<td align="right">52.38</td>
+<td align="right">64187</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">GA</td>
+<td align="right">21.85262</td>
+<td align="right">38.25</td>
+<td align="right">53270</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">HI</td>
+<td align="right">13.33637</td>
+<td align="right">62.58</td>
+<td align="right">51713</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">IA</td>
+<td align="right">23.19780</td>
+<td align="right">52.13</td>
+<td align="right">56295</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">ID</td>
+<td align="right">28.87761</td>
+<td align="right">37.08</td>
+<td align="right">42134</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">IL</td>
+<td align="right">21.05810</td>
+<td align="right">60.19</td>
+<td align="right">61560</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">IN</td>
+<td align="right">31.85999</td>
+<td align="right">43.53</td>
+<td align="right">50873</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">KS</td>
+<td align="right">26.82827</td>
+<td align="right">48.49</td>
+<td align="right">55303</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">KY</td>
+<td align="right">34.61130</td>
+<td align="right">27.66</td>
+<td align="right">43868</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">LA</td>
+<td align="right">30.64532</td>
+<td align="right">16.66</td>
+<td align="right">47827</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">MA</td>
+<td align="right">22.38116</td>
+<td align="right">70.91</td>
+<td align="right">76324</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">MD</td>
+<td align="right">21.63637</td>
+<td align="right">63.91</td>
+<td align="right">59783</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">ME</td>
+<td align="right">29.86267</td>
+<td align="right">63.24</td>
+<td align="right">46343</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">MI</td>
+<td align="right">28.61701</td>
+<td align="right">52.65</td>
+<td align="right">47934</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">MN</td>
+<td align="right">26.47907</td>
+<td align="right">60.56</td>
+<td align="right">60659</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">MO</td>
+<td align="right">28.91324</td>
+<td align="right">38.10</td>
+<td align="right">47937</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">MS</td>
+<td align="right">25.78826</td>
+<td align="right">18.20</td>
+<td align="right">35374</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">MT</td>
+<td align="right">29.99522</td>
+<td align="right">44.58</td>
+<td align="right">44352</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">NC</td>
+<td align="right">26.20933</td>
+<td align="right">44.64</td>
+<td align="right">51362</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">ND</td>
+<td align="right">26.48847</td>
+<td align="right">52.88</td>
+<td align="right">69429</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">NE</td>
+<td align="right">22.17546</td>
+<td align="right">53.67</td>
+<td align="right">62197</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">NH</td>
+<td align="right">29.51401</td>
+<td align="right">65.20</td>
+<td align="right">59746</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">NJ</td>
+<td align="right">20.16273</td>
+<td align="right">60.73</td>
+<td align="right">61172</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">NM</td>
+<td align="right">24.96349</td>
+<td align="right">36.49</td>
+<td align="right">44249</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">NV</td>
+<td align="right">21.82802</td>
+<td align="right">43.16</td>
+<td align="right">50753</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">NY</td>
+<td align="right">20.02527</td>
+<td align="right">63.42</td>
+<td align="right">76365</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">OH</td>
+<td align="right">27.52658</td>
+<td align="right">50.61</td>
+<td align="right">53420</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">OK</td>
+<td align="right">30.67792</td>
+<td align="right">33.93</td>
+<td align="right">48469</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">OR</td>
+<td align="right">31.25107</td>
+<td align="right">54.12</td>
+<td align="right">53691</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">PA</td>
+<td align="right">23.37622</td>
+<td align="right">54.47</td>
+<td align="right">54842</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">RI</td>
+<td align="right">27.01662</td>
+<td align="right">67.87</td>
+<td align="right">49841</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">SC</td>
+<td align="right">25.24207</td>
+<td align="right">30.40</td>
+<td align="right">42585</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">SD</td>
+<td align="right">22.28772</td>
+<td align="right">46.95</td>
+<td align="right">55349</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">TN</td>
+<td align="right">31.90031</td>
+<td align="right">29.91</td>
+<td align="right">50530</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">TX</td>
+<td align="right">24.17797</td>
+<td align="right">35.50</td>
+<td align="right">61469</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">UT</td>
+<td align="right">32.25531</td>
+<td align="right">40.02</td>
+<td align="right">55995</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">VA</td>
+<td align="right">24.89834</td>
+<td align="right">48.53</td>
+<td align="right">58474</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">VT</td>
+<td align="right">30.50070</td>
+<td align="right">69.05</td>
+<td align="right">47318</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">WA</td>
+<td align="right">29.95328</td>
+<td align="right">52.02</td>
+<td align="right">74319</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">WI</td>
+<td align="right">28.14236</td>
+<td align="right">55.93</td>
+<td align="right">51980</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">WV</td>
+<td align="right">34.63618</td>
+<td align="right">29.35</td>
+<td align="right">40014</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">WY</td>
+<td align="right">27.62881</td>
+<td align="right">30.76</td>
+<td align="right">62888</td>
+</tr>
+</tbody>
+</table>
+<div id="scatterplot-for-spotting-assoiation" class="section level3">
+<h3>Scatterplot for spotting assoiation</h3>
 <p>The following scatterplot shows that there might be a negative
 association between the depression prevalence among women and the WPS
 index:</p>
-<pre class="r"><code>merged_female_depr_eco %&gt;% 
-  ggplot(aes(x = scaled_index, y = depression_prev)) +
-  geom_point()</code></pre>
-<p><img src="ecological_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p>We check if the association above is significant by running a
-multiple linear regression of Female depression prevalence in each state
-on the WPS index in each state:</p>
+<pre class="r"><code>plot_ly(merged_female_depr_eco, 
+        x = ~scaled_index, y = ~depression_prev,
+        type = &quot;scatter&quot;, mode = &quot;markers&quot;,
+        text = ~state_code) %&gt;% 
+  layout(title = &#39;% Self-reported past depression vs WPS index, by state&#39;,
+         xaxis = list(title = &#39;WPS index&#39;),
+         yaxis = list(title = &#39;% Self-reported past depression&#39;)) </code></pre>
+<div id="htmlwidget-7fb7467bf91c00c08d25" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7fb7467bf91c00c08d25">{"x":{"visdat":{"11507701fc20":["function () ","plotlyVisDat"]},"cur_data":"11507701fc20","attrs":{"11507701fc20":{"x":{},"y":{},"mode":"markers","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"% Self-reported past depression vs WPS index, by state","xaxis":{"domain":[0,1],"automargin":true,"title":"WPS index"},"yaxis":{"domain":[0,1],"automargin":true,"title":"% Self-reported past depression"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[48.23,23.82,23.09,45.3,56.42,56.51,69.63,69.49,52.38,38.25,62.58,52.13,37.08,60.19,43.53,48.49,27.66,16.66,70.91,63.91,63.24,52.65,60.56,38.1,18.2,44.58,44.64,52.88,53.67,65.2,60.73,36.49,43.16,63.42,50.61,33.93,54.12,54.47,67.87,30.4,46.95,29.91,35.5,40.02,48.53,69.05,52.02,55.93,29.35,30.76],"y":[24.8311789469841,28.2506519547944,30.0809089466364,22.4870358805347,18.0582144049614,26.5751294404781,22.1620687210811,23.7382725723321,20.4605708902827,21.8526216911618,13.3363748003366,23.1978039282297,28.8776131287934,21.0580997049505,31.8599898856878,26.8282706008772,34.6113031767517,30.6453163648573,22.3811560148928,21.6363714905082,29.8626733671774,28.6170147965802,26.4790693464664,28.9132363957243,25.7882647779463,29.9952244979855,26.2093311351113,26.4884739230651,22.1754634293274,29.5140077538701,20.1627321464366,24.9634900558666,21.8280197610649,20.0252732627944,27.5265821487444,30.677924490415,31.2510665610867,23.3762239721548,27.0166161170754,25.2420687064299,22.2877248840237,31.9003076397722,24.1779656047657,32.2553065700779,24.8983426576629,30.500701294927,29.9532797603985,28.14236265379,34.6361754848757,27.6288068685539],"mode":"markers","text":["AK","AL","AR","AZ","CA","CO","CT","DC","DE","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],"type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div
+id="regression-analysis-on-the-association-between-depression-prevalence-among-women-and-gender-inequality"
+class="section level3">
+<h3>Regression analysis on the association between depression prevalence
+among women and gender inequality</h3>
+<p>We check if the association above is significant by first running a
+simple linear regression of prevalence of self-reported depression among
+women in each state on the WPS index in each state:</p>
 <pre class="r"><code>index_m11 = lm(depression_prev ~ scaled_index, data = merged_female_depr_eco)
-summary(index_m11) %&gt;% broom::tidy()</code></pre>
-<pre><code>## # A tibble: 2 × 5
-##   term         estimate std.error statistic  p.value
-##   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)    32.6      2.00       16.3  3.24e-21
-## 2 scaled_index   -0.135    0.0400     -3.38 1.45e- 3</code></pre>
+summary(index_m11) %&gt;% broom::tidy() %&gt;%  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">32.5791044</td>
+<td align="right">1.9968275</td>
+<td align="right">16.315433</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">scaled_index</td>
+<td align="right">-0.1351883</td>
+<td align="right">0.0399892</td>
+<td align="right">-3.380621</td>
+<td align="right">0.0014452</td>
+</tr>
+</tbody>
+</table>
 <p>We check if the association between state-level prevalence of
 self-reported depression and the WPS index is still statistically
-significant after adjusting for state per-capita GDP:</p>
+significant after adjusting for state per-capita GDP, which is a measure
+of economic development:</p>
 <pre class="r"><code>index_m12 = lm(depression_prev ~ scaled_index + gdp, data = merged_female_depr_eco)
-summary(index_m12) %&gt;% broom::tidy()</code></pre>
-<pre><code>## # A tibble: 3 × 5
-##   term           estimate std.error statistic  p.value
-##   &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)  33.1       2.14         15.5   4.73e-20
-## 2 scaled_index -0.121     0.0453       -2.67  1.05e- 2
-## 3 gdp          -0.0000209 0.0000303    -0.690 4.94e- 1</code></pre>
+summary(index_m12) %&gt;% broom::tidy() %&gt;% knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">33.0921073</td>
+<td align="right">2.1411131</td>
+<td align="right">15.4555623</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">scaled_index</td>
+<td align="right">-0.1207836</td>
+<td align="right">0.0453080</td>
+<td align="right">-2.6658332</td>
+<td align="right">0.0104951</td>
+</tr>
+<tr class="odd">
+<td align="left">gdp</td>
+<td align="right">-0.0000209</td>
+<td align="right">0.0000303</td>
+<td align="right">-0.6898376</td>
+<td align="right">0.4936885</td>
+</tr>
+</tbody>
+</table>
+<p>After adjusting for per-capita GDP, the negative association between
+prevalence of self-reported depression among women and the gender
+inequality index remains statistically significant. Therefore, we
+conclude that, on a state-level, the self-reported depression among
+women may indeed be associated with the level of gender inequality in
+their state of residence.</p>
+</div>
+</div>
+<div
+id="mental-health-outcome-2-self-reported-15-days-mental-health-not-good-in-the-past-30-days"
+class="section level2">
+<h2>Mental health outcome 2: self-reported &gt;15 days mental health not
+good in the past 30 days</h2>
+<p>We run the same analyses as above using our second mental health
+outcome. First, we prepare the data frame.</p>
+<pre class="r"><code>badmh_prev_bystate_gender = brfss_design %&gt;%
+  group_by(state_code, sex, mh_bin) %&gt;%
+  summarize(badmh_prev = 100*survey_mean(na.rm = T, vartype = c(&quot;ci&quot;)))
+
+badmh_prev_bystate_female = badmh_prev_bystate_gender %&gt;%
+  filter(sex == &quot;female&quot;, mh_bin == &quot;&gt;15 days&quot;) %&gt;% 
+  select(state_code, badmh_prev)
+
+merged_female_badmh_eco = list(badmh_prev_bystate_female, index_data, gdp_data) %&gt;% 
+  reduce(left_join, by=&#39;state_code&#39;) %&gt;% 
+  select(state_code, badmh_prev, scaled_index, gdp)
+
+merged_female_badmh_eco %&gt;% knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">sex</th>
+<th align="left">state_code</th>
+<th align="right">badmh_prev</th>
+<th align="right">scaled_index</th>
+<th align="right">gdp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">AK</td>
+<td align="right">9.901947</td>
+<td align="right">48.23</td>
+<td align="right">69430</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">AL</td>
+<td align="right">15.738084</td>
+<td align="right">23.82</td>
+<td align="right">41664</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">AR</td>
+<td align="right">15.457136</td>
+<td align="right">23.09</td>
+<td align="right">40764</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">AZ</td>
+<td align="right">12.193988</td>
+<td align="right">45.30</td>
+<td align="right">47779</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">CA</td>
+<td align="right">12.362229</td>
+<td align="right">56.42</td>
+<td align="right">73264</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">CO</td>
+<td align="right">12.205224</td>
+<td align="right">56.51</td>
+<td align="right">64308</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">CT</td>
+<td align="right">10.983084</td>
+<td align="right">69.63</td>
+<td align="right">68381</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">DC</td>
+<td align="right">9.642374</td>
+<td align="right">69.49</td>
+<td align="right">189513</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">DE</td>
+<td align="right">12.044364</td>
+<td align="right">52.38</td>
+<td align="right">64187</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">GA</td>
+<td align="right">12.035640</td>
+<td align="right">38.25</td>
+<td align="right">53270</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">HI</td>
+<td align="right">7.600334</td>
+<td align="right">62.58</td>
+<td align="right">51713</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">IA</td>
+<td align="right">11.466711</td>
+<td align="right">52.13</td>
+<td align="right">56295</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">ID</td>
+<td align="right">11.964375</td>
+<td align="right">37.08</td>
+<td align="right">42134</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">IL</td>
+<td align="right">10.288070</td>
+<td align="right">60.19</td>
+<td align="right">61560</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">IN</td>
+<td align="right">13.714215</td>
+<td align="right">43.53</td>
+<td align="right">50873</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">KS</td>
+<td align="right">12.892639</td>
+<td align="right">48.49</td>
+<td align="right">55303</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">KY</td>
+<td align="right">15.492143</td>
+<td align="right">27.66</td>
+<td align="right">43868</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">LA</td>
+<td align="right">14.609744</td>
+<td align="right">16.66</td>
+<td align="right">47827</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">MA</td>
+<td align="right">11.329613</td>
+<td align="right">70.91</td>
+<td align="right">76324</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">MD</td>
+<td align="right">10.093583</td>
+<td align="right">63.91</td>
+<td align="right">59783</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">ME</td>
+<td align="right">12.163899</td>
+<td align="right">63.24</td>
+<td align="right">46343</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">MI</td>
+<td align="right">13.127491</td>
+<td align="right">52.65</td>
+<td align="right">47934</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">MN</td>
+<td align="right">9.745176</td>
+<td align="right">60.56</td>
+<td align="right">60659</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">MO</td>
+<td align="right">13.617548</td>
+<td align="right">38.10</td>
+<td align="right">47937</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">MS</td>
+<td align="right">11.165513</td>
+<td align="right">18.20</td>
+<td align="right">35374</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">MT</td>
+<td align="right">11.385565</td>
+<td align="right">44.58</td>
+<td align="right">44352</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">NC</td>
+<td align="right">11.273692</td>
+<td align="right">44.64</td>
+<td align="right">51362</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">ND</td>
+<td align="right">9.942315</td>
+<td align="right">52.88</td>
+<td align="right">69429</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">NE</td>
+<td align="right">9.963987</td>
+<td align="right">53.67</td>
+<td align="right">62197</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">NH</td>
+<td align="right">11.545657</td>
+<td align="right">65.20</td>
+<td align="right">59746</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">NJ</td>
+<td align="right">10.072782</td>
+<td align="right">60.73</td>
+<td align="right">61172</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">NM</td>
+<td align="right">11.530685</td>
+<td align="right">36.49</td>
+<td align="right">44249</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">NV</td>
+<td align="right">13.920586</td>
+<td align="right">43.16</td>
+<td align="right">50753</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">NY</td>
+<td align="right">9.917467</td>
+<td align="right">63.42</td>
+<td align="right">76365</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">OH</td>
+<td align="right">13.820604</td>
+<td align="right">50.61</td>
+<td align="right">53420</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">OK</td>
+<td align="right">15.655117</td>
+<td align="right">33.93</td>
+<td align="right">48469</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">OR</td>
+<td align="right">13.646951</td>
+<td align="right">54.12</td>
+<td align="right">53691</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">PA</td>
+<td align="right">10.320849</td>
+<td align="right">54.47</td>
+<td align="right">54842</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">RI</td>
+<td align="right">10.802385</td>
+<td align="right">67.87</td>
+<td align="right">49841</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">SC</td>
+<td align="right">13.796842</td>
+<td align="right">30.40</td>
+<td align="right">42585</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">SD</td>
+<td align="right">9.044554</td>
+<td align="right">46.95</td>
+<td align="right">55349</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">TN</td>
+<td align="right">15.109429</td>
+<td align="right">29.91</td>
+<td align="right">50530</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">TX</td>
+<td align="right">11.162140</td>
+<td align="right">35.50</td>
+<td align="right">61469</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">UT</td>
+<td align="right">14.523966</td>
+<td align="right">40.02</td>
+<td align="right">55995</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">VA</td>
+<td align="right">12.802861</td>
+<td align="right">48.53</td>
+<td align="right">58474</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">VT</td>
+<td align="right">12.383645</td>
+<td align="right">69.05</td>
+<td align="right">47318</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">WA</td>
+<td align="right">13.602671</td>
+<td align="right">52.02</td>
+<td align="right">74319</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">WI</td>
+<td align="right">12.760315</td>
+<td align="right">55.93</td>
+<td align="right">51980</td>
+</tr>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">WV</td>
+<td align="right">17.293912</td>
+<td align="right">29.35</td>
+<td align="right">40014</td>
+</tr>
+<tr class="even">
+<td align="left">female</td>
+<td align="left">WY</td>
+<td align="right">13.617253</td>
+<td align="right">30.76</td>
+<td align="right">62888</td>
+</tr>
+</tbody>
+</table>
+<div id="scatterplot-for-spotting-assoiation-1" class="section level3">
+<h3>Scatterplot for spotting assoiation</h3>
+<p>The following scatterplot shows that there might be a negative
+association between having &gt;15 days mental health not good in the
+past 30 days among women and the WPS index:</p>
+<pre class="r"><code>plot_ly(merged_female_badmh_eco, 
+        x = ~scaled_index, y = ~badmh_prev,
+        type = &quot;scatter&quot;, mode = &quot;markers&quot;,
+        text = ~state_code) %&gt;% 
+  layout(title = &#39;% &gt;15 days mental health not good in the past 30 days vs WPS index, by state&#39;,
+         xaxis = list(title = &#39;WPS index&#39;),
+         yaxis = list(title = &#39;% &gt;15 days mental health not good in the past 30 days&#39;)) </code></pre>
+<div id="htmlwidget-5f9400313504ff1b0da7" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5f9400313504ff1b0da7">{"x":{"visdat":{"115074018aeff":["function () ","plotlyVisDat"]},"cur_data":"115074018aeff","attrs":{"115074018aeff":{"x":{},"y":{},"mode":"markers","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"% >15 days mental health not good in the past 30 days vs WPS index, by state","xaxis":{"domain":[0,1],"automargin":true,"title":"WPS index"},"yaxis":{"domain":[0,1],"automargin":true,"title":"% >15 days mental health not good in the past 30 days"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[48.23,23.82,23.09,45.3,56.42,56.51,69.63,69.49,52.38,38.25,62.58,52.13,37.08,60.19,43.53,48.49,27.66,16.66,70.91,63.91,63.24,52.65,60.56,38.1,18.2,44.58,44.64,52.88,53.67,65.2,60.73,36.49,43.16,63.42,50.61,33.93,54.12,54.47,67.87,30.4,46.95,29.91,35.5,40.02,48.53,69.05,52.02,55.93,29.35,30.76],"y":[9.90194707693702,15.7380836797344,15.4571362766851,12.1939878400788,12.3622289136273,12.2052237305397,10.98308442335,9.64237415200413,12.0443641847708,12.0356402325478,7.60033362279467,11.4667114340968,11.9643749575053,10.2880699980428,13.7142151290427,12.8926390394767,15.4921427860564,14.6097441667275,11.3296128370123,10.0935826711001,12.163899278833,13.1274907924062,9.74517554031321,13.6175483614629,11.165513474438,11.3855653108204,11.273692528712,9.9423150004997,9.96398711246516,11.5456571700407,10.0727823176004,11.5306849016657,13.9205862774418,9.91746691602005,13.8206039100717,15.6551174367125,13.6469510670136,10.3208485464804,10.8023846381979,13.7968421625593,9.04455358847393,15.1094288337551,11.1621396468987,14.5239658047144,12.8028612338106,12.3836454463797,13.6026714137994,12.7603149771032,17.2939119064622,13.6172530230464],"mode":"markers","text":["AK","AL","AR","AZ","CA","CO","CT","DC","DE","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],"type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div
+id="regression-analysis-on-the-association-between-15-days-mental-health-not-good-in-the-past-30-days-among-women-and-gender-inequality"
+class="section level3">
+<h3>Regression analysis on the association between % &gt;15 days mental
+health not good in the past 30 days among women and gender
+inequality</h3>
+<p>We check if the association above is significant by first running a
+simple linear regression against the WPS index in each state:</p>
+<pre class="r"><code>index_m21 = lm(badmh_prev ~ scaled_index, data = merged_female_badmh_eco)
+summary(index_m21) %&gt;% broom::tidy() %&gt;%  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">16.5134511</td>
+<td align="right">0.7878185</td>
+<td align="right">20.96098</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="even">
+<td align="left">scaled_index</td>
+<td align="right">-0.0893955</td>
+<td align="right">0.0157771</td>
+<td align="right">-5.66614</td>
+<td align="right">8e-07</td>
+</tr>
+</tbody>
+</table>
+<p>We check if the association between our second mental health outcome
+and the WPS index is still statistically significant after adjusting for
+state per-capita GDP.</p>
+<pre class="r"><code>index_m22 = lm(badmh_prev ~ scaled_index + gdp, data = merged_female_badmh_eco)
+summary(index_m22) %&gt;% broom::tidy() %&gt;% knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">16.7310959</td>
+<td align="right">0.8440754</td>
+<td align="right">19.8218020</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">scaled_index</td>
+<td align="right">-0.0832842</td>
+<td align="right">0.0178614</td>
+<td align="right">-4.6627906</td>
+<td align="right">0.0000260</td>
+</tr>
+<tr class="odd">
+<td align="left">gdp</td>
+<td align="right">-0.0000089</td>
+<td align="right">0.0000119</td>
+<td align="right">-0.7423929</td>
+<td align="right">0.4615436</td>
+</tr>
+</tbody>
+</table>
+<p>We can see that the WPS index remains statistically significant.
+Therefore, recent bad mental health may be associated with gender
+inequality on the state level as well.</p>
+</div>
+</div>
 
 
 
