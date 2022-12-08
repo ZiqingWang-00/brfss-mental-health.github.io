@@ -123,7 +123,7 @@ brfss_design %>%
                    y = children, yend = children, color = children),
                size = 2) +
   labs(
-    title = "Confidence Interval for the Self-Reported Prevalence of Depression of Men",
+    title = "Self-Reported Prevalence of Depression in Men",
     x = "Confidence Interval",
     y = "Number of Children in the Household"
   ) 
@@ -236,6 +236,7 @@ brfss_design %>%
                    y = age, yend = age, color = sex),
                size = 2)+
   labs(
+    title = "Self-Reported Prevalence of Depression",
     x = "Confidence Interval",
     y = "Age"
   ) 
