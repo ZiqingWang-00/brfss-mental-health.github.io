@@ -221,8 +221,23 @@ brfss_design %>%
   pull(p.value)
 ```
 
-Based on the plot and test result above, it seems that, for women, the prevalence of self-reported depression remains stable between age group 30-49 and 50-64, but decreases significantly when entering the age group of 30-49 as well as the group of 65+. The same trend is also displayed in men but with smaller magnitude in changes.  
+Based on the plot and test result above, it seems that, for women, the prevalence of self-reported depression remains stable between age group 30-49 and 50-64, but decreases significantly when entering the age group of 30-49 as well as the group of 65+. We draw the confidence intervals below to illustrate this point. The same trend is also displayed in men but with smaller magnitude in changes. 
 
 This gap in the magnitude of changes in the prevalence of self-reported depression indicates that aging might affect self-reported depression among women and men differently. 
 
+
+```{r}
+brfss_design %>%
+  group_by(sex, age, depression) %>%
+  summarize(depression_prev = survey_mean(na.rm = T, vartype = c("ci"))) %>%
+  filter(!is.na(age), depression == "yes") %>% 
+  ggplot() + 
+  geom_segment(aes(x = depression_prev_low, xend = depression_prev_upp,
+                   y = age, yend = age, color = sex),
+               size = 2)+
+  labs(
+    x = "Confidence Interval",
+    y = "Age"
+  ) 
+```
 
