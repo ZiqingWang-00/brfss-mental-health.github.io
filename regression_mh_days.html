@@ -342,10 +342,10 @@ div.tocify {
       <a href="state_level_eda.html">State-level Explorations</a>
     </li>
     <li>
-      <a href="depression_prev_EDA.html">On prevalence of self-reported depression diagnosis</a>
+      <a href="depression_prev_EDA.html">Self-reported past depression</a>
     </li>
     <li>
-      <a href="bad_mh_days_EDA.html">On # of days of bad mental health in the past 30 days</a>
+      <a href="bad_mh_days_EDA.html"># of days mental health not good in the past 30 days</a>
     </li>
   </ul>
 </li>
@@ -357,28 +357,26 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="regression_depr.html">Regression on self-reported depression diagnosis</a>
+      <a href="regression_depr.html">Regression on self-reported past depression</a>
     </li>
     <li>
-      <a href="regression_mh_days.html">Regression on # of days of bad mental health in the past 30 days</a>
+      <a href="regression_mh_days.html">Regression on # of days mental health not good in the past 30 days</a>
     </li>
     <li>
       <a href="ecological.html">Ecological analysis on state-level mental health outcomes</a>
     </li>
+    <li class="dropdown-header">Geographic Distribution of mental health outcomes by gender</li>
+    <li>
+      <a href="state_level_dashboard.html"></a>
+    </li>
   </ul>
 </li>
 <li>
-  <a href="state_level_dashboard.html">Geographic Distribution</a>
-</li>
-<li>
-  <a href="https://ziqingwang.shinyapps.io/shiny/">Predictions</a>
+  <a href="https://ziqingwang.shinyapps.io/shiny/">Odds to Probability</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="about.html">About</a>
-</li>
-<li>
   <a href="report.html">Report</a>
 </li>
 <li>
@@ -422,14 +420,68 @@ bad mental health</h1>
        brfss_design,
        family = quasibinomial()) 
 crude_mod_mh %&gt;%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
-<pre><code>## # A tibble: 4 × 7
-##   term                  estimate std.error statistic  p.value conf.low conf.high
-##   &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
-## 1 (Intercept)             0.0924    0.0192 -124.     0          0.0890    0.0959
-## 2 sexfemale               1.50      0.0235   17.2    3.60e-66   1.43      1.57  
-## 3 childrenone or two      1.00      0.0279    0.0225 9.82e- 1   0.947     1.06  
-## 4 childrenthree or more   0.992     0.0465   -0.162  8.71e- 1   0.906     1.09</code></pre>
+  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95) %&gt;%
+  knitr::kable(digits = 3)</code></pre>
+<table>
+<colgroup>
+<col width="28%" />
+<col width="11%" />
+<col width="12%" />
+<col width="12%" />
+<col width="10%" />
+<col width="11%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.092</td>
+<td align="right">0.019</td>
+<td align="right">-124.192</td>
+<td align="right">0.000</td>
+<td align="right">0.089</td>
+<td align="right">0.096</td>
+</tr>
+<tr class="even">
+<td align="left">sexfemale</td>
+<td align="right">1.498</td>
+<td align="right">0.024</td>
+<td align="right">17.186</td>
+<td align="right">0.000</td>
+<td align="right">1.430</td>
+<td align="right">1.569</td>
+</tr>
+<tr class="odd">
+<td align="left">childrenone or two</td>
+<td align="right">1.001</td>
+<td align="right">0.028</td>
+<td align="right">0.022</td>
+<td align="right">0.982</td>
+<td align="right">0.947</td>
+<td align="right">1.057</td>
+</tr>
+<tr class="even">
+<td align="left">childrenthree or more</td>
+<td align="right">0.992</td>
+<td align="right">0.046</td>
+<td align="right">-0.162</td>
+<td align="right">0.871</td>
+<td align="right">0.906</td>
+<td align="right">1.087</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="model-controlling-for-demographic-variables"
 class="section level3">
@@ -439,24 +491,140 @@ class="section level3">
        brfss_design,
        family = quasibinomial())
 mod2_mh %&gt;%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
-<pre><code>## # A tibble: 12 × 7
-##    term                      estimate std.er…¹ stati…²   p.value conf.…³ conf.…⁴
-##    &lt;chr&gt;                        &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 (Intercept)                 0.0905   0.0380  -63.1  0          0.0840  0.0975
-##  2 sexfemale                   1.57     0.0246   18.3  1.01e- 74  1.49    1.65  
-##  3 childrenone or two          0.905    0.0310   -3.24 1.20e-  3  0.851   0.961 
-##  4 childrenthree or more       0.906    0.0505   -1.96 4.95e-  2  0.820   1.00  
-##  5 raceblack                   0.879    0.0398   -3.23 1.23e-  3  0.813   0.951 
-##  6 raceasian                   0.527    0.109    -5.88 4.02e-  9  0.426   0.652 
-##  7 racehispanic                0.711    0.0410   -8.32 9.02e- 17  0.656   0.770 
-##  8 raceother                   1.27     0.0468    5.17 2.39e-  7  1.16    1.40  
-##  9 age30-49                    0.943    0.0348   -1.69 9.18e-  2  0.881   1.01  
-## 10 age50-64                    0.785    0.0350   -6.91 4.97e- 12  0.733   0.841 
-## 11 age65+                      0.412    0.0423  -21.0  9.27e- 98  0.379   0.447 
-## 12 marital_statusnot married   1.88     0.0279   22.6  2.04e-113  1.78    1.99  
-## # … with abbreviated variable names ¹​std.error, ²​statistic, ³​conf.low,
-## #   ⁴​conf.high</code></pre>
+  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)  %&gt;%
+  knitr::kable(digits = 3)</code></pre>
+<table>
+<colgroup>
+<col width="31%" />
+<col width="10%" />
+<col width="12%" />
+<col width="12%" />
+<col width="9%" />
+<col width="10%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.091</td>
+<td align="right">0.038</td>
+<td align="right">-63.132</td>
+<td align="right">0.000</td>
+<td align="right">0.084</td>
+<td align="right">0.098</td>
+</tr>
+<tr class="even">
+<td align="left">sexfemale</td>
+<td align="right">1.568</td>
+<td align="right">0.025</td>
+<td align="right">18.293</td>
+<td align="right">0.000</td>
+<td align="right">1.495</td>
+<td align="right">1.646</td>
+</tr>
+<tr class="odd">
+<td align="left">childrenone or two</td>
+<td align="right">0.905</td>
+<td align="right">0.031</td>
+<td align="right">-3.239</td>
+<td align="right">0.001</td>
+<td align="right">0.851</td>
+<td align="right">0.961</td>
+</tr>
+<tr class="even">
+<td align="left">childrenthree or more</td>
+<td align="right">0.906</td>
+<td align="right">0.051</td>
+<td align="right">-1.964</td>
+<td align="right">0.050</td>
+<td align="right">0.820</td>
+<td align="right">1.000</td>
+</tr>
+<tr class="odd">
+<td align="left">raceblack</td>
+<td align="right">0.879</td>
+<td align="right">0.040</td>
+<td align="right">-3.231</td>
+<td align="right">0.001</td>
+<td align="right">0.813</td>
+<td align="right">0.951</td>
+</tr>
+<tr class="even">
+<td align="left">raceasian</td>
+<td align="right">0.527</td>
+<td align="right">0.109</td>
+<td align="right">-5.883</td>
+<td align="right">0.000</td>
+<td align="right">0.426</td>
+<td align="right">0.652</td>
+</tr>
+<tr class="odd">
+<td align="left">racehispanic</td>
+<td align="right">0.711</td>
+<td align="right">0.041</td>
+<td align="right">-8.317</td>
+<td align="right">0.000</td>
+<td align="right">0.656</td>
+<td align="right">0.770</td>
+</tr>
+<tr class="even">
+<td align="left">raceother</td>
+<td align="right">1.273</td>
+<td align="right">0.047</td>
+<td align="right">5.166</td>
+<td align="right">0.000</td>
+<td align="right">1.162</td>
+<td align="right">1.396</td>
+</tr>
+<tr class="odd">
+<td align="left">age30-49</td>
+<td align="right">0.943</td>
+<td align="right">0.035</td>
+<td align="right">-1.686</td>
+<td align="right">0.092</td>
+<td align="right">0.881</td>
+<td align="right">1.010</td>
+</tr>
+<tr class="even">
+<td align="left">age50-64</td>
+<td align="right">0.785</td>
+<td align="right">0.035</td>
+<td align="right">-6.907</td>
+<td align="right">0.000</td>
+<td align="right">0.733</td>
+<td align="right">0.841</td>
+</tr>
+<tr class="odd">
+<td align="left">age65+</td>
+<td align="right">0.412</td>
+<td align="right">0.042</td>
+<td align="right">-20.989</td>
+<td align="right">0.000</td>
+<td align="right">0.379</td>
+<td align="right">0.447</td>
+</tr>
+<tr class="even">
+<td align="left">marital_statusnot married</td>
+<td align="right">1.882</td>
+<td align="right">0.028</td>
+<td align="right">22.641</td>
+<td align="right">0.000</td>
+<td align="right">1.781</td>
+<td align="right">1.987</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="model-controlling-for-demographic-and-socioeconomic-variables"
 class="section level3">
@@ -467,30 +635,194 @@ class="section level3">
        brfss_design,
        family = quasibinomial())
 mod3_mh %&gt;%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
-<pre><code>## # A tibble: 18 × 7
-##    term                       estim…¹ std.e…² statis…³   p.value conf.…⁴ conf.…⁵
-##    &lt;chr&gt;                        &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 (Intercept)                  0.164  0.0730 -24.8    2.46e-135   0.142   0.189
-##  2 sexfemale                    1.55   0.0291  15.1    3.23e- 51   1.46    1.64 
-##  3 childrenone or two           0.870  0.0359  -3.87   1.08e-  4   0.811   0.934
-##  4 childrenthree or more        0.856  0.0588  -2.64   8.19e-  3   0.763   0.961
-##  5 raceblack                    0.755  0.0468  -6.00   1.94e-  9   0.689   0.828
-##  6 raceasian                    0.607  0.139   -3.59   3.33e-  4   0.462   0.797
-##  7 racehispanic                 0.573  0.0524 -10.6    2.29e- 26   0.517   0.635
-##  8 raceother                    1.07   0.0555   1.15   2.49e-  1   0.956   1.19 
-##  9 age30-49                     0.905  0.0411  -2.42   1.55e-  2   0.835   0.981
-## 10 age50-64                     0.629  0.0406 -11.4    3.17e- 30   0.581   0.681
-## 11 age65+                       0.374  0.0573 -17.2    4.41e- 66   0.334   0.418
-## 12 marital_statusnot married    1.31   0.0332   8.22   2.09e- 16   1.23    1.40 
-## 13 educationhigh school or s…   0.990  0.0481  -0.216  8.29e-  1   0.901   1.09 
-## 14 educationbachelors or hig…   0.730  0.0551  -5.73   1.03e-  8   0.655   0.813
-## 15 income35000-75000            0.721  0.0368  -8.90   5.83e- 19   0.671   0.775
-## 16 income&gt;75000                 0.579  0.0478 -11.4    2.77e- 30   0.527   0.636
-## 17 employmenthomemaker/stude…   1.00   0.0451  -0.0111 9.91e-  1   0.915   1.09 
-## 18 employmentunemployed         2.51   0.0373  24.7    1.33e-134   2.34    2.71 
-## # … with abbreviated variable names ¹​estimate, ²​std.error, ³​statistic,
-## #   ⁴​conf.low, ⁵​conf.high</code></pre>
+  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)  %&gt;%
+  knitr::kable(digits = 3)</code></pre>
+<table>
+<colgroup>
+<col width="39%" />
+<col width="9%" />
+<col width="10%" />
+<col width="10%" />
+<col width="8%" />
+<col width="9%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.164</td>
+<td align="right">0.073</td>
+<td align="right">-24.772</td>
+<td align="right">0.000</td>
+<td align="right">0.142</td>
+<td align="right">0.189</td>
+</tr>
+<tr class="even">
+<td align="left">sexfemale</td>
+<td align="right">1.551</td>
+<td align="right">0.029</td>
+<td align="right">15.057</td>
+<td align="right">0.000</td>
+<td align="right">1.465</td>
+<td align="right">1.642</td>
+</tr>
+<tr class="odd">
+<td align="left">childrenone or two</td>
+<td align="right">0.870</td>
+<td align="right">0.036</td>
+<td align="right">-3.872</td>
+<td align="right">0.000</td>
+<td align="right">0.811</td>
+<td align="right">0.934</td>
+</tr>
+<tr class="even">
+<td align="left">childrenthree or more</td>
+<td align="right">0.856</td>
+<td align="right">0.059</td>
+<td align="right">-2.644</td>
+<td align="right">0.008</td>
+<td align="right">0.763</td>
+<td align="right">0.961</td>
+</tr>
+<tr class="odd">
+<td align="left">raceblack</td>
+<td align="right">0.755</td>
+<td align="right">0.047</td>
+<td align="right">-6.003</td>
+<td align="right">0.000</td>
+<td align="right">0.689</td>
+<td align="right">0.828</td>
+</tr>
+<tr class="even">
+<td align="left">raceasian</td>
+<td align="right">0.607</td>
+<td align="right">0.139</td>
+<td align="right">-3.588</td>
+<td align="right">0.000</td>
+<td align="right">0.462</td>
+<td align="right">0.797</td>
+</tr>
+<tr class="odd">
+<td align="left">racehispanic</td>
+<td align="right">0.573</td>
+<td align="right">0.052</td>
+<td align="right">-10.626</td>
+<td align="right">0.000</td>
+<td align="right">0.517</td>
+<td align="right">0.635</td>
+</tr>
+<tr class="even">
+<td align="left">raceother</td>
+<td align="right">1.066</td>
+<td align="right">0.056</td>
+<td align="right">1.153</td>
+<td align="right">0.249</td>
+<td align="right">0.956</td>
+<td align="right">1.189</td>
+</tr>
+<tr class="odd">
+<td align="left">age30-49</td>
+<td align="right">0.905</td>
+<td align="right">0.041</td>
+<td align="right">-2.419</td>
+<td align="right">0.016</td>
+<td align="right">0.835</td>
+<td align="right">0.981</td>
+</tr>
+<tr class="even">
+<td align="left">age50-64</td>
+<td align="right">0.629</td>
+<td align="right">0.041</td>
+<td align="right">-11.425</td>
+<td align="right">0.000</td>
+<td align="right">0.581</td>
+<td align="right">0.681</td>
+</tr>
+<tr class="odd">
+<td align="left">age65+</td>
+<td align="right">0.374</td>
+<td align="right">0.057</td>
+<td align="right">-17.175</td>
+<td align="right">0.000</td>
+<td align="right">0.334</td>
+<td align="right">0.418</td>
+</tr>
+<tr class="even">
+<td align="left">marital_statusnot married</td>
+<td align="right">1.314</td>
+<td align="right">0.033</td>
+<td align="right">8.217</td>
+<td align="right">0.000</td>
+<td align="right">1.231</td>
+<td align="right">1.402</td>
+</tr>
+<tr class="odd">
+<td align="left">educationhigh school or some college</td>
+<td align="right">0.990</td>
+<td align="right">0.048</td>
+<td align="right">-0.216</td>
+<td align="right">0.829</td>
+<td align="right">0.901</td>
+<td align="right">1.088</td>
+</tr>
+<tr class="even">
+<td align="left">educationbachelors or higher</td>
+<td align="right">0.730</td>
+<td align="right">0.055</td>
+<td align="right">-5.727</td>
+<td align="right">0.000</td>
+<td align="right">0.655</td>
+<td align="right">0.813</td>
+</tr>
+<tr class="odd">
+<td align="left">income35000-75000</td>
+<td align="right">0.721</td>
+<td align="right">0.037</td>
+<td align="right">-8.896</td>
+<td align="right">0.000</td>
+<td align="right">0.671</td>
+<td align="right">0.775</td>
+</tr>
+<tr class="even">
+<td align="left">income&gt;75000</td>
+<td align="right">0.579</td>
+<td align="right">0.048</td>
+<td align="right">-11.437</td>
+<td align="right">0.000</td>
+<td align="right">0.527</td>
+<td align="right">0.636</td>
+</tr>
+<tr class="odd">
+<td align="left">employmenthomemaker/student/retired</td>
+<td align="right">1.000</td>
+<td align="right">0.045</td>
+<td align="right">-0.011</td>
+<td align="right">0.991</td>
+<td align="right">0.915</td>
+<td align="right">1.092</td>
+</tr>
+<tr class="even">
+<td align="left">employmentunemployed</td>
+<td align="right">2.515</td>
+<td align="right">0.037</td>
+<td align="right">24.704</td>
+<td align="right">0.000</td>
+<td align="right">2.337</td>
+<td align="right">2.706</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div
 id="model-controlling-for-demographic-socioeconomic-and-health-variables"
@@ -504,21 +836,221 @@ variables</h3>
        brfss_design,
        family = quasibinomial())  
 full_mod_mh %&gt;%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
-<pre><code>## # A tibble: 21 × 7
-##    term                  estimate std.error statistic   p.value conf.low conf.…¹
-##    &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-##  1 (Intercept)             0.0639    0.0839   -32.8   2.04e-235   0.0542  0.0753
-##  2 sexfemale               1.55      0.0298    14.7   8.44e- 49   1.46    1.64  
-##  3 childrenone or two      0.893     0.0365    -3.11  1.85e-  3   0.831   0.959 
-##  4 childrenthree or more   0.906     0.0599    -1.65  9.94e-  2   0.806   1.02  
-##  5 raceblack               0.740     0.0486    -6.19  6.04e- 10   0.673   0.814 
-##  6 raceasian               0.619     0.138     -3.48  5.03e-  4   0.472   0.811 
-##  7 racehispanic            0.545     0.0534   -11.4   6.76e- 30   0.491   0.606 
-##  8 raceother               1.03      0.0588     0.473 6.36e-  1   0.916   1.15  
-##  9 age30-49                0.744     0.0418    -7.08  1.40e- 12   0.685   0.807 
-## 10 age50-64                0.436     0.0431   -19.2   1.74e- 82   0.401   0.475 
-## # … with 11 more rows, and abbreviated variable name ¹​conf.high</code></pre>
+  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95) %&gt;%
+  knitr::kable(digits = 3)</code></pre>
+<table>
+<colgroup>
+<col width="39%" />
+<col width="9%" />
+<col width="10%" />
+<col width="10%" />
+<col width="8%" />
+<col width="9%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.064</td>
+<td align="right">0.084</td>
+<td align="right">-32.792</td>
+<td align="right">0.000</td>
+<td align="right">0.054</td>
+<td align="right">0.075</td>
+</tr>
+<tr class="even">
+<td align="left">sexfemale</td>
+<td align="right">1.548</td>
+<td align="right">0.030</td>
+<td align="right">14.684</td>
+<td align="right">0.000</td>
+<td align="right">1.461</td>
+<td align="right">1.642</td>
+</tr>
+<tr class="odd">
+<td align="left">childrenone or two</td>
+<td align="right">0.893</td>
+<td align="right">0.036</td>
+<td align="right">-3.113</td>
+<td align="right">0.002</td>
+<td align="right">0.831</td>
+<td align="right">0.959</td>
+</tr>
+<tr class="even">
+<td align="left">childrenthree or more</td>
+<td align="right">0.906</td>
+<td align="right">0.060</td>
+<td align="right">-1.648</td>
+<td align="right">0.099</td>
+<td align="right">0.806</td>
+<td align="right">1.019</td>
+</tr>
+<tr class="odd">
+<td align="left">raceblack</td>
+<td align="right">0.740</td>
+<td align="right">0.049</td>
+<td align="right">-6.189</td>
+<td align="right">0.000</td>
+<td align="right">0.673</td>
+<td align="right">0.814</td>
+</tr>
+<tr class="even">
+<td align="left">raceasian</td>
+<td align="right">0.619</td>
+<td align="right">0.138</td>
+<td align="right">-3.479</td>
+<td align="right">0.001</td>
+<td align="right">0.472</td>
+<td align="right">0.811</td>
+</tr>
+<tr class="odd">
+<td align="left">racehispanic</td>
+<td align="right">0.545</td>
+<td align="right">0.053</td>
+<td align="right">-11.359</td>
+<td align="right">0.000</td>
+<td align="right">0.491</td>
+<td align="right">0.606</td>
+</tr>
+<tr class="even">
+<td align="left">raceother</td>
+<td align="right">1.028</td>
+<td align="right">0.059</td>
+<td align="right">0.473</td>
+<td align="right">0.636</td>
+<td align="right">0.916</td>
+<td align="right">1.154</td>
+</tr>
+<tr class="odd">
+<td align="left">age30-49</td>
+<td align="right">0.744</td>
+<td align="right">0.042</td>
+<td align="right">-7.084</td>
+<td align="right">0.000</td>
+<td align="right">0.685</td>
+<td align="right">0.807</td>
+</tr>
+<tr class="even">
+<td align="left">age50-64</td>
+<td align="right">0.436</td>
+<td align="right">0.043</td>
+<td align="right">-19.245</td>
+<td align="right">0.000</td>
+<td align="right">0.401</td>
+<td align="right">0.475</td>
+</tr>
+<tr class="odd">
+<td align="left">age65+</td>
+<td align="right">0.245</td>
+<td align="right">0.061</td>
+<td align="right">-23.152</td>
+<td align="right">0.000</td>
+<td align="right">0.217</td>
+<td align="right">0.276</td>
+</tr>
+<tr class="even">
+<td align="left">marital_statusnot married</td>
+<td align="right">1.295</td>
+<td align="right">0.034</td>
+<td align="right">7.641</td>
+<td align="right">0.000</td>
+<td align="right">1.212</td>
+<td align="right">1.384</td>
+</tr>
+<tr class="odd">
+<td align="left">educationhigh school or some college</td>
+<td align="right">1.179</td>
+<td align="right">0.049</td>
+<td align="right">3.337</td>
+<td align="right">0.001</td>
+<td align="right">1.070</td>
+<td align="right">1.299</td>
+</tr>
+<tr class="even">
+<td align="left">educationbachelors or higher</td>
+<td align="right">0.975</td>
+<td align="right">0.057</td>
+<td align="right">-0.441</td>
+<td align="right">0.659</td>
+<td align="right">0.871</td>
+<td align="right">1.091</td>
+</tr>
+<tr class="odd">
+<td align="left">income35000-75000</td>
+<td align="right">0.812</td>
+<td align="right">0.038</td>
+<td align="right">-5.524</td>
+<td align="right">0.000</td>
+<td align="right">0.755</td>
+<td align="right">0.875</td>
+</tr>
+<tr class="even">
+<td align="left">income&gt;75000</td>
+<td align="right">0.737</td>
+<td align="right">0.049</td>
+<td align="right">-6.268</td>
+<td align="right">0.000</td>
+<td align="right">0.669</td>
+<td align="right">0.810</td>
+</tr>
+<tr class="odd">
+<td align="left">employmenthomemaker/student/retired</td>
+<td align="right">0.956</td>
+<td align="right">0.046</td>
+<td align="right">-0.988</td>
+<td align="right">0.323</td>
+<td align="right">0.873</td>
+<td align="right">1.046</td>
+</tr>
+<tr class="even">
+<td align="left">employmentunemployed</td>
+<td align="right">1.864</td>
+<td align="right">0.040</td>
+<td align="right">15.769</td>
+<td align="right">0.000</td>
+<td align="right">1.726</td>
+<td align="right">2.015</td>
+</tr>
+<tr class="odd">
+<td align="left">general_healthvery good/good</td>
+<td align="right">1.925</td>
+<td align="right">0.051</td>
+<td align="right">12.898</td>
+<td align="right">0.000</td>
+<td align="right">1.743</td>
+<td align="right">2.127</td>
+</tr>
+<tr class="even">
+<td align="left">general_healthfair/poor</td>
+<td align="right">6.750</td>
+<td align="right">0.056</td>
+<td align="right">34.171</td>
+<td align="right">0.000</td>
+<td align="right">6.049</td>
+<td align="right">7.531</td>
+</tr>
+<tr class="odd">
+<td align="left">exerciseno</td>
+<td align="right">1.304</td>
+<td align="right">0.033</td>
+<td align="right">8.131</td>
+<td align="right">0.000</td>
+<td align="right">1.224</td>
+<td align="right">1.391</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="model-comparison" class="section level3">
 <h3>Model Comparison</h3>
@@ -536,7 +1068,7 @@ AIC = c(getAIC(crude_mod_mh), getAIC(mod2_mh), getAIC(mod3_mh), getAIC(full_mod_
 df = data.frame(model_name, AIC, variables)
 
 df %&gt;%
-  knitr::kable()</code></pre>
+  knitr::kable(digits = 3)</code></pre>
 <table>
 <colgroup>
 <col width="14%" />
@@ -595,32 +1127,212 @@ men and women.</p>
             general_health + exercise, # health-related covariates
         brfss_male,
         family = quasibinomial())  %&gt;%
-   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
-<pre><code>## # A tibble: 20 × 7
-##    term                        estim…¹ std.e…² stati…³   p.value conf.…⁴ conf.…⁵
-##    &lt;chr&gt;                         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 (Intercept)                  0.0674  0.118  -22.8   1.37e-114  0.0534  0.0850
-##  2 childrenone or two           0.933   0.0586  -1.18  2.39e-  1  0.832   1.05  
-##  3 childrenthree or more        1.02    0.0983   0.170 8.65e-  1  0.839   1.23  
-##  4 raceblack                    0.858   0.0757  -2.03  4.25e-  2  0.739   0.995 
-##  5 raceasian                    0.506   0.149   -4.57  4.78e-  6  0.378   0.677 
-##  6 racehispanic                 0.600   0.0791  -6.45  1.12e- 10  0.514   0.701 
-##  7 raceother                    0.986   0.0862  -0.169 8.66e-  1  0.832   1.17  
-##  8 age30-49                     0.742   0.0632  -4.72  2.36e-  6  0.655   0.840 
-##  9 age50-64                     0.407   0.0681 -13.2   8.62e- 40  0.356   0.465 
-## 10 age65+                       0.251   0.0840 -16.4   1.14e- 60  0.213   0.296 
-## 11 marital_statusnot married    1.32    0.0527   5.29  1.26e-  7  1.19    1.46  
-## 12 educationhigh school or so…  1.09    0.0753   1.17  2.44e-  1  0.942   1.27  
-## 13 educationbachelors or high…  0.964   0.0846  -0.439 6.61e-  1  0.816   1.14  
-## 14 income35000-75000            0.755   0.0572  -4.91  9.15e-  7  0.675   0.845 
-## 15 income&gt;75000                 0.711   0.0708  -4.82  1.43e-  6  0.619   0.817 
-## 16 employmenthomemaker/studen…  1.06    0.0744   0.829 4.07e-  1  0.919   1.23  
-## 17 employmentunemployed         2.11    0.0616  12.2   5.13e- 34  1.87    2.39  
-## 18 general_healthvery good/go…  1.74    0.0803   6.93  4.18e- 12  1.49    2.04  
-## 19 general_healthfair/poor      6.39    0.0859  21.6   3.19e-103  5.40    7.56  
-## 20 exerciseno                   1.36    0.0505   6.11  9.92e- 10  1.23    1.50  
-## # … with abbreviated variable names ¹​estimate, ²​std.error, ³​statistic,
-## #   ⁴​conf.low, ⁵​conf.high</code></pre>
+   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)  %&gt;%
+  knitr::kable(digits = 3)</code></pre>
+<table>
+<colgroup>
+<col width="39%" />
+<col width="9%" />
+<col width="10%" />
+<col width="10%" />
+<col width="8%" />
+<col width="9%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.067</td>
+<td align="right">0.118</td>
+<td align="right">-22.773</td>
+<td align="right">0.000</td>
+<td align="right">0.053</td>
+<td align="right">0.085</td>
+</tr>
+<tr class="even">
+<td align="left">childrenone or two</td>
+<td align="right">0.933</td>
+<td align="right">0.059</td>
+<td align="right">-1.178</td>
+<td align="right">0.239</td>
+<td align="right">0.832</td>
+<td align="right">1.047</td>
+</tr>
+<tr class="odd">
+<td align="left">childrenthree or more</td>
+<td align="right">1.017</td>
+<td align="right">0.098</td>
+<td align="right">0.170</td>
+<td align="right">0.865</td>
+<td align="right">0.839</td>
+<td align="right">1.233</td>
+</tr>
+<tr class="even">
+<td align="left">raceblack</td>
+<td align="right">0.858</td>
+<td align="right">0.076</td>
+<td align="right">-2.029</td>
+<td align="right">0.042</td>
+<td align="right">0.739</td>
+<td align="right">0.995</td>
+</tr>
+<tr class="odd">
+<td align="left">raceasian</td>
+<td align="right">0.506</td>
+<td align="right">0.149</td>
+<td align="right">-4.574</td>
+<td align="right">0.000</td>
+<td align="right">0.378</td>
+<td align="right">0.677</td>
+</tr>
+<tr class="even">
+<td align="left">racehispanic</td>
+<td align="right">0.600</td>
+<td align="right">0.079</td>
+<td align="right">-6.450</td>
+<td align="right">0.000</td>
+<td align="right">0.514</td>
+<td align="right">0.701</td>
+</tr>
+<tr class="odd">
+<td align="left">raceother</td>
+<td align="right">0.986</td>
+<td align="right">0.086</td>
+<td align="right">-0.169</td>
+<td align="right">0.866</td>
+<td align="right">0.832</td>
+<td align="right">1.167</td>
+</tr>
+<tr class="even">
+<td align="left">age30-49</td>
+<td align="right">0.742</td>
+<td align="right">0.063</td>
+<td align="right">-4.720</td>
+<td align="right">0.000</td>
+<td align="right">0.655</td>
+<td align="right">0.840</td>
+</tr>
+<tr class="odd">
+<td align="left">age50-64</td>
+<td align="right">0.407</td>
+<td align="right">0.068</td>
+<td align="right">-13.205</td>
+<td align="right">0.000</td>
+<td align="right">0.356</td>
+<td align="right">0.465</td>
+</tr>
+<tr class="even">
+<td align="left">age65+</td>
+<td align="right">0.251</td>
+<td align="right">0.084</td>
+<td align="right">-16.439</td>
+<td align="right">0.000</td>
+<td align="right">0.213</td>
+<td align="right">0.296</td>
+</tr>
+<tr class="odd">
+<td align="left">marital_statusnot married</td>
+<td align="right">1.321</td>
+<td align="right">0.053</td>
+<td align="right">5.285</td>
+<td align="right">0.000</td>
+<td align="right">1.191</td>
+<td align="right">1.465</td>
+</tr>
+<tr class="even">
+<td align="left">educationhigh school or some college</td>
+<td align="right">1.092</td>
+<td align="right">0.075</td>
+<td align="right">1.166</td>
+<td align="right">0.244</td>
+<td align="right">0.942</td>
+<td align="right">1.265</td>
+</tr>
+<tr class="odd">
+<td align="left">educationbachelors or higher</td>
+<td align="right">0.964</td>
+<td align="right">0.085</td>
+<td align="right">-0.439</td>
+<td align="right">0.661</td>
+<td align="right">0.816</td>
+<td align="right">1.137</td>
+</tr>
+<tr class="even">
+<td align="left">income35000-75000</td>
+<td align="right">0.755</td>
+<td align="right">0.057</td>
+<td align="right">-4.909</td>
+<td align="right">0.000</td>
+<td align="right">0.675</td>
+<td align="right">0.845</td>
+</tr>
+<tr class="odd">
+<td align="left">income&gt;75000</td>
+<td align="right">0.711</td>
+<td align="right">0.071</td>
+<td align="right">-4.821</td>
+<td align="right">0.000</td>
+<td align="right">0.619</td>
+<td align="right">0.817</td>
+</tr>
+<tr class="even">
+<td align="left">employmenthomemaker/student/retired</td>
+<td align="right">1.064</td>
+<td align="right">0.074</td>
+<td align="right">0.829</td>
+<td align="right">0.407</td>
+<td align="right">0.919</td>
+<td align="right">1.230</td>
+</tr>
+<tr class="odd">
+<td align="left">employmentunemployed</td>
+<td align="right">2.114</td>
+<td align="right">0.062</td>
+<td align="right">12.162</td>
+<td align="right">0.000</td>
+<td align="right">1.874</td>
+<td align="right">2.386</td>
+</tr>
+<tr class="even">
+<td align="left">general_healthvery good/good</td>
+<td align="right">1.744</td>
+<td align="right">0.080</td>
+<td align="right">6.932</td>
+<td align="right">0.000</td>
+<td align="right">1.490</td>
+<td align="right">2.041</td>
+</tr>
+<tr class="odd">
+<td align="left">general_healthfair/poor</td>
+<td align="right">6.387</td>
+<td align="right">0.086</td>
+<td align="right">21.591</td>
+<td align="right">0.000</td>
+<td align="right">5.398</td>
+<td align="right">7.558</td>
+</tr>
+<tr class="even">
+<td align="left">exerciseno</td>
+<td align="right">1.362</td>
+<td align="right">0.051</td>
+<td align="right">6.111</td>
+<td align="right">0.000</td>
+<td align="right">1.233</td>
+<td align="right">1.504</td>
+</tr>
+</tbody>
+</table>
 <p>For female:</p>
 <pre class="r"><code> brfss_female = brfss_design %&gt;%
    filter(sex == &quot;female&quot;)
@@ -631,32 +1343,212 @@ men and women.</p>
             general_health + exercise, # health-related covariates
         brfss_female,
         family = quasibinomial())  %&gt;%
-   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)</code></pre>
-<pre><code>## # A tibble: 20 × 7
-##    term                        estim…¹ std.e…² stati…³   p.value conf.…⁴ conf.…⁵
-##    &lt;chr&gt;                         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 (Intercept)                  0.0938  0.112  -21.2   3.23e- 99  0.0753   0.117
-##  2 childrenone or two           0.880   0.0467  -2.75  5.98e-  3  0.803    0.964
-##  3 childrenthree or more        0.868   0.0756  -1.87  6.20e-  2  0.749    1.01 
-##  4 raceblack                    0.674   0.0627  -6.29  3.16e- 10  0.596    0.762
-##  5 raceasian                    0.693   0.195   -1.89  5.94e-  2  0.473    1.01 
-##  6 racehispanic                 0.509   0.0720  -9.37  7.16e- 21  0.442    0.586
-##  7 raceother                    1.06    0.0800   0.673 5.01e-  1  0.902    1.23 
-##  8 age30-49                     0.744   0.0556  -5.32  1.02e-  7  0.667    0.830
-##  9 age50-64                     0.450   0.0560 -14.3   4.38e- 46  0.403    0.502
-## 10 age65+                       0.238   0.0858 -16.8   5.34e- 63  0.201    0.281
-## 11 marital_statusnot married    1.29    0.0449   5.75  9.01e-  9  1.19     1.41 
-## 12 educationhigh school or so…  1.25    0.0649   3.39  6.92e-  4  1.10     1.42 
-## 13 educationbachelors or high…  0.976   0.0760  -0.325 7.45e-  1  0.841    1.13 
-## 14 income35000-75000            0.852   0.0492  -3.25  1.17e-  3  0.774    0.939
-## 15 income&gt;75000                 0.762   0.0662  -4.11  3.90e-  5  0.669    0.867
-## 16 employmenthomemaker/studen…  0.906   0.0577  -1.71  8.80e-  2  0.809    1.01 
-## 17 employmentunemployed         1.70    0.0511  10.4   1.84e- 25  1.54     1.88 
-## 18 general_healthvery good/go…  2.08    0.0652  11.2   2.50e- 29  1.83     2.36 
-## 19 general_healthfair/poor      7.06    0.0727  26.9   9.91e-159  6.12     8.14 
-## 20 exerciseno                   1.28    0.0426   5.71  1.10e-  8  1.17     1.39 
-## # … with abbreviated variable names ¹​estimate, ²​std.error, ³​statistic,
-## #   ⁴​conf.low, ⁵​conf.high</code></pre>
+   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)  %&gt;%
+   knitr::kable(digits = 3)</code></pre>
+<table>
+<colgroup>
+<col width="39%" />
+<col width="9%" />
+<col width="10%" />
+<col width="10%" />
+<col width="8%" />
+<col width="9%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.094</td>
+<td align="right">0.112</td>
+<td align="right">-21.158</td>
+<td align="right">0.000</td>
+<td align="right">0.075</td>
+<td align="right">0.117</td>
+</tr>
+<tr class="even">
+<td align="left">childrenone or two</td>
+<td align="right">0.880</td>
+<td align="right">0.047</td>
+<td align="right">-2.749</td>
+<td align="right">0.006</td>
+<td align="right">0.803</td>
+<td align="right">0.964</td>
+</tr>
+<tr class="odd">
+<td align="left">childrenthree or more</td>
+<td align="right">0.868</td>
+<td align="right">0.076</td>
+<td align="right">-1.867</td>
+<td align="right">0.062</td>
+<td align="right">0.749</td>
+<td align="right">1.007</td>
+</tr>
+<tr class="even">
+<td align="left">raceblack</td>
+<td align="right">0.674</td>
+<td align="right">0.063</td>
+<td align="right">-6.291</td>
+<td align="right">0.000</td>
+<td align="right">0.596</td>
+<td align="right">0.762</td>
+</tr>
+<tr class="odd">
+<td align="left">raceasian</td>
+<td align="right">0.693</td>
+<td align="right">0.195</td>
+<td align="right">-1.885</td>
+<td align="right">0.059</td>
+<td align="right">0.473</td>
+<td align="right">1.015</td>
+</tr>
+<tr class="even">
+<td align="left">racehispanic</td>
+<td align="right">0.509</td>
+<td align="right">0.072</td>
+<td align="right">-9.373</td>
+<td align="right">0.000</td>
+<td align="right">0.442</td>
+<td align="right">0.586</td>
+</tr>
+<tr class="odd">
+<td align="left">raceother</td>
+<td align="right">1.055</td>
+<td align="right">0.080</td>
+<td align="right">0.673</td>
+<td align="right">0.501</td>
+<td align="right">0.902</td>
+<td align="right">1.235</td>
+</tr>
+<tr class="even">
+<td align="left">age30-49</td>
+<td align="right">0.744</td>
+<td align="right">0.056</td>
+<td align="right">-5.323</td>
+<td align="right">0.000</td>
+<td align="right">0.667</td>
+<td align="right">0.830</td>
+</tr>
+<tr class="odd">
+<td align="left">age50-64</td>
+<td align="right">0.450</td>
+<td align="right">0.056</td>
+<td align="right">-14.256</td>
+<td align="right">0.000</td>
+<td align="right">0.403</td>
+<td align="right">0.502</td>
+</tr>
+<tr class="even">
+<td align="left">age65+</td>
+<td align="right">0.238</td>
+<td align="right">0.086</td>
+<td align="right">-16.761</td>
+<td align="right">0.000</td>
+<td align="right">0.201</td>
+<td align="right">0.281</td>
+</tr>
+<tr class="odd">
+<td align="left">marital_statusnot married</td>
+<td align="right">1.295</td>
+<td align="right">0.045</td>
+<td align="right">5.749</td>
+<td align="right">0.000</td>
+<td align="right">1.186</td>
+<td align="right">1.414</td>
+</tr>
+<tr class="even">
+<td align="left">educationhigh school or some college</td>
+<td align="right">1.246</td>
+<td align="right">0.065</td>
+<td align="right">3.393</td>
+<td align="right">0.001</td>
+<td align="right">1.097</td>
+<td align="right">1.415</td>
+</tr>
+<tr class="odd">
+<td align="left">educationbachelors or higher</td>
+<td align="right">0.976</td>
+<td align="right">0.076</td>
+<td align="right">-0.325</td>
+<td align="right">0.745</td>
+<td align="right">0.841</td>
+<td align="right">1.132</td>
+</tr>
+<tr class="even">
+<td align="left">income35000-75000</td>
+<td align="right">0.852</td>
+<td align="right">0.049</td>
+<td align="right">-3.245</td>
+<td align="right">0.001</td>
+<td align="right">0.774</td>
+<td align="right">0.939</td>
+</tr>
+<tr class="odd">
+<td align="left">income&gt;75000</td>
+<td align="right">0.762</td>
+<td align="right">0.066</td>
+<td align="right">-4.114</td>
+<td align="right">0.000</td>
+<td align="right">0.669</td>
+<td align="right">0.867</td>
+</tr>
+<tr class="even">
+<td align="left">employmenthomemaker/student/retired</td>
+<td align="right">0.906</td>
+<td align="right">0.058</td>
+<td align="right">-1.706</td>
+<td align="right">0.088</td>
+<td align="right">0.809</td>
+<td align="right">1.015</td>
+</tr>
+<tr class="odd">
+<td align="left">employmentunemployed</td>
+<td align="right">1.704</td>
+<td align="right">0.051</td>
+<td align="right">10.430</td>
+<td align="right">0.000</td>
+<td align="right">1.542</td>
+<td align="right">1.884</td>
+</tr>
+<tr class="even">
+<td align="left">general_healthvery good/good</td>
+<td align="right">2.081</td>
+<td align="right">0.065</td>
+<td align="right">11.246</td>
+<td align="right">0.000</td>
+<td align="right">1.832</td>
+<td align="right">2.365</td>
+</tr>
+<tr class="odd">
+<td align="left">general_healthfair/poor</td>
+<td align="right">7.061</td>
+<td align="right">0.073</td>
+<td align="right">26.875</td>
+<td align="right">0.000</td>
+<td align="right">6.123</td>
+<td align="right">8.143</td>
+</tr>
+<tr class="even">
+<td align="left">exerciseno</td>
+<td align="right">1.276</td>
+<td align="right">0.043</td>
+<td align="right">5.714</td>
+<td align="right">0.000</td>
+<td align="right">1.174</td>
+<td align="right">1.387</td>
+</tr>
+</tbody>
+</table>
 <p>From subsetted regression, we can conclude that the number of
 children influences women and men in different ways because the p value
 for women now is much less than 0.05.</p>
