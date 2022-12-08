@@ -18,7 +18,7 @@ navbar:
         - text: "Regression on # of days mental health not good in the past 30 days"
           href: regression_mh_days.html
         - text: "Geographic Distribution of mental health outcomes by gender"
-        - href: state_level_dashboard.html
+          href: state_level_dashboard.html
      - text: "Post-hoc Explorations"
        menu: 
         - text: "Ecological analysis on state-level mental health outcomes"
