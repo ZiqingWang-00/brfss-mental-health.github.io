@@ -34,7 +34,8 @@ crude_mod_mh = svyglm(mh_bin ~ sex + children, # exposures
        brfss_design,
        family = quasibinomial()) 
 crude_mod_mh %>%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95) %>%
+  knitr::kable(digits = 3)
 ```
 
 ### Model controlling for demographic variables
@@ -44,7 +45,8 @@ mod2_mh = svyglm(mh_bin ~ sex + children + # exposures
        brfss_design,
        family = quasibinomial())
 mod2_mh %>%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)  %>%
+  knitr::kable(digits = 3)
 ```
 
 ### Model controlling for demographic and socioeconomic variables
@@ -55,7 +57,8 @@ mod3_mh = svyglm(mh_bin ~ sex + children + # exposures
        brfss_design,
        family = quasibinomial())
 mod3_mh %>%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)  %>%
+  knitr::kable(digits = 3)
 ```
 
 
@@ -68,7 +71,8 @@ full_mod_mh = svyglm(mh_bin ~ sex + children + # exposures
        brfss_design,
        family = quasibinomial())  
 full_mod_mh %>%
-  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+  broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95) %>%
+  knitr::kable(digits = 3)
 ```
 
 ### Model Comparison
@@ -86,7 +90,7 @@ AIC = c(getAIC(crude_mod_mh), getAIC(mod2_mh), getAIC(mod3_mh), getAIC(full_mod_
 df = data.frame(model_name, AIC, variables)
 
 df %>%
-  knitr::kable()
+  knitr::kable(digits = 3)
 ```
 
 From the results of models comparison, we can conclude that the full model (model controlling for demographic, socioeconomic, and health variables) is the best model.
@@ -105,7 +109,8 @@ For male:
             general_health + exercise, # health-related covariates
         brfss_male,
         family = quasibinomial())  %>%
-   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)  %>%
+  knitr::kable(digits = 3)
 ```
 
 For female:
@@ -119,7 +124,8 @@ For female:
             general_health + exercise, # health-related covariates
         brfss_female,
         family = quasibinomial())  %>%
-   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
+   broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)  %>%
+   knitr::kable(digits = 3)
 ```
 
 From subsetted regression, we can conclude that the number of children influences women and men in different ways because the p value for women now is much less than 0.05.
