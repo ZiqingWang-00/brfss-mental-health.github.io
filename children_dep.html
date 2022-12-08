@@ -263,10 +263,10 @@ $(document).ready(function () {
       <a href="state_level_eda.html">State-level Explorations</a>
     </li>
     <li>
-      <a href="depression_prev_EDA.html">On prevalence of self-reported depression diagnosis</a>
+      <a href="depression_prev_EDA.html">Self-reported past depression</a>
     </li>
     <li>
-      <a href="bad_mh_days_EDA.html">On # of days of bad mental health in the past 30 days</a>
+      <a href="bad_mh_days_EDA.html"># of days mental health not good in the past 30 days</a>
     </li>
   </ul>
 </li>
@@ -278,28 +278,38 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="regression_depr.html">Regression on self-reported depression diagnosis</a>
+      <a href="regression_depr.html">Regression on self-reported past depression</a>
     </li>
     <li>
-      <a href="regression_mh_days.html">Regression on # of days of bad mental health in the past 30 days</a>
+      <a href="regression_mh_days.html">Regression on # of days mental health not good in the past 30 days</a>
     </li>
+    <li class="dropdown-header">Geographic Distribution of mental health outcomes by gender</li>
+    <li>
+      <a href="state_level_dashboard.html"></a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Post-hoc Explorations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
     <li>
       <a href="ecological.html">Ecological analysis on state-level mental health outcomes</a>
+    </li>
+    <li>
+      <a href="mh_opinions_by_gender.html">Mental health service utilization and public opinions</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="state_level_dashboard.html">Geographic Distribution</a>
-</li>
-<li>
-  <a href="https://ziqingwang.shinyapps.io/shiny/">Predictions</a>
+  <a href="https://ziqingwang.shinyapps.io/shiny/">Odds to Probability</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="about.html">About</a>
-</li>
-<li>
   <a href="report.html">Report</a>
 </li>
 <li>
@@ -340,7 +350,7 @@ $(document).ready(function () {
           children %in% c(&quot;none&quot;) ~ &quot;No&quot;,
           TRUE ~ &quot;Yes&quot;))</code></pre>
 <pre><code>## Rows: 417619 Columns: 31
-## ── Column specification ─────────────────────────
+## ── Column specification ─────────────
 ## Delimiter: &quot;,&quot;
 ## chr (15): sex, race, mh_cat3, mh_bin, depression, children, education, incom...
 ## dbl (16): psu, llcpwt, ststr, menthlth, addepev3, chldcnt, state, educa, inc...

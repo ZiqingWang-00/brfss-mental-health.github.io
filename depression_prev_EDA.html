@@ -342,10 +342,10 @@ div.tocify {
       <a href="state_level_eda.html">State-level Explorations</a>
     </li>
     <li>
-      <a href="depression_prev_EDA.html">On prevalence of self-reported depression diagnosis</a>
+      <a href="depression_prev_EDA.html">Self-reported past depression</a>
     </li>
     <li>
-      <a href="bad_mh_days_EDA.html">On # of days of bad mental health in the past 30 days</a>
+      <a href="bad_mh_days_EDA.html"># of days mental health not good in the past 30 days</a>
     </li>
   </ul>
 </li>
@@ -357,28 +357,38 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="regression_depr.html">Regression on self-reported depression diagnosis</a>
+      <a href="regression_depr.html">Regression on self-reported past depression</a>
     </li>
     <li>
-      <a href="regression_mh_days.html">Regression on # of days of bad mental health in the past 30 days</a>
+      <a href="regression_mh_days.html">Regression on # of days mental health not good in the past 30 days</a>
     </li>
+    <li class="dropdown-header">Geographic Distribution of mental health outcomes by gender</li>
+    <li>
+      <a href="state_level_dashboard.html"></a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Post-hoc Explorations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
     <li>
       <a href="ecological.html">Ecological analysis on state-level mental health outcomes</a>
+    </li>
+    <li>
+      <a href="mh_opinions_by_gender.html">Mental health service utilization and public opinions</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="state_level_dashboard.html">Geographic Distribution</a>
-</li>
-<li>
-  <a href="https://ziqingwang.shinyapps.io/shiny/">Predictions</a>
+  <a href="https://ziqingwang.shinyapps.io/shiny/">Odds to Probability</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="about.html">About</a>
-</li>
-<li>
   <a href="report.html">Report</a>
 </li>
 <li>
@@ -432,12 +442,12 @@ had depression.</p>
               type = list(exercise ~ &quot;categorical&quot;))
 
 tb1_unweighted_depr</code></pre>
-<div id="bkvpictwxk" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="wdtmvhwqgv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#bkvpictwxk .gt_table {
+#wdtmvhwqgv .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -462,7 +472,7 @@ tb1_unweighted_depr</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#bkvpictwxk .gt_heading {
+#wdtmvhwqgv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -474,7 +484,7 @@ tb1_unweighted_depr</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#bkvpictwxk .gt_title {
+#wdtmvhwqgv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -486,7 +496,7 @@ tb1_unweighted_depr</code></pre>
   border-bottom-width: 0;
 }
 
-#bkvpictwxk .gt_subtitle {
+#wdtmvhwqgv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -498,13 +508,13 @@ tb1_unweighted_depr</code></pre>
   border-top-width: 0;
 }
 
-#bkvpictwxk .gt_bottom_border {
+#wdtmvhwqgv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bkvpictwxk .gt_col_headings {
+#wdtmvhwqgv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -519,7 +529,7 @@ tb1_unweighted_depr</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#bkvpictwxk .gt_col_heading {
+#wdtmvhwqgv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -539,7 +549,7 @@ tb1_unweighted_depr</code></pre>
   overflow-x: hidden;
 }
 
-#bkvpictwxk .gt_column_spanner_outer {
+#wdtmvhwqgv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -551,15 +561,15 @@ tb1_unweighted_depr</code></pre>
   padding-right: 4px;
 }
 
-#bkvpictwxk .gt_column_spanner_outer:first-child {
+#wdtmvhwqgv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bkvpictwxk .gt_column_spanner_outer:last-child {
+#wdtmvhwqgv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bkvpictwxk .gt_column_spanner {
+#wdtmvhwqgv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -571,7 +581,7 @@ tb1_unweighted_depr</code></pre>
   width: 100%;
 }
 
-#bkvpictwxk .gt_group_heading {
+#wdtmvhwqgv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -596,7 +606,7 @@ tb1_unweighted_depr</code></pre>
   vertical-align: middle;
 }
 
-#bkvpictwxk .gt_empty_group_heading {
+#wdtmvhwqgv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -611,15 +621,15 @@ tb1_unweighted_depr</code></pre>
   vertical-align: middle;
 }
 
-#bkvpictwxk .gt_from_md > :first-child {
+#wdtmvhwqgv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bkvpictwxk .gt_from_md > :last-child {
+#wdtmvhwqgv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bkvpictwxk .gt_row {
+#wdtmvhwqgv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -638,7 +648,7 @@ tb1_unweighted_depr</code></pre>
   overflow-x: hidden;
 }
 
-#bkvpictwxk .gt_stub {
+#wdtmvhwqgv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -651,7 +661,7 @@ tb1_unweighted_depr</code></pre>
   padding-right: 5px;
 }
 
-#bkvpictwxk .gt_stub_row_group {
+#wdtmvhwqgv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -665,11 +675,11 @@ tb1_unweighted_depr</code></pre>
   vertical-align: top;
 }
 
-#bkvpictwxk .gt_row_group_first td {
+#wdtmvhwqgv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bkvpictwxk .gt_summary_row {
+#wdtmvhwqgv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -679,16 +689,16 @@ tb1_unweighted_depr</code></pre>
   padding-right: 5px;
 }
 
-#bkvpictwxk .gt_first_summary_row {
+#wdtmvhwqgv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bkvpictwxk .gt_first_summary_row.thick {
+#wdtmvhwqgv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bkvpictwxk .gt_last_summary_row {
+#wdtmvhwqgv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -698,7 +708,7 @@ tb1_unweighted_depr</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#bkvpictwxk .gt_grand_summary_row {
+#wdtmvhwqgv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -708,7 +718,7 @@ tb1_unweighted_depr</code></pre>
   padding-right: 5px;
 }
 
-#bkvpictwxk .gt_first_grand_summary_row {
+#wdtmvhwqgv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -718,11 +728,11 @@ tb1_unweighted_depr</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#bkvpictwxk .gt_striped {
+#wdtmvhwqgv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bkvpictwxk .gt_table_body {
+#wdtmvhwqgv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -731,7 +741,7 @@ tb1_unweighted_depr</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#bkvpictwxk .gt_footnotes {
+#wdtmvhwqgv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -745,7 +755,7 @@ tb1_unweighted_depr</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#bkvpictwxk .gt_footnote {
+#wdtmvhwqgv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -754,7 +764,7 @@ tb1_unweighted_depr</code></pre>
   padding-right: 5px;
 }
 
-#bkvpictwxk .gt_sourcenotes {
+#wdtmvhwqgv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -768,7 +778,7 @@ tb1_unweighted_depr</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#bkvpictwxk .gt_sourcenote {
+#wdtmvhwqgv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -776,64 +786,64 @@ tb1_unweighted_depr</code></pre>
   padding-right: 5px;
 }
 
-#bkvpictwxk .gt_left {
+#wdtmvhwqgv .gt_left {
   text-align: left;
 }
 
-#bkvpictwxk .gt_center {
+#wdtmvhwqgv .gt_center {
   text-align: center;
 }
 
-#bkvpictwxk .gt_right {
+#wdtmvhwqgv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bkvpictwxk .gt_font_normal {
+#wdtmvhwqgv .gt_font_normal {
   font-weight: normal;
 }
 
-#bkvpictwxk .gt_font_bold {
+#wdtmvhwqgv .gt_font_bold {
   font-weight: bold;
 }
 
-#bkvpictwxk .gt_font_italic {
+#wdtmvhwqgv .gt_font_italic {
   font-style: italic;
 }
 
-#bkvpictwxk .gt_super {
+#wdtmvhwqgv .gt_super {
   font-size: 65%;
 }
 
-#bkvpictwxk .gt_footnote_marks {
+#wdtmvhwqgv .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#bkvpictwxk .gt_asterisk {
+#wdtmvhwqgv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bkvpictwxk .gt_indent_1 {
+#wdtmvhwqgv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bkvpictwxk .gt_indent_2 {
+#wdtmvhwqgv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bkvpictwxk .gt_indent_3 {
+#wdtmvhwqgv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bkvpictwxk .gt_indent_4 {
+#wdtmvhwqgv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bkvpictwxk .gt_indent_5 {
+#wdtmvhwqgv .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1036,12 +1046,12 @@ self-reported depression.</li>
                   type = list(exercise ~ &quot;categorical&quot;))
 
 tb1_weighted_depr</code></pre>
-<div id="fkrpxwthpo" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="ppfrjzouqs" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#fkrpxwthpo .gt_table {
+#ppfrjzouqs .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1066,7 +1076,7 @@ tb1_weighted_depr</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#fkrpxwthpo .gt_heading {
+#ppfrjzouqs .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1078,7 +1088,7 @@ tb1_weighted_depr</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#fkrpxwthpo .gt_title {
+#ppfrjzouqs .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1090,7 +1100,7 @@ tb1_weighted_depr</code></pre>
   border-bottom-width: 0;
 }
 
-#fkrpxwthpo .gt_subtitle {
+#ppfrjzouqs .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1102,13 +1112,13 @@ tb1_weighted_depr</code></pre>
   border-top-width: 0;
 }
 
-#fkrpxwthpo .gt_bottom_border {
+#ppfrjzouqs .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fkrpxwthpo .gt_col_headings {
+#ppfrjzouqs .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1123,7 +1133,7 @@ tb1_weighted_depr</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#fkrpxwthpo .gt_col_heading {
+#ppfrjzouqs .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1143,7 +1153,7 @@ tb1_weighted_depr</code></pre>
   overflow-x: hidden;
 }
 
-#fkrpxwthpo .gt_column_spanner_outer {
+#ppfrjzouqs .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1155,15 +1165,15 @@ tb1_weighted_depr</code></pre>
   padding-right: 4px;
 }
 
-#fkrpxwthpo .gt_column_spanner_outer:first-child {
+#ppfrjzouqs .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fkrpxwthpo .gt_column_spanner_outer:last-child {
+#ppfrjzouqs .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fkrpxwthpo .gt_column_spanner {
+#ppfrjzouqs .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1175,7 +1185,7 @@ tb1_weighted_depr</code></pre>
   width: 100%;
 }
 
-#fkrpxwthpo .gt_group_heading {
+#ppfrjzouqs .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1200,7 +1210,7 @@ tb1_weighted_depr</code></pre>
   vertical-align: middle;
 }
 
-#fkrpxwthpo .gt_empty_group_heading {
+#ppfrjzouqs .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1215,15 +1225,15 @@ tb1_weighted_depr</code></pre>
   vertical-align: middle;
 }
 
-#fkrpxwthpo .gt_from_md > :first-child {
+#ppfrjzouqs .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fkrpxwthpo .gt_from_md > :last-child {
+#ppfrjzouqs .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fkrpxwthpo .gt_row {
+#ppfrjzouqs .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1242,7 +1252,7 @@ tb1_weighted_depr</code></pre>
   overflow-x: hidden;
 }
 
-#fkrpxwthpo .gt_stub {
+#ppfrjzouqs .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1255,7 +1265,7 @@ tb1_weighted_depr</code></pre>
   padding-right: 5px;
 }
 
-#fkrpxwthpo .gt_stub_row_group {
+#ppfrjzouqs .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1269,11 +1279,11 @@ tb1_weighted_depr</code></pre>
   vertical-align: top;
 }
 
-#fkrpxwthpo .gt_row_group_first td {
+#ppfrjzouqs .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fkrpxwthpo .gt_summary_row {
+#ppfrjzouqs .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1283,16 +1293,16 @@ tb1_weighted_depr</code></pre>
   padding-right: 5px;
 }
 
-#fkrpxwthpo .gt_first_summary_row {
+#ppfrjzouqs .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fkrpxwthpo .gt_first_summary_row.thick {
+#ppfrjzouqs .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fkrpxwthpo .gt_last_summary_row {
+#ppfrjzouqs .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1302,7 +1312,7 @@ tb1_weighted_depr</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#fkrpxwthpo .gt_grand_summary_row {
+#ppfrjzouqs .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1312,7 +1322,7 @@ tb1_weighted_depr</code></pre>
   padding-right: 5px;
 }
 
-#fkrpxwthpo .gt_first_grand_summary_row {
+#ppfrjzouqs .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1322,11 +1332,11 @@ tb1_weighted_depr</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#fkrpxwthpo .gt_striped {
+#ppfrjzouqs .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fkrpxwthpo .gt_table_body {
+#ppfrjzouqs .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1335,7 +1345,7 @@ tb1_weighted_depr</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#fkrpxwthpo .gt_footnotes {
+#ppfrjzouqs .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1349,7 +1359,7 @@ tb1_weighted_depr</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#fkrpxwthpo .gt_footnote {
+#ppfrjzouqs .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1358,7 +1368,7 @@ tb1_weighted_depr</code></pre>
   padding-right: 5px;
 }
 
-#fkrpxwthpo .gt_sourcenotes {
+#ppfrjzouqs .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1372,7 +1382,7 @@ tb1_weighted_depr</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#fkrpxwthpo .gt_sourcenote {
+#ppfrjzouqs .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1380,64 +1390,64 @@ tb1_weighted_depr</code></pre>
   padding-right: 5px;
 }
 
-#fkrpxwthpo .gt_left {
+#ppfrjzouqs .gt_left {
   text-align: left;
 }
 
-#fkrpxwthpo .gt_center {
+#ppfrjzouqs .gt_center {
   text-align: center;
 }
 
-#fkrpxwthpo .gt_right {
+#ppfrjzouqs .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fkrpxwthpo .gt_font_normal {
+#ppfrjzouqs .gt_font_normal {
   font-weight: normal;
 }
 
-#fkrpxwthpo .gt_font_bold {
+#ppfrjzouqs .gt_font_bold {
   font-weight: bold;
 }
 
-#fkrpxwthpo .gt_font_italic {
+#ppfrjzouqs .gt_font_italic {
   font-style: italic;
 }
 
-#fkrpxwthpo .gt_super {
+#ppfrjzouqs .gt_super {
   font-size: 65%;
 }
 
-#fkrpxwthpo .gt_footnote_marks {
+#ppfrjzouqs .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#fkrpxwthpo .gt_asterisk {
+#ppfrjzouqs .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fkrpxwthpo .gt_indent_1 {
+#ppfrjzouqs .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fkrpxwthpo .gt_indent_2 {
+#ppfrjzouqs .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fkrpxwthpo .gt_indent_3 {
+#ppfrjzouqs .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fkrpxwthpo .gt_indent_4 {
+#ppfrjzouqs .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fkrpxwthpo .gt_indent_5 {
+#ppfrjzouqs .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1626,7 +1636,7 @@ women. Below is a barplot on this topic:</p>
   ggplot(aes(x = children, y = depression_prev, fill = sex)) +
   geom_bar(position=&quot;dodge&quot;, stat=&quot;identity&quot;) +
   geom_errorbar(aes(ymin=depression_prev_low, ymax=depression_prev_upp), 
-                width=.2, position=position_dodge(.9))</code></pre>
+                width=.2, position=position_dodge(.9)) </code></pre>
 <p><img src="depression_prev_EDA_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>One interesting observation is that men who have children in the
 household have noticeably lower prevalence of self-reported depression
@@ -1697,6 +1707,28 @@ We can see that not only is the prevalence of self-reported depression
 higher in women than men, the same holds true for all race/ethnicities
 included in the data set. This is the result of the chi-squared test we
 did to verify this observation:</p>
+<pre class="r"><code># For women
+brfss_design %&gt;%
+  filter(sex == &quot;female&quot;) %&gt;% 
+  select(race, depression) %&gt;% 
+  svychisq(~race + depression, . , statistic=&quot;adjWald&quot;) %&gt;% 
+  broom::tidy()</code></pre>
+<pre><code>## Multiple parameters; naming those columns ndf, ddf</code></pre>
+<pre><code>## # A tibble: 1 × 5
+##     ndf    ddf statistic   p.value method                               
+##   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                                
+## 1     4 221248      134. 9.26e-115 Design-based Wald test of association</code></pre>
+<pre class="r"><code># For men
+brfss_design %&gt;%
+  filter(sex == &quot;male&quot;) %&gt;% 
+  select(race, depression) %&gt;% 
+  svychisq(~race + depression, . , statistic=&quot;adjWald&quot;) %&gt;% 
+  broom::tidy()</code></pre>
+<pre><code>## Multiple parameters; naming those columns ndf, ddf</code></pre>
+<pre><code>## # A tibble: 1 × 5
+##     ndf    ddf statistic  p.value method                               
+##   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;                                
+## 1     4 192240      61.8 2.70e-52 Design-based Wald test of association</code></pre>
 </div>
 <div id="gender-age-and-depression" class="section level3">
 <h3>Gender, age, and depression</h3>

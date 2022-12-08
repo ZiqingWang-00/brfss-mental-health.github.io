@@ -1,0 +1,209 @@
+---
+title: "Mental health opinion service utilization by gender"
+author: ""
+date: ""
+output: 
+html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(survey)
+library(srvyr)
+library(readr)
+library(forcats)
+
+# Set options for allowing a single observation per stratum 
+options(survey.lonely.psu = "adjust")
+
+# Load the 2012 BRFSS survey design object
+load(file = "./data/brfss_design2012.Rdata")
+
+```
+
+So far, we found out from our analysis of the 2021 BRFSS data set that women are more likely to report past depression and >15 days mental health not good than men, controlling for demographic and physical health. However, the reason behind this discrepancy remains unclear. Do men indeed have better mental health than women, or are things more complicated behind the scenes? For example, it is possible that men express their emotions less frequently than women or have more stigma against mental health issues, which prevent them from self-reporting bad mental health or seeking help from mental health professionals.   
+
+Therefore, it'd be interesting to explore how women and men differ in mental health care utilization, their own opinions on mental health disorders, and their perceived public opinions on mental health issues. Unfortunately, there is no relevant variables in the 2021 BRFSS data set to answer these questions, and public opinion data on mental health is hard to find. However, after some search, we found that the 2012 BRFSS data contains some variables that might help answer our questions.  
+
+The 2012 BRFSS data set has three questions on mental health: 
+
+* Are you now taking medicine or receiving treatment from a doctor or other health professional for any type of mental health condition or emotional problem? 
+* People are generally caring and sympathetic to people with mental illness. Do you agree slightly or strongly or disagree slightly or strongly?
+* Treatment can help people with mental illness lead normal lives. Do you agree slightly or strongly, or disagree slightly or strongly?  
+
+Unfortunately, the CDC did not specify in their codebook what was meant exactly by mental illness. Here, we are assuming that it is a general term that spans many mental health disorders/issues, such as depression, anxiety, PTSD, bipolar disorder, autism, and so on.  
+
+The first question measures mental health service utilization. We hypothesize that men have lower mental health service utilization than women. The second question measures people's perceived public stigma against mental illnesses. We hypothesize that people who think the public have more stigma are more likely to be men and are less likely to seek mental health help. The third question asks for people's opinion on the effectiveness of mental health treatment. Although this is an interesting question, we think it is unclear what this items measures - the level of trust in mental health care providers, or the level of stigma agaisnt people who have mental health disorders?  
+
+### Checking mental health outcome prevalences by gender in the 2012 BRFSS data 
+First, we check whether women also self-reported worse mental health outcomes than men in the 2012 BRFSS data set.
+```{r}
+# depression
+depr_by_gender2012 = brfss_design2012 %>% 
+  filter(!is.na(depression)) %>% 
+  group_by(sex, depression) %>% 
+  summarize(percent_past_depression = 100*survey_mean(na.rm = T, vartype = c("ci"))) %>% 
+  filter(depression == "yes") %>% 
+  select(-depression)
+
+knitr::kable(depr_by_gender2012, 
+             col.names = c("gender",
+                           "% past depression",
+                           "lower 95% CI",
+                           "upper 95% CI"))
+```
+Based on the 95% CI, we can see that in 2012, women still had significantly higher prevalence of self-reported past depression than men.  
+
+The mean number of days reported by women and men in 2012 were calculated as follows:
+```{r}
+days_badmh_by_gender2012 = brfss_design2012 %>% 
+  filter(!is.na(days_badmh)) %>% 
+  group_by(sex) %>% 
+  summarize(mean_days_badmh = survey_mean(days_badmh, na.rm = T, vartype = c("ci"))) 
+
+knitr::kable(days_badmh_by_gender2012,
+             col.names = c("gender",
+                           "average days mental health not good in the past 30 days",
+                           "lower 95% CI",
+                           "upper 95% CI"))
+```
+It is not surprising that women reported higher numbers of days mental health not good in the past 30 days than men in 2012 as well. 
+
+### Post-hoc exploration: mental health service utilization
+
+We first look at how mental health service utilization differs among men and women are at risk of mental health issues (here, we meant those who reported past depression or reported >15 days mental health not good in the past 30 days) in the 2012 BRFSS data set. 
+
+```{r}
+mh_treatment_by_gender = brfss_design2012 %>% 
+  filter(days_badmh > 15 | depression == "yes") %>% 
+  filter(!is.na(mistmnt)) %>% # filter out those who weren't asked about mental health service utilization 
+  group_by(sex, mh_treatment) %>% 
+  summarize(percent_using_treatment = 100*survey_mean(na.rm = T, vartype = c("ci"))) 
+
+knitr::kable(mh_treatment_by_gender, 
+            col.names = c("gender",
+                             "whether currently using mental health service",
+                             "% currently using mental health service",
+                             "lower limit of 95% CI",
+                             "upper limit of 95% CI"))
+
+```
+The table above shows that among those who are under risk of mental health issues, women are more likely to be currently using mental health services than men.  
+
+### Perception of public stigma on mental health
+
+Next, we look at the distribution of responses by gender to the second question. This time, we included all women and men, regardless of their self-reported mental health status. 
+
+```{r}
+mh_pub_stig = brfss_design2012 %>% 
+  filter(!is.na(misphlpf)) %>% # filter out those who weren't asked about this
+  group_by(sex, mh_pub_perc_opinion) %>% 
+  summarize(percent_category = 100*survey_mean(na.rm = T, vartype = c("ci"))) 
+
+mh_pub_stig %>% 
+  ggplot(aes(x = mh_pub_perc_opinion, y = percent_category, fill = sex)) +
+  geom_bar(position="dodge", stat="identity") +
+  geom_errorbar(aes(ymin=percent_category_low, ymax=percent_category_upp), 
+                width=.2, position=position_dodge(.9)) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) +
+  labs(title = "Perception of public stigma against mental health disorder",
+       x = "scale",
+       y = "%")
+
+
+```
+Interestingly, more % of men think that people are generally caring and sympathetic to people with mental illness. That is, men actually have more optimistic perception of the public views on people with mental health issues than women.  
+
+What about the people who are under risk of mental health issues, i.e., those who reported past depression or >15 days mental health not good in the past 30 days? Do men in this subgroup also have more optimistic perception of the public stigma? 
+
+```{r}
+brfss_design2012 %>% 
+  filter(!is.na(misphlpf)) %>% # filter out those who weren't asked about this
+  filter(depression == "yes" | days_badmh > 15) %>% 
+  group_by(sex, mh_pub_perc_opinion) %>% 
+  summarize(percent_category = 100*survey_mean(na.rm = T, vartype = c("ci"))) %>% 
+  ggplot(aes(x = mh_pub_perc_opinion, y = percent_category, fill = sex)) +
+  geom_bar(position="dodge", stat="identity") +
+  geom_errorbar(aes(ymin=percent_category_low, ymax=percent_category_upp), 
+                width=.2, position=position_dodge(.9)) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) +
+  labs(title = "Perception on public stigma against mental health disorders \n among people who reported past depression or \n >15 days mental health not good in the past 30 days",
+       x = "scale",
+       y = "%")
+  
+```
+
+
+We can see that, among people who are at risk of mental health issues (those who reported past depression or >15 days mental health not good in the past 30 days), men are still estimated to report more optimistic perception of public stigma against mental health illness, although the gender difference in perception is smaller in this subgroup. This observation is interesting because we speculated the opposite! Then does it mean that the fear of public stigmatization probably should not be the reason why men who are at risk of mental health issues are less likely to seek mental health services than women, as we saw from the previous section? This is an interesting question to delve in deeper. 
+
+### Perceived effectiveness of mental health treatment
+
+Do men think mental health treatment is less effective compared to women? Again, we look at everyone who was asked about their opinion of the effectiveness of mental health treatment and the subgroup of those who are under risk of mental health issues separately.
+
+```{r}
+mh_eff = brfss_design2012 %>% 
+  filter(!is.na(mistrhlp)) %>% # filter out those who weren't asked about this
+  group_by(sex, mh_help_opinion) %>% 
+  summarize(percent_category = 100*survey_mean(na.rm = T, vartype = c("ci"))) 
+
+mh_eff %>% 
+  ggplot(aes(x = mh_help_opinion, y = percent_category, fill = sex)) +
+  geom_bar(position="dodge", stat="identity") +
+  geom_errorbar(aes(ymin=percent_category_low, ymax=percent_category_upp), 
+                width=.2, position=position_dodge(.9)) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) +
+  labs(title = "Opinion on the effectiveness of mental health treatment",
+       x = "scale",
+       y = "%")
+
+```
+
+We can see that both men and women have high agreement of the statement that mental health treatment can help people lead normal life, while agreement among women is stronger, as indicted by more percentages of women answering "agree strongly". We look at the subgroup that consists of people who are at risks of mental healh issues:
+
+```{r}
+brfss_design2012 %>% 
+  filter(!is.na(mistrhlp)) %>% # filter out those who weren't asked about this
+  filter(depression == "yes" | days_badmh > 15) %>% 
+  group_by(sex, mh_help_opinion) %>% 
+  summarize(percent_category = 100*survey_mean(na.rm = T, vartype = c("ci"))) %>% 
+  ggplot(aes(x = mh_help_opinion, y = percent_category, fill = sex)) +
+  geom_bar(position="dodge", stat="identity") +
+  geom_errorbar(aes(ymin=percent_category_low, ymax=percent_category_upp), 
+                width=.2, position=position_dodge(.9)) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) +
+  labs(title = "Opinion on the effectiveness of mental health treatment \n among people who reported past depression or \n >15 days mental health not good in the past 30 days",
+       x = "scale",
+       y = "%")
+```
+
+We can see that regardless whether under risk of mental health issues, the same pattern holds - Both women and men show high agreement of the effectiveness of mental health treatment with women having stronger agreement.  
+
+### Summary
+In summary, we found the follows:
+
+* Among those who reported past depression or >15 days mental health not good in the past 30 days, women are more likely to seek mental health services than men. 
+* Men perceive less public stigma against people with mental health illnesses compared to women. 
+* Both men and women are highly likely to agree that mental health treatments are effective.  
+One main takeway from these findings is that fear of public stigma is probably not one of the reasons why men have lower mental health service utlization than women, at least not a major one. More importantly, these findings raise new questions. For example,
+
+* Why do men seek mental health services less than women? Is this related to better self-reported mental health outcomes among men (e.g., less professional help, less disgnoses, less self reports)?
+* How does mental health services differ in different demographic variables, such as race/ethnicity?
+* How do people's perception of public stigma against people with mental health disorders related to their own stigma against people with mental health disorders?
+* How do these stigmas affect their self-reported mental health outcomes and their mental health service utilization?
+* What are some factors that are associated with people's perception of public stigma and their own stigma against mental health disorders? 
+
+
+
+
+
+
+
+
+
+
+

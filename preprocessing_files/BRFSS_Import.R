@@ -156,5 +156,67 @@ save(brfss21_data, file = "./data/brfss21_data.Rdata")
 brfss_design = as_survey_design(brfss21_data, id = 1, strata = ststr, weight = llcpwt)
 save(brfss_design, file = "./data/brfss_design.Rdata")
 
+# Import BRFSS 2012 data for post-hoc analysis on mental health stigma by gender
+# This data set contains variables on attitudes on mental illness and mental health service utilization
+# Impor XPT file 
+BRFSS2012 = read_xpt(
+  './data/LLCP2012.XPT',
+  col_select = NULL,
+  skip = 0,
+  n_max = Inf,
+  .name_repair = "unique"
+) %>% janitor::clean_names()
 
+# preview the data
+head(BRFSS2012)
 
+# Select variables of interest
+tidy_brfss12 = BRFSS2012 %>%
+  select(psu, llcpwt, ststr, # survey weight variables
+         mistmnt, # mental health service utilization
+         mistrhlp, # stigma on mental health treatment
+         misphlpf, # perception on public opinion of mental illness
+         sex, addepev2, menthlth) %>% 
+  filter(!mistmnt %in% c(7, 9), 
+        !mistrhlp %in% c(7, 9),
+        !misphlpf %in% c(7, 9)) %>% # keep observations that responded to mental health questions
+  mutate(mh_treatment = case_when(mistmnt == 1 ~ "yes",
+                                  mistmnt == 2 ~ "no"),
+         mh_help_opinion = case_when(mistrhlp == 1 ~ "agree strongly",
+                                     mistrhlp == 2 ~ "agree slightly",
+                                     mistrhlp == 3 ~ "neither agree nor disagree",
+                                     mistrhlp == 4 ~ "disagree slightly",
+                                     mistrhlp == 5 ~ "disagree strongly"),
+         mh_pub_perc_opinion = case_when(misphlpf == 1 ~ "agree strongly",
+                                         misphlpf == 2 ~ "agree slightly",
+                                         misphlpf == 3 ~ "neither agree nor disagree",
+                                         misphlpf == 4 ~ "disagree slightly",
+                                         misphlpf == 5 ~ "disagree strongly"),
+         depression = case_when(addepev2 == 1 ~ "yes",
+                                addepev2 == 2 ~ "no"),
+         days_badmh = replace(menthlth, menthlth == 88, 0),
+         sex = case_when(sex == 1 ~ "male",
+                         sex == 2 ~ "female"))
+
+# Export the above data frame to a csv file
+write_csv(tidy_brfss12, "./data/cleaned_brfss12.csv")
+
+# code variables in csv as factor
+# create survey design object and save as an R object
+brfss12_data = read_csv("./data/cleaned_brfss12.csv") %>%
+  mutate(mh_treatment = factor(mh_treatment, levels = c("no", "yes")),
+         mh_help_opinion = factor(mh_help_opinion, levels = c("agree strongly", 
+                                                              "agree slightly",
+                                                              "neither agree nor disagree",
+                                                              "disagree slightly",
+                                                              "disagree strongly")),
+         mh_pub_perc_opinion = factor(mh_pub_perc_opinion, levels = c("agree strongly", 
+                                                              "agree slightly",
+                                                              "neither agree nor disagree",
+                                                              "disagree slightly",
+                                                              "disagree strongly")),
+         deepression = factor(depression, levels = c("no", "yes")),
+         sex = factor(sex, levels = c("male", "female")))
+
+brfss_design2012 = as_survey_design(brfss12_data, id = 1, strata = ststr, weight = llcpwt)
+save(brfss_design2012, file = "./data/brfss_design2012.Rdata")

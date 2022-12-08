@@ -1,6 +1,7 @@
 ---
 title: "State-level Explorations"
-html_document:
+output:
+  html_document:
     toc: true
     toc_float: true
     code_folding: hide
@@ -330,4 +331,3 @@ colnames(ranking_table) = c("% past depression", "difference in % past depressio
 
 ranking_table %>%  knitr::kable()
 ```
-

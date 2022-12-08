@@ -83,8 +83,7 @@ brfss_design %>%
   ggplot(aes(x = children, y = depression_prev, fill = sex)) +
   geom_bar(position="dodge", stat="identity") +
   geom_errorbar(aes(ymin=depression_prev_low, ymax=depression_prev_upp), 
-                width=.2, position=position_dodge(.9))
-
+                width=.2, position=position_dodge(.9)) 
 ```
 
 One interesting observation is that men who have children in the household have noticeably lower prevalence of self-reported depression while women who have children don't. We do a chi-square test incorporating the survey weights to verify this observation:
