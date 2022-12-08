@@ -7,26 +7,24 @@ navbar:
        menu:
         - text: "State-level Explorations"
           href: state_level_eda.html
-        - text: "On prevalence of self-reported depression diagnosis"
+        - text: "Self-reported past depression"
           href: depression_prev_EDA.html
-        - text: "On # of days of bad mental health in the past 30 days"
+        - text: "# of days mental health not good in the past 30 days"
           href: bad_mh_days_EDA.html
      - text: "Statistical Analysis"
        menu: 
-        - text: "Regression on self-reported depression diagnosis"
+        - text: "Regression on self-reported past depression"
           href: regression_depr.html
-        - text: "Regression on # of days of bad mental health in the past 30 days"
+        - text: "Regression on # of days mental health not good in the past 30 days"
           href: regression_mh_days.html
         - text: "Ecological analysis on state-level mental health outcomes"
           href: ecological.html
-     - text: "Geographic Distribution"
-       href: state_level_dashboard.html
-     - text: "Predictions"
+        - text: "Geographic Distribution of mental health outcomes by gender"
+        - href: state_level_dashboard.html
+     - text: "Odds to Probability"
        href: https://ziqingwang.shinyapps.io/shiny/
 
   right:
-    - text: "About"
-      href: about.html
     - text: "Report"
       href: report.html
     - icon: fa-envelope fa-lg
