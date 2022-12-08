@@ -68,7 +68,7 @@ tb1_weighted
 
 ### Gender, number of children in family, and #of days of bad mental health in the past 30 days
 
-We are interested in the differential impact of the number of children in the household on self-reported over 15 days of bad mental health in the past 30 days among men and women. Below is a barplot on this topic:
+We are interested in the differential impact of the number of children in the household on self-reported prevalence of over 15 days of bad mental health in the past 30 days among men and women. Below is a barplot on this topic:
 
 ```{r}
 brfss_design %>%
@@ -105,7 +105,8 @@ brfss_design %>%
 As expected, based on the chi-squared test, the number of children in the household is significantly associated with self-reported over 15 days of bad mental health in the past 30 days among men but not women. 
 
 ### Gender, race, and # of days of bad mental health in the past 30 days
-Next, we examine how gender and race together associate with self-reported over 15 days of bad mental health in the past 30 days.
+
+Next, we examine how gender and race together associate with self-reported prevalence of over 15 days of bad mental health in the past 30 days.
 
 ```{r}
 brfss_design %>%
@@ -119,9 +120,11 @@ brfss_design %>%
                 width=.2, position=position_dodge(.9))
 ```
 
-We can see that not only is the reported number of days in the past 30 days being in bad mental health is larger in women than men, the same holds true for all race/ethnicities included in the data set.
+We can see that not only is the prevalence of reported more than 15 days in the past 30 days being in bad mental health higher in women than men, the same holds true for all race/ethnicities included in the data set.
 
 ### Gender, age, and # of days of bad mental health in the past 30 days
+
+Then, we want to examine the association between age and prevalence of more than 15 days being in bad mental health among different genders.
 
 ```{r}
 brfss_design %>%
@@ -135,8 +138,46 @@ brfss_design %>%
                 width=.2, position=position_dodge(.9))
 ```
 
-Based on the plot above, it seems that, for women, the prevalence of self-reported over 15 days of bad mental in past 30 days drops slightly between age group 30-49 and 50-64, but decreases significantly between age group 18-29 and 30-49 as well as between age group 50-64 and 65+. The same trend is displayed among men as well but in smaller magnitude.  
+Below are the p-values of the chi-square tests for the self-reported prevalence of more than 15 days of depression in the last 30 days in different age groups, for women and men separately.
+
+```{r}
+# For women
+brfss_design %>%
+  filter(sex == "female") %>% 
+  select(age, mh_bin) %>% 
+  svychisq(~age + mh_bin, . , statistic="adjWald") %>% 
+  broom::tidy()%>% 
+  pull(p.value)
+
+# For men
+brfss_design %>%
+  filter(sex == "male") %>% 
+  select(age, mh_bin) %>% 
+  svychisq(~age + mh_bin, . , statistic="adjWald") %>% 
+  broom::tidy()%>% 
+  pull(p.value)
+```
+
+Based on the plot and test result above, it seems that, for women, the prevalence of self-reported over 15 days of bad mental in past 30 days drops slightly when entering the age group of 50-64, but decreases noticeably when entering 30-49 as well as 65+. The confidence interval plot below supported our conclusion. The same trend is displayed among men as well but in smaller magnitude.  
 
 This gap in the magnitude of change in prevalence of self-reported number of days in bad mental in the past 30 days indicates that aging might affect self-reported it among women and men differently. 
+
+```{r}
+brfss_design %>%
+  group_by(sex, age, mh_bin) %>%
+  summarize(mh_prev = 100*survey_mean(na.rm = T, vartype = c("ci"))) %>%
+  filter(!is.na(age), mh_bin == ">15 days") %>% 
+  ggplot() + 
+  geom_segment(aes(x = mh_prev_low, xend = mh_prev_upp,
+                   y = age, yend = age, color = sex),
+               size = 2)+
+  labs(
+    title = "Prevalence of over 15 days of Bad Mental Health during the Last 30 days",
+    x = "Confidence Interval",
+    y = "Age"
+  ) 
+```
+
+### Conclusion
 
 As a conclusion, all factors we chose influence self-reported number of days in bad mental in the past 30 days in the similar way to depression. We presume that it is because longer periods of being in bad mental health will lead to depression. Correspondingly, those in depression are much more likely to be in bad mental health for longer period.
