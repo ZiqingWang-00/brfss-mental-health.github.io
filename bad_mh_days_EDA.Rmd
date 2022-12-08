@@ -67,7 +67,9 @@ tb1_weighted
 
 
 ### Gender, number of children in family, and #of days of bad mental health in the past 30 days
+
 We are interested in the differential impact of the number of children in the household on self-reported over 15 days of bad mental health in the past 30 days among men and women. Below is a barplot on this topic:
+
 ```{r}
 brfss_design %>%
   group_by(sex, children, mh_bin) %>%
@@ -101,6 +103,7 @@ As expected, based on the chi-squared test, the number of children in the househ
 
 ### Gender, race, and # of days of bad mental health in the past 30 days
 Next, we examine how gender and race together associate with self-reported over 15 days of bad mental health in the past 30 days.
+
 ```{r}
 brfss_design %>%
   group_by(sex, race, mh_bin) %>%
@@ -116,6 +119,7 @@ brfss_design %>%
 We can see that not only is the reported number of days in the past 30 days being in bad mental health is larger in women than men, the same holds true for all race/ethnicities included in the data set.
 
 ### Gender, age, and # of days of bad mental health in the past 30 days
+
 ```{r}
 brfss_design %>%
   group_by(sex, age, mh_bin) %>%

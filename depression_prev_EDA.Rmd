@@ -74,6 +74,7 @@ We can see that the same observations above hold in the weighted summary counts.
 We take closer looks at how gender might interact with the following demographic variables to affect self-reported depression:  
 
 ### Gender, number of children in family, and depression
+
 We are interested in the differential impact of the number of children in the household on self-reported depression among men and women. Below is a barplot on this topic:
 
 ```{r}
@@ -108,7 +109,7 @@ brfss_design %>%
   pull(p.value)
 ```
 
-As expected, based on the chi-squared test, self-reported depression is significantly associated with the number of children in the household among men but not women.   
+As expected, based on the chi-square test, self-reported depression is significantly associated with the number of children in the household among men but not women.   
 
 Also, we draw the confidence interval for the self-reported prevalence of depression among men with different numbers of children in the household.
 
@@ -146,7 +147,7 @@ brfss_design %>%
                 width=.2, position=position_dodge(.9))
 ```
 
-We can see that not only is the prevalence of self-reported depression higher in women than men, the same seems to hold true for all race/ethnicities included in the data set. Below are the p-values of the chi-squared test we did seperately for women and men to verify this observation:
+We can see that not only is the prevalence of self-reported depression higher in women than men, the same seems to hold true for all race/ethnicities included in the data set. Below are the p-values of the chi-square test we did separately for women and men to verify this observation:
 
 ```{r}
 # For women
@@ -200,7 +201,7 @@ brfss_design %>%
                 width=.2, position=position_dodge(.9))
 ```
 
-Below are the p-values of the chi-squared tests for the self-reported prevalence of depression in different age groups, for women and men seperately.
+Below are the p-values of the chi-square tests for the self-reported prevalence of depression in different age groups, for women and men separately.
 
 ```{r}
 # For women
