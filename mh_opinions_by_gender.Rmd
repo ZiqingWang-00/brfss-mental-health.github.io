@@ -189,13 +189,16 @@ In summary, we found the follows:
 * Among those who reported past depression or >15 days mental health not good in the past 30 days, women are more likely to seek mental health services than men. 
 * Men perceive less public stigma against people with mental health illnesses compared to women. 
 * Both men and women are highly likely to agree that mental health treatments are effective.  
-One main takeway from these findings is that fear of public stigma is probably not one of the reasons why men have lower mental health service utlization than women, at least not a major one. More importantly, these findings raise new questions. For example,
 
-* Why do men seek mental health services less than women? Is this related to better self-reported mental health outcomes among men (e.g., less professional help, less disgnoses, less self reports)?
+One main takeway from these findings is that fear of public stigma might not one of the reasons why men have lower mental health service utlization than women, at least not a major one. More importantly, these findings raise new questions. For example,
+
+* Why do men seek mental health services less than women? Is this related to better self-reported mental health outcomes among men (e.g., less professional help, less disgnoses, less self reports)? Also, further analyses can be done on the effect of perceived public stigma and belief in the effectiveness of mental health treatment on mental health services utilization. 
 * How does mental health services differ in different demographic variables, such as race/ethnicity?
 * How do people's perception of public stigma against people with mental health disorders related to their own stigma against people with mental health disorders?
 * How do these stigmas affect their self-reported mental health outcomes and their mental health service utilization?
-* What are some factors that are associated with people's perception of public stigma and their own stigma against mental health disorders? 
+* What are some factors that are associated with people's perception of public stigma and their own stigma against mental health disorders?  
+
+These questions are out of scope for our project, but they are interesting potential next steps to take.
 
 
 
