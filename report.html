@@ -462,11 +462,13 @@ explore the circumstances at state-level.</p>
 household might affect women and men’s mental health differently. This
 question was inspired by personal observations and experience - Women
 are usually more likely to assume more care-giving responsibilities in
-the household. Then when it comes to children in the household, do
-women</p>
+the household. Then is women’s mental health affected more than men’s by
+the presence of children in the household?</p>
 </div>
-<div id="main-research-questions" class="section level2">
-<h2>Main research questions</h2>
+<div id="research-questions" class="section level2">
+<h2>Research questions</h2>
+<div id="main-research-questions" class="section level3">
+<h3>Main research questions</h3>
 <p>We are interested in the following questions:</p>
 <ul>
 <li><p>How does the geological distribution of mental health outcomes
@@ -477,18 +479,20 @@ into account of demographic, socioeconomic, and health factors?</p></li>
 health of men and women differently?</p></li>
 </ul>
 </div>
-<div id="post-hoc-questions" class="section level2">
-<h2>Post-hoc questions</h2>
+<div id="post-hoc-questions" class="section level3">
+<h3>Post-hoc questions</h3>
 <p>While answering our main research questions, some additional
 interesting questions emerged, and we tried answering some of them after
 our main analyses. These “post-hoc” questions include the following:</p>
 <ul>
-<li>Is state-level gender inequality associated with state-level
-prevalence of mental health outcomes?<br />
+<li>Is state-level prevalence of mental health outcomes associated with
+state-level gender inequality?<br />
 </li>
 <li>How do mental health care service utilization and opinions on mental
-health disorders differ among men and women?</li>
+health disorders differ among men and women? How are these differences
+associated with women and men’s mental health?</li>
 </ul>
+</div>
 </div>
 <div id="method" class="section level2">
 <h2>Method</h2>
@@ -549,33 +553,78 @@ mental health status.</p>
 respondent’s gender coded as female or male based on their answers to
 whether they were male or female and whether they were male or female at
 birth. The second exposure variable is the number of children in the
-respondent’s household.</p>
+respondent’s household, which was recoded to three levels: none, one or
+two, and three or more.</p>
 </div>
 <div id="covariates" class="section level3">
 <h3>Covariates</h3>
-<p>Demographic covariates in our analyses include race/ethnicity, age,
-employment status, and marital status. Socioeconomic cavariates include
-education level and annual income. Health-related covariates include
-self-reported general health and any self-reported exercises in the past
-30 days.</p>
+<p>Demographic covariates in our analyses include race/ethnicity
+(recoded as non-Hispanic white, black, Asian, Hispanic, and other), age
+(recoded as 18-29 years old, 30-49 years old, 50-64 years old, and 65 or
+older), employment status (recoded as employed for salary,
+homemake/student/retired, and unemployed), and marital status (recoded
+as married and not married). Socioeconomic cavariates include education
+level (recoded as less than high school, high school or some college,
+and Bachelors’s degree or higher) and annual income (recoded as <span
+class="math inline">\(\leq\)</span> 35000 dollars, between 35000 and
+75000 dollars, and more than 75000 dollars). Health-related covariates
+include self-reported general health (recoded as excellent, very
+good/good, and fair/poor) and any self-reported exercises in the past 30
+days (recoded as yes and no).</p>
 </div>
 <div id="statistical-analysis" class="section level3">
 <h3>Statistical Analysis</h3>
+<p>National surveys such and BRFSS and NHIS are not simple random
+samples because observations have different probabilities of being
+sampled due to complex survey designs. Therefore, before analyzing
+nationally representative survey data, we must apply survey weights, or
+all our estimates will be invalid. In our project, after selecting,
+cleaning, and recoding the variables, we converted the data set into a
+survey design object using the srvyr package.</p>
 <p>We computed weighted and unweighted summary counts of exposure and
-covariate categories in each level of the mental health outcome
-variables.</p>
-<p>We used the binary logistic regression model to examine the
-association between gender and the self-reported past diagnosis of
-depression and the dichotomized number of days of self-reported bad
-mental health in the past 30 days, respectively.</p>
-<p>For both outcome variables, we added demographic, socioeconomic, and
-health-related variables sequentially in the regression model and used
-cross validation to select the best model, respectively.</p>
-<p>We subsetted the data by gender and ran the best logistic regression
-models selected from above separately on these two subsetted data sets.
-The aim of the subsetted analysis is to check whether the number of
-children in the household differentially impacts the two mental health
-outcomes.</p>
+covariate categories in each level of the two mental health outcome
+variables. We used Chi-squared tests for weighted survey data to
+identify differences in mental health outcomes by gender as well as
+differences in mental health outcomes and other variables (e.g., number
+of children in household, age, race/ethnicity) by gender.</p>
+<p>We used binary logistic regression to examine the association between
+gender and past depression and &gt;15 days mental health not good in the
+past 30 days, respectively. We started with a crude model that only
+included the exposures (gender and the number of children in the
+household). Then we constructed a larger model by adding demographic
+covariates, which are age, race/ethnicity, and marital status. Then we
+constructed another model by adding socioeconomic covariates to the
+previous model, which are education, annual income, and employment
+status. Finally, we constructed our full model by adding physical health
+related variables, which are self-reported general health and
+self-reported any physical exercise in the past 30 days. Survey weights
+were applied to all regression models as well. The regression models
+were compared using the AIC criterion. Models with the lowest AIC values
+were selected as final models.</p>
+<p>The final model for each of the two mental health outcomes were used
+to compute the predictive marginal means for each independent variable.
+According to the documentation of the survey package, the predictive
+marginal mean for one level of a factor variable is the
+probability-weighted average of the fitted values for the model on new
+data where all observations are set to that specific level of the factor
+variable but have whatever values of adjustment covariates they really
+have. In our case where we have a binary logistic regression model, the
+predictive marginal mean shows the effect of a categorical variable on
+the predicted probability of the response variable, adjusting for all
+other predictor variables included in the model. We computed the
+predictive marginal means because we think it better demonstrates the
+magnitude of a factor predictor’s effect on the outcome variable than
+the odds, because odds are less intuitive than probabilities. The final
+models were also used to calculate the predicted probability of each
+mental health outcome given each combination of levels of independent
+variables. We put these results in a Shiny app so that users can play
+around with different factor levels and observe how they affect mental
+health outcomes according to our selected model.</p>
+<p>To check whether the number of children in the household has
+differential effect on mental health by gender, we subsetted the data by
+gender (one data set only has men, the other only has women) and ran the
+best logistic regression models selected from above separately on the
+two subsetted data sets, excluding the gender variable.</p>
 </div>
 </div>
 <div id="results" class="section level2">
