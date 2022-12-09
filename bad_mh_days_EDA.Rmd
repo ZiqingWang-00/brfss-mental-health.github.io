@@ -65,8 +65,20 @@ tb1_weighted =
 tb1_weighted
 ```
 
+### Gender, #of days of bad mental health in the past 30 days
 
-### Gender, number of children in family, and #of days of bad mental health in the past 30 days
+Before analyzing the influence of other factors on the # of days of bad mental health in the past 30 days, we would like to determine if the outcome is independent of gender or not. We do a chi-square test for this and the p-value is shown below:
+
+```{r}
+brfss_design %>%
+  svychisq(~sex + mh_bin, . , statistic="adjWald") %>% 
+  broom::tidy() %>% 
+  pull(p.value)
+```
+
+The test statistic proved that # of days of bad mental health in the past 30 days is dependent on gender. Thus we examine the influences of other factors separately based on different genders in the following analysis.
+
+### Gender, number of children in family, and # of days of bad mental health in the past 30 days
 
 We are interested in the differential impact of the number of children in the household on self-reported prevalence of over 15 days of bad mental health in the past 30 days among men and women. Below is a barplot on this topic:
 
