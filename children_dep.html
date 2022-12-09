@@ -263,6 +263,9 @@ $(document).ready(function () {
       <a href="state_level_eda.html">State-level Explorations</a>
     </li>
     <li>
+      <a href="state_level_dashboard.html">Geographic Distribution of mental health outcomes by gender</a>
+    </li>
+    <li>
       <a href="depression_prev_EDA.html">Self-reported past depression</a>
     </li>
     <li>
@@ -282,9 +285,6 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="regression_mh_days.html">Regression on # of days mental health not good in the past 30 days</a>
-    </li>
-    <li>
-      <a href="state_level_dashboard.html">Geographic Distribution of mental health outcomes by gender</a>
     </li>
   </ul>
 </li>
@@ -349,7 +349,7 @@ $(document).ready(function () {
           children %in% c(&quot;none&quot;) ~ &quot;No&quot;,
           TRUE ~ &quot;Yes&quot;))</code></pre>
 <pre><code>## Rows: 417619 Columns: 31
-## ── Column specification ───────────────────
+## ── Column specification ───────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (15): sex, race, mh_cat3, mh_bin, depression, children, education, incom...
 ## dbl (16): psu, llcpwt, ststr, menthlth, addepev3, chldcnt, state, educa, inc...
