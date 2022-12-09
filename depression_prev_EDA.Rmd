@@ -89,7 +89,7 @@ brfss_design %>%
                 width=.2, position=position_dodge(.9)) 
 ```
 
-One interesting observation is that men who have children in the household have noticeably lower prevalence of self-reported depression while women who have children don't. We do a chi-square test incorporating the survey weights to verify this observation, below are the p-values of the test results for women and men: 
+One interesting observation is that men who have children in the household have noticeably lower prevalence of self-reported depression while women who have children don't. We do a chi-square test incorporating the survey weights to verify this observation, below are the p-values of the test results for women and men:  
 
 ```{r}
 # For women
