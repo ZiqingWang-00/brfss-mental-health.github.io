@@ -508,7 +508,7 @@ crude_mod_depr %&gt;% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
 class="section level3">
 <h3>Model controlling for demographic variables</h3>
 <p>Then we wanted to take demographic covariates into account in our
-second model, including race, age and marital status: <em>mod_depr:
+second model, including race, age and marital status: <em>mod2_depr:
 depression ~ sex + children + race + age + marital_status</em></p>
 <pre class="r"><code>mod2_depr = svyglm(depression ~ sex + children + # exposures
          race + age + marital_status, # demographic covariates
