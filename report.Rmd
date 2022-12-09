@@ -80,6 +80,7 @@ We found that the prevalence of self-reported past depression is associated with
 We also found that the prevalence of past depression is higher in women than men for all race/ethnicities included. White people and people who are not white, black, Asian, nor Hispanic have the highest prevalence of past depression, while Asians report the lowest prevalence of past depression.  
 
 As for the association between past depression and age among men and women, we found that **for both women and men, the prevalence of self-reported past depression remains stable between the age group 30-49 and 50-64, but decreases significantly between 18-29 and 30-49 and between 50-64 and 65+. However, the manitude of decrease is larger among women than men**. This suggests that age might affect mental health differently among men and women.  
+
 #### Respondent-level analysis: Recent frequency of bad mental health 
 We first examined whether the number of days mental health not good in the past 30 days ($\leq$ 15 days and >15 days) is associated with the exposure, respondent's gender using a chi-square test. The resulting p-value of 1.014e-67 indicates that **the number of days of bad mental health in the past 30 days is associated with gender in that more % of women reported >15 days of bad mental health in the past month**. We then proceeded to studying the relationship between the number of days of bad mental health in the past 30 days and some of the other covariates, on top of the effects of gender.  
 
