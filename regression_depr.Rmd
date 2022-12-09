@@ -27,8 +27,16 @@ options(survey.lonely.psu = "adjust")
 load(file = "./data/brfss_design.Rdata")
 ```
 
+Based on results of former researches and EDA, we categorized variables selected into main exposures, demographic, socioeconomic, and health variables, and fitted model based on their category.
+
+* Main exposures: sex, children
+* Demographic variables: race, age and marital status 
+* Socioeconomic variables: education, income, employment
+* Health variables: general health, exercise
 
 ### Crude model with exposures only
+ At the beginning, we constructed a crude model with these two exposures only:
+*crude_mod_depr: depression ~ sex + children.* 
 ```{r}
 crude_mod_depr = svyglm(depression ~ sex + children, # exposures
        brfss_design,
@@ -37,6 +45,8 @@ crude_mod_depr %>% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95) %>
 ```
 
 ### Model controlling for demographic variables
+Then we wanted to take demographic covariates into account in our second model, including race, age and marital status: 
+*mod_depr: depression ~ sex + children + race + age + marital_status* 
 ```{r}
 mod2_depr = svyglm(depression ~ sex + children + # exposures
          race + age + marital_status, # demographic covariates
@@ -46,6 +56,8 @@ mod2_depr %>% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95) %>% kni
 ```
 
 ### Model controlling for demographic and socioeconomic variables
+In the third model, we added socioeconomic covariates (education, income, employment) comparing to the second one:
+*mod3_depr: depression ~ sex + children + race + age + marital_status + education + income + employment*
 ```{r}
 mod3_depr = svyglm(depression ~ sex + children + # exposures
          race + age + marital_status + # demographic covariates
@@ -57,6 +69,8 @@ mod3_depr %>% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95) %>% kni
 
 
 ### Model controlling for demographic, socioeconomic, and health variables
+Eventually, we fitted the full model considering all covariates:
+*full_mod_depr: depression ~ sex + children + race + age + marital_status + education + income + employment + general_health + exercise*
 ```{r}
 full_mod_depr = svyglm(depression ~ sex + children + # exposures
            race + age + marital_status + # demographic covariates
@@ -69,7 +83,11 @@ full_mod_depr %>% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95) %>%
 ```
 
 ### Model Comparison
-(AIC for score-based comparison for inference purposes and cross validation for prediction purpose?)
+We compared all these models based on Akaike Information Criterion (AIC), which is an estimator of prediction error and thereby relative quality of statistical models for a given set of data. Suppose that we have a statistical model of some data. Let p be the number of estimated parameters in the model. Let $\hat{L}$ be the maximized value of the likelihood function for the model. Then the AIC value of the model is the following: 
+
+$AIC = 2k - 2ln(\hat{L})$.
+
+Given a set of candidate models for the data, the preferred model is the one with the **minimum AIC value**. 
 ```{r, warning = FALSE}
 getAIC = function(m){
   AIC(m) %>%
@@ -89,7 +107,7 @@ df %>%
 From the results of models comparison, we can conclude that the full model (model controlling for demographic, socioeconomic, and health variables) is the best model.
 
 ### Subsetted analysis by gender
-Here we are intereted in our second exposure, the number of children in the household. Specifically, we are interested in if it affects self-reported depression diagnosis differently for men and women. 
+Here we are interested in our second exposure, the number of children in the household. Specifically, we are interested in if it affects self-reported depression diagnosis differently for men and women. 
 
 For male: 
 ```{r}
