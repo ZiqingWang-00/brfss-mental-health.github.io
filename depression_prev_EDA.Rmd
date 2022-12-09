@@ -75,16 +75,17 @@ We take closer looks at how gender might interact with the following demographic
 
 ### Gender and depression
 
-Before analyzing the influence of other factors on the # of days of bad mental health in the past 30 days, we would like to determine if the outcome is independent of gender or not. We do a chi-square test for this and the p-value is shown below:
+Before analyzing the influence of other factors on the prevalence of self-reported depression, we would like to determine if the outcome is independent of gender or not. We do a chi-square test for this and the p-value is shown below:
 
 ```{r}
 brfss_design %>%
-  svychisq(~sex + mh_bin, . , statistic="adjWald") %>% 
-  broom::tidy() %>% 
+  select(sex, depression) %>% 
+  svychisq(~sex + depression, . , statistic="Chisq") %>% 
+  broom::tidy() %>%
   pull(p.value)
 ```
 
-The test statistic proves that # of days of bad mental health in the past 30 days is dependent on gender. Thus we examine the influences of other factors separately based on different genders in the following analysis.
+The test statistic is extremely small, indicating that the prevalence of self-reported depressions is dependent on gender. Thus we examine the influences of other factors separately based on different genders in the following analysis.
 
 
 ### Gender, number of children in family, and depression
@@ -110,7 +111,7 @@ One interesting observation is that men who have children in the household have 
 brfss_design %>%
   filter(sex == "female") %>% 
   select(children, depression) %>% 
-  svychisq(~children + depression, . , statistic="adjWald") %>% 
+  svychisq(~children + depression, . , statistic="Chisq") %>% 
   broom::tidy() %>% 
   pull(p.value)
 
@@ -118,7 +119,7 @@ brfss_design %>%
 brfss_design %>%
   filter(sex == "male") %>% 
   select(children, depression) %>% 
-  svychisq(~children + depression, . , statistic="adjWald") %>% 
+  svychisq(~children + depression, . , statistic="Chisq") %>% 
   broom::tidy() %>% 
   pull(p.value)
 ```
@@ -168,7 +169,7 @@ We can see that not only is the prevalence of self-reported depression higher in
 brfss_design %>%
   filter(sex == "female") %>% 
   select(race, depression) %>% 
-  svychisq(~race + depression, . , statistic="adjWald") %>% 
+  svychisq(~race + depression, . , statistic="Chisq") %>% 
   broom::tidy()%>% 
   pull(p.value)
 
@@ -176,7 +177,7 @@ brfss_design %>%
 brfss_design %>%
   filter(sex == "male") %>% 
   select(race, depression) %>% 
-  svychisq(~race + depression, . , statistic="adjWald") %>% 
+  svychisq(~race + depression, . , statistic="Chisq") %>% 
   broom::tidy()%>% 
   pull(p.value)
 ```
@@ -222,7 +223,7 @@ Below are the p-values of the chi-square tests for the self-reported prevalence 
 brfss_design %>%
   filter(sex == "female") %>% 
   select(age, depression) %>% 
-  svychisq(~age + depression, . , statistic="adjWald") %>% 
+  svychisq(~age + depression, . , statistic="Chisq") %>% 
   broom::tidy()%>% 
   pull(p.value)
 
@@ -230,7 +231,7 @@ brfss_design %>%
 brfss_design %>%
   filter(sex == "male") %>% 
   select(age, depression) %>% 
-  svychisq(~age + depression, . , statistic="adjWald") %>% 
+  svychisq(~age + depression, . , statistic="Chisq") %>% 
   broom::tidy()%>% 
   pull(p.value)
 ```

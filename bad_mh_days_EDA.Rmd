@@ -71,7 +71,7 @@ Before analyzing the influence of other factors on the # of days of bad mental h
 
 ```{r}
 brfss_design %>%
-  svychisq(~sex + mh_bin, . , statistic="adjWald") %>% 
+  svychisq(~sex + mh_bin, . , statistic="Chisq") %>% 
   broom::tidy() %>% 
   pull(p.value)
 ```
@@ -101,7 +101,7 @@ One interesting observation is that same as depression, men who have children in
 brfss_design %>%
   filter(sex == "female") %>% 
   select(children, mh_bin) %>% 
-  svychisq(~children + mh_bin, . , statistic="adjWald") %>% 
+  svychisq(~children + mh_bin, . , statistic="Chisq") %>% 
   broom::tidy() %>% 
   pull(p.value)
 
@@ -109,7 +109,7 @@ brfss_design %>%
 brfss_design %>%
   filter(sex == "male") %>% 
   select(children, mh_bin) %>% 
-  svychisq(~children + mh_bin, . , statistic="adjWald") %>% 
+  svychisq(~children + mh_bin, . , statistic="Chisq") %>% 
   broom::tidy()%>% 
   pull(p.value)
 ```
@@ -157,7 +157,7 @@ Below are the p-values of the chi-square tests for the self-reported prevalence 
 brfss_design %>%
   filter(sex == "female") %>% 
   select(age, mh_bin) %>% 
-  svychisq(~age + mh_bin, . , statistic="adjWald") %>% 
+  svychisq(~age + mh_bin, . , statistic="Chisq") %>% 
   broom::tidy()%>% 
   pull(p.value)
 
@@ -165,7 +165,7 @@ brfss_design %>%
 brfss_design %>%
   filter(sex == "male") %>% 
   select(age, mh_bin) %>% 
-  svychisq(~age + mh_bin, . , statistic="adjWald") %>% 
+  svychisq(~age + mh_bin, . , statistic="Chisq") %>% 
   broom::tidy()%>% 
   pull(p.value)
 ```
