@@ -103,14 +103,12 @@ Also, among men, having children in the household is not significantly associate
 
 In summary, based on the subsetted analysis, it seems like having children in the household influences women and men's mental health differently. More specifically, if we view self-reported past depression as a proxy measurement of chronic/long-term mental health and view self-reported >15 days mental health not good in the past 30 days as a proxy measurement of recent distress, we can conjecture that one or more children in the household is beneficial to men's chronic mental health but not women's, and that one or two children in the household is beneficial for women's recent mental health but not men's. The details of the models and the numbers for self-reported depression and self-reported recent days of bad mental health are [here](https://ziqingwang-00.github.io/brfss-mental-health.github.io/regression_depr.html) and [here](https://ziqingwang-00.github.io/brfss-mental-health.github.io/regression_mh_days.html), respectively. 
 
-
 ### Post-hoc explorations
 #### State-level mental health outcomes and gender inequality
 We found that the WPS index is negatively associated with the prevalence of self-reported depression and the average number of days mental health not good in the past 30 days, before and after adjusting per-capita GDP. This indicates that the higher women's status in the state, the lower the state-level prevalence of self-reported depression and >15 days mental health not good recently among women. Details and numbers are [here](https://ziqingwang-00.github.io/brfss-mental-health.github.io/ecological.html).
 
 #### Beliefs, attitudes, and service utilization
-We found that among those who reported past depression or >15 days mental health not good in the past 30 days, women are more likely to use mental health services than men. This might explain why women report worse mental health outcomes than men. For example, people who seek professional help are more likely to be told that they have depression than those who don't. We also found that men perceive less public stigma against people with mental health illnesses compared to women, and that both men and women are highly likely to agree that mental health treatments are effective. The numbers and details can be found [here](https://ziqingwang-00.github.io/brfss-mental-health.github.io/mh_opinions_by_gender.html).
-
+We found that among those who reported past depression or >15 days mental health not good in the past 30 days, women are more likely to use mental health services than men. This might explain why women report worse mental health outcomes than men. For example, people who seek professional help are more likely to be told that they have depression than those who don't. We also found that men perceive less public stigma against people with mental health illnesses compared to women, and that both men and women are highly likely to agree that mental health treatments are effective. The numbers and details can be found [here](https://ziqingwang-00.github.io/brfss-mental-health.github.io/mh_opinions_by_gender.html).  
 
 ## Discussion
 ### Takeaways 
