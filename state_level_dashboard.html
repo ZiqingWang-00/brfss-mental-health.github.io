@@ -1,29 +1,18 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+
+<html>
+
 <head>
 
-<meta charset="utf-8">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
 
 
 
 <title>State-level mental health outcome by gender</title>
 
-<meta property="og:title" content="State-level mental health outcome by gender" />
-
-<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
-
-<link rel="icon" href="data:image/x-icon;" type="image/x-icon">
-
-
-<script type="text/javascript">
-window.FlexDashboardComponents = [];
-</script>
-
-<script id="flexdashboard-navbar" type="application/json">
-[{"title":"Source Code","icon":"fa-code","href":"source_embed","align":"right"}]
-</script>
 <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -40,17 +29,9 @@ window.FlexDashboardComponents = [];
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-<script src="site_libs/sly-1.6.1/sly.min.js"></script>
-<script src="site_libs/stickytableheaders-0.1.19/jquery.stickytableheaders.min.js"></script>
-<link href="site_libs/value-box-accent-static-0.6.0/theme-cosmo-value-box.css" rel="stylesheet" />
-<link href="site_libs/featherlight-1.3.5/featherlight.min.css" rel="stylesheet" />
-<script src="site_libs/featherlight-1.3.5/featherlight.min.js"></script>
-<link href="site_libs/prism-1.4.1/prism.css" rel="stylesheet" />
-<script src="site_libs/prism-1.4.1/prism.js"></script>
-<link href="site_libs/flexdashboard-css-0.6.0/flexdashboard.min.css" rel="stylesheet" />
-<link href="site_libs/flexdashboard-css-0.6.0/theme-cosmo.css" rel="stylesheet" />
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <script src="site_libs/plotly-binding-4.10.0/plotly.js"></script>
 <script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
@@ -58,104 +39,200 @@ window.FlexDashboardComponents = [];
 <script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 <link href="site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
 <style type="text/css">
-/*
-  CSS for flexdashboard.js' use of Sly(). The sizing/position of this CSS needs to be
-  applied _before_ flexdashboard.js initializes, which is why this CSS has been pulled
-  out from flexdashboard.scss and inlined in the document's head.
-*/
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
-.storyboard-nav button {
-  background: transparent;
-  border: 0;
-  opacity: .3;
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
   padding: 0;
-}
-
-.storyboard-nav button:hover,
-.storyboard-nav button:hover {
-  opacity: .5;
-}
-
-.storyboard-nav button:disabled,
-.storyboard-nav button:disabled {
-  opacity: .1;
-}
-
-.storyboard-nav .sbnext,
-.storyboard-nav .sbprev {
-  float: left;
-  width: 2%;
-  height: 120px;
-}
-
-.storyboard-nav .sbprev {
-  text-align: left;
-  width: 2%;
-}
-
-.storyboard-nav .sbnext {
-  float: right;
-  text-align: right;
-  margin-right: 8px;
-}
-
-.storyboard-nav .sbframelist {
-  margin: 0 auto;
-  width: 94%;
-  height: 120px;
-  overflow: hidden;
-  text-shadow: none;
-  margin-bottom: 8px;
-}
-
-.storyboard-nav .sbframelist ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
-.storyboard-nav .sbframelist ul li {
-  float: left;
-  width: 270px;
-  height: 100%;
-  padding: 10px 10px 10px 10px;
-  margin-right: 8px;
-  text-align: left;
-  cursor: pointer;
-}
-
-.storyboard-nav .sbframelist ul li:last-child {
-  margin-right: 0px;
-}
-
-.sbframe-commentary {
-  width: 300px;
-}
-
-.sbframe-commentary ul {
-  padding-left: 22px;
-}
-
-.sbframe.active {
-  display: flex;
-}
-
-.sbframe:not(.active) {
-  display: none;
-}
-@media only screen and (min-width: 768px) {
-html, body {
-  height: 100%;
-}
-
-#dashboard-container {
-  height: 100%;
-}
 }
 </style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
 
 
 
@@ -163,1762 +240,189 @@ html, body {
 
 <body>
 
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-<div class="container-fluid">
-<div class="navbar-header">
 
-<span class="navbar-logo">
-  
-</span>
-<span class="navbar-brand">
-  State-level mental health outcome by gender
-  <span class="navbar-author">
-        </span>
-</span>
+<div class="container-fluid main-container">
 
-<button id="navbar-button" type="button" class="navbar-toggle collapsed pull-right" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-</button>
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    EDA
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="state_level_eda.html">State-level Explorations</a>
+    </li>
+    <li>
+      <a href="state_level_dashboard.html">Geographic Distribution of mental health outcomes by gender</a>
+    </li>
+    <li>
+      <a href="depression_prev_EDA.html">Self-reported past depression</a>
+    </li>
+    <li>
+      <a href="bad_mh_days_EDA.html"># of days mental health not good in the past 30 days</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Statistical Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="regression_depr.html">Regression on self-reported past depression</a>
+    </li>
+    <li>
+      <a href="regression_mh_days.html">Regression on # of days mental health not good in the past 30 days</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Post-hoc Explorations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="ecological.html">Ecological analysis on state-level mental health outcomes</a>
+    </li>
+    <li>
+      <a href="mh_opinions_by_gender.html">Mental health service utilization and public opinions</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="https://ziqingwang.shinyapps.io/shiny/">Odds to Probability</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="report.html">Report</a>
+</li>
+<li>
+  <a href="mailto:&lt;zw2899@cumc.columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/ZiqingWang-00">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">State-level mental health outcome by
+gender</h1>
 
 </div>
-<div id="navbar" class="navbar-collapse collapse">
-<ul class="nav navbar-nav navbar-left">
-</ul>
-<ul class="nav navbar-nav navbar-right">
-</ul>
-</div><!--/.nav-collapse-->
-</div><!--/.container-->
-</div><!--/.navbar-->
 
-<script type="text/javascript">
-
-
-var FlexDashboard = (function () {
-
-  // initialize options
-  var _options = {};
-
-  var FlexDashboard = function() {
-
-    // default options
-    _options = $.extend(_options, {
-      theme: "cosmo",
-      fillPage: false,
-      orientation: 'columns',
-      storyboard: false,
-      defaultFigWidth: 576,
-      defaultFigHeight: 461,
-      defaultFigWidthMobile: 360,
-      defaultFigHeightMobile: 461,
-      isMobile: false,
-      isPortrait: false,
-      resize_reload: true
-    });
-  };
-
-  function init(options) {
-
-    // extend default options
-    $.extend(true, _options, options);
-
-    // add ids to sections that don't have them (pandoc won't assign ids
-    // to e.g. sections with titles consisting of only chinese characters)
-    var nextId = 1;
-    $('.level1:not([id]),.level2:not([id]),.level3:not([id])').each(function() {
-      $(this).attr('id', 'dashboard-' + nextId++);
-    });
-
-    // find navbar items
-    var navbarItems = $('#flexdashboard-navbar');
-    if (navbarItems.length)
-      navbarItems = JSON.parse(navbarItems.html());
-    addNavbarItems(navbarItems);
-
-    // find the main dashboard container
-    var dashboardContainer = $('#dashboard-container');
-
-    // resolve mobile classes
-    resolveMobileClasses(dashboardContainer);
-
-    // one time global initialization for components
-    componentsInit(dashboardContainer);
-
-    // look for a global sidebar
-    var globalSidebar = dashboardContainer.find(".section.level1.sidebar");
-    if (globalSidebar.length > 0) {
-
-      // global layout for fullscreen displays
-      if (!isMobilePhone()) {
-
-         // hoist it up to the top level
-         globalSidebar.insertBefore(dashboardContainer);
-
-         // lay it out (set width/positions)
-         layoutSidebar(globalSidebar, dashboardContainer);
-
-      // tuck sidebar into first page for mobile phones
-      } else {
-
-        // convert it into a level3 section
-        globalSidebar.removeClass('sidebar');
-        globalSidebar.removeClass('level1');
-        globalSidebar.addClass('level3');
-        var h1 = globalSidebar.children('h1');
-        var h3 = $('<h3></h3>');
-        h3.append(h1.contents());
-        h3.insertBefore(h1);
-        h1.detach();
-
-        // move it into the first page
-        var page = dashboardContainer.find('.section.level1').first();
-        if (page.length > 0)
-          page.prepend(globalSidebar);
-      }
-    }
-
-    // look for pages to layout
-    var pages = $('div.section.level1');
-    if (pages.length > 0) {
-
-        // find the navbar and collapse on clicked
-        var navbar = $('#navbar');
-        navbar.on("click", "a[data-toggle!=dropdown]", null, function () {
-           navbar.collapse('hide');
-        });
-
-        // envelop the dashboard container in a tab content div
-        dashboardContainer.wrapInner('<div class="tab-content"></div>');
-
-        pages.each(function(index) {
-
-          // lay it out
-          layoutDashboardPage($(this));
-
-          // add it to the navbar
-          addToNavbar($(this), index === 0);
-
-        });
-
-    } else {
-
-      // remove the navbar and navbar button if we don't
-      // have any navbuttons
-      if (navbarItems.length === 0) {
-        $('#navbar').remove();
-        $('#navbar-button').remove();
-      }
-
-      // add the storyboard class if requested
-      if (_options.storyboard)
-        dashboardContainer.addClass('storyboard');
-
-      // layout the entire page
-      layoutDashboardPage(dashboardContainer);
-    }
-
-    // if we are in shiny we need to trigger a window resize event to
-    // force correct layout of shiny-bound-output elements
-    if (isShinyDoc())
-      $(window).trigger('resize');
-
-    // make main components visible
-    $('.section.sidebar').css('visibility', 'visible');
-    dashboardContainer.css('visibility', 'visible');
-
-    // handle location hash
-    handleLocationHash();
-
-    // intialize prism highlighting
-    initPrismHighlighting();
-
-    // record mobile and orientation state then register a handler
-    // to refresh if resize_reload is set to true and it changes
-    _options.isMobile = isMobilePhone();
-    _options.isPortrait = isPortrait();
-    if (_options.resize_reload) {
-      $(window).on('resize', function() {
-        if (_options.isMobile !== isMobilePhone() ||
-            _options.isPortrait !== isPortrait()) {
-          window.location.reload();
-        }
-      });
-    } else {
-      // if in desktop mode and resizing to mobile, make sure the heights are 100%
-      // This enforces what `fillpage.css` does for "wider" pages.
-      // Since we are not reloading once the page becomes small, we need to force the height to 100%
-      // This is a new situation introduced when `_options.resize_reload` is `false`
-      if (! _options.isMobile) {
-        // only add if `fillpage.css` was added in the first place
-        if (_options.fillPage) {
-          // fillpage.css
-          $("html,body,#dashboard").css("height", "100%");
-        }
-      }
-    }
-    // trigger layoutcomplete event
-    dashboardContainer.trigger('flexdashboard:layoutcomplete');
-  }
-
-  function resolveMobileClasses(dashboardContainer) {
-     // add top level layout class
-    dashboardContainer.addClass(isMobilePhone() ? 'mobile-layout' :
-                                                  'desktop-layout');
-
-    // look for .mobile sections and add .no-mobile to their peers
-    var mobileSections = $('.section.mobile');
-    mobileSections.each(function() {
-       var id = $(this).attr('id');
-       var nomobileId = id.replace(/-\d+$/, '');
-       $('#' + nomobileId).addClass('no-mobile');
-    });
-  }
-
-  function addNavbarItems(navbarItems) {
-
-    var navbarLeft = $('ul.navbar-left');
-    var navbarRight = $('ul.navbar-right');
-
-    for (var i = 0; i<navbarItems.length; i++) {
-
-      // get the item
-      var item = navbarItems[i];
-
-      // determine the container
-      var container = null;
-      if (item.align === "left")
-        container = navbarLeft;
-      else
-        container = navbarRight;
-
-      // navbar menu if we have multiple items
-      if (item.items) {
-        var menu = navbarMenu(null, item.icon, item.title, container);
-        for (var j = 0; j<item.items.length; j++) {
-          var subItem = item.items[j];
-          var li = $('<li></li>');
-          var a = navbarLink(subItem.icon, subItem.title, subItem.href, subItem.target);
-          a.removeClass("nav-link").addClass("dropdown-item");
-          li.append(a);
-          menu.append(li);
-        }
-      } else {
-        var li = $('<li class="nav-item"></li>');
-        li.append(navbarLink(item.icon, item.title, item.href, item.target));
-        container.append(li);
-      }
-    }
-  }
-
-  // create or get a reference to an existing dropdown menu
-  function navbarMenu(id, icon, title, container) {
-    var existingMenu = [];
-    if (id)
-      existingMenu = container.children('#' + id);
-    if (existingMenu.length > 0) {
-      return existingMenu.children('ul');
-    } else {
-      var li = $('<li class="nav-item"></li>');
-      if (id)
-        li.attr('id', id);
-      li.addClass('dropdown');
-      // auto add "Share" title on mobile if necessary
-      if (!title && icon && (icon === "fa-share-alt") && isMobilePhone())
-        title = "Share";
-      if (title) {
-        title = title + ' <span class="caret"></span>';
-      }
-      var a = navbarLink(icon, title, "#");
-      a.addClass('dropdown-toggle');
-      a.attr('data-toggle', 'dropdown');
-      a.attr('data-bs-toggle', 'dropdown');
-      a.attr('role', 'button');
-      a.attr('aria-expanded', 'false');
-      li.append(a);
-      var ul = $('<ul class="dropdown-menu"></ul>');
-      ul.attr('role', 'menu');
-      li.append(ul);
-      container.append(li);
-      return ul;
-    }
-  }
-
-  function addToNavbar(page, active) {
-
-    // capture the id and data-icon attribute (if any)
-    var id = page.attr('id');
-    var icon = page.attr('data-icon');
-    var navmenu = page.attr('data-navmenu');
-
-    // get hidden state (transfer this to navbar)
-    var hidden = page.hasClass('hidden');
-    page.removeClass('hidden');
-
-    // sanitize the id for use with bootstrap tabs
-    id = id.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_');
-    page.attr('id', id);
-
-    // get the wrapper
-    var wrapper = page.closest('.dashboard-page-wrapper');
-
-    // move the id to the wrapper
-    page.removeAttr('id');
-    wrapper.attr('id', id);
-
-    // add the tab-pane class to the wrapper
-    wrapper.addClass('tab-pane');
-    if (active)
-      wrapper.addClass('active');
-
-    // get a reference to the h1, discover its inner contens, then detach it
-    var h1 = wrapper.find('h1').first();
-    var title = h1.contents();
-    h1.detach();
-
-    // create a navbar item
-    var li = $('<li></li>');
-    var a = navbarLink(icon, title, '#' + id);
-    a.attr('data-toggle', 'tab');
-    li.append(a);
-
-    // add it to the navbar (or navbar menu if specified)
-    var container = $('ul.navbar-left');
-    if (navmenu) {
-      var menuId = navmenu.replace(/\s+/g, '');
-      var menu = navbarMenu(menuId, null, navmenu, container);
-      li.find("> a").removeClass("nav-link").addClass("dropdown-item");
-      menu.append(li);
-    } else {
-      li.addClass("nav-item")
-      container.append(li);
-    }
-
-    // hide it if requested
-    if (hidden)
-      li.addClass('hidden');
-  }
-
-  function navbarLink(icon, title, href, target) {
-
-    var a = $('<a class="nav-link"></a>');
-    if (icon) {
-
-      // get the name of the icon set and icon
-      var dashPos = icon.indexOf("-");
-      var iconSet = null;
-      var iconSplit = icon.split(" ");
-      if (iconSplit.length > 1) {
-        iconSet = iconSplit[0];
-        icon = iconSplit.slice(1).join(" ");
-      } else {
-        iconSet = icon.substring(0, dashPos);
-      }
-      var iconName = icon.substring(dashPos + 1);
-
-      // create the icon
-      var iconElement = $('<span class="' + iconSet + ' ' + icon + '"></span>');
-      if (title)
-        iconElement.css('margin-right', '7px');
-      a.append(iconElement);
-      // if href is null see if we can auto-generate based on icon (e.g. social)
-      if (!href)
-        maybeGenerateLinkFromIcon(iconName, a);
-    }
-    if (title)
-      a.append(title);
-
-    // add the href.
-    if (href) {
-      if (href === "source_embed") {
-        a.attr('href', '#');
-        a.attr('data-featherlight', "#flexdashboard-source-code");
-        a.featherlight({
-            beforeOpen: function(event){
-              $('body').addClass('unselectable');
-            },
-            afterClose: function(event){
-              $('body').removeClass('unselectable');
-            }
-        });
-      } else {
-        a.attr('href', href);
-      }
-    }
-
-    // add the arget
-    if (target)
-      a.attr('target', target);
-
-    return a;
-  }
-
-  // auto generate a link from an icon name (e.g. twitter) when possible
-  function maybeGenerateLinkFromIcon(iconName, a) {
-
-     var serviceLinks = {
-      "twitter": "https://twitter.com/share?text=" + encodeURIComponent(document.title) + "&url="+encodeURIComponent(location.href),
-      "facebook": "https://www.facebook.com/sharer/sharer.php?s=100&p[url]="+encodeURIComponent(location.href),
-      "linkedin": "https://www.linkedin.com/shareArticle?mini=true&url="+encodeURIComponent(location.href) + "&title=" + encodeURIComponent(document.title),
-      "pinterest": "https://pinterest.com/pin/create/link/?url="+encodeURIComponent(location.href) + "&description=" + encodeURIComponent(document.title)
-    };
-
-    var makeSocialLink = function(a, href) {
-      a.attr('href', '#');
-      a.on('click', function(e) {
-        e.preventDefault();
-        window.open(href);
-      });
-    };
-
-    $.each(serviceLinks, function(key, value) {
-      if (iconName.indexOf(key) !== -1)
-        makeSocialLink(a, value);
-    });
-  }
-
-  // layout a dashboard page
-  function layoutDashboardPage(page) {
-
-    // use a page wrapper so that free form content above the
-    // dashboard appears at the top rather than the side (as it
-    // would without the wrapper in a column orientation)
-    var wrapper = $('<div class="dashboard-page-wrapper"></div>');
-    page.wrap(wrapper);
-
-    // if there are no level2 or level3 headers synthesize a level3
-    // header to contain the (e.g. frame it, scroll container, etc.)
-    var headers = page.find('h2,h3');
-    if (headers.length === 0)
-      page.wrapInner('<div class="section level3"></div>');
-
-    // hoist up any content before level 2 or level 3 headers
-    var children = page.children();
-    children.each(function(index) {
-      if ($(this).hasClass('level2') || $(this).hasClass('level3'))
-        return false;
-      $(this).insertBefore(page);
-    });
-
-    // determine orientation and fillPage behavior for distinct media
-    var orientation, fillPage, storyboard;
-
-    // media: mobile phone
-    if (isMobilePhone()) {
-
-      // if there is a sidebar we need to ensure it's content
-      // is properly framed as an h3
-      var sidebar = page.find('.section.sidebar');
-      sidebar.removeClass('sidebar');
-      sidebar.wrapInner('<div class="section level3"></div>');
-      var h2 = sidebar.find('h2');
-      var h3 = $('<h3></h3>');
-      h3.append(h2.contents());
-      h3.insertBefore(h2);
-      h2.detach();
-
-      // wipeout h2 elements then enclose them in a single h2
-      var level2 = page.find('div.section.level2');
-      level2.each(function() {
-        level2.children('h2').remove();
-        level2.children().unwrap();
-      });
-      page.wrapInner('<div class="section level2"></div>');
-
-      // substitute mobile images
-      if (isPortrait()) {
-        var mobileFigures = $('img.mobile-figure');
-        mobileFigures.each(function() {
-          // get the src (might be base64 encoded)
-          var src = $(this).attr('src');
-
-          // find it's peer
-          var id = $(this).attr('data-mobile-figure-id');
-          var img = $('img[data-figure-id=' + id + "]");
-          img.attr('src', src)
-             .attr('width', _options.defaultFigWidthMobile)
-             .attr('height', _options.defaultFigHeightMobile);
-        });
-      }
-
-      // hoist storyboard commentary into it's own section
-      if (page.hasClass('storyboard')) {
-        var commentaryHR = page.find('div.section.level3 hr');
-        commentaryHR.each(function() {
-          var commentary = $(this).nextAll().detach();
-          var commentarySection = $('<div class="section level3"></div>');
-          commentarySection.append(commentary);
-          commentarySection.insertAfter($(this).closest('div.section.level3'));
-          $(this).remove();
-        });
-      }
-
-      // force a non full screen layout by columns
-      orientation = _options.orientation = 'columns';
-      fillPage = _options.fillPage = false;
-      storyboard = _options.storyboard = false;
-
-    // media: desktop
-    } else {
-
-      // determine orientation
-      orientation = page.attr('data-orientation');
-      if (orientation !== 'rows' && orientation != 'columns')
-        orientation = _options.orientation;
-
-      // determine storyboard mode
-      storyboard = page.hasClass('storyboard');
-
-      // fillPage based on options (force for storyboard)
-      fillPage = _options.fillPage || storyboard;
-
-      // handle sidebar
-      var sidebar = page.find('.section.level2.sidebar');
-      if (sidebar.length > 0)
-        layoutSidebar(sidebar, page);
-    }
-
-    // give it and it's parent divs height: 100% if we are in fillPage mode
-    if (fillPage) {
-      page.addClass('vertical-layout-fill');
-      page.css('height', '100%');
-      page.parents('div').css('height', '100%');
-    } else {
-      page.addClass('vertical-layout-scroll');
-    }
-
-    // perform the layout
-    if (storyboard)
-      layoutPageAsStoryboard(page);
-    else if (orientation === 'rows')
-      layoutPageByRows(page, fillPage);
-    else if (orientation === 'columns')
-      layoutPageByColumns(page, fillPage);
-  }
-
-  function layoutSidebar(sidebar, content) {
-
-    // get it out of the header hierarchy
-    sidebar = sidebar.first();
-    if (sidebar.hasClass('level1')) {
-      sidebar.removeClass('level1');
-      sidebar.children('h1').remove();
-    } else if (sidebar.hasClass('level2')) {
-      sidebar.removeClass('level2');
-      sidebar.children('h2').remove();
-    }
-
-    // determine width
-    var sidebarWidth = isTablet() ? 220 : 250;
-    var dataWidth = parseInt(sidebar.attr('data-width'));
-    if (dataWidth)
-      sidebarWidth = dataWidth;
-
-    // set the width and shift the page right to accomodate the sidebar
-    sidebar.css('width', sidebarWidth + 'px');
-    content.css('padding-left', sidebarWidth + 'px');
-
-    // wrap it's contents in a form
-    sidebar.wrapInner($('<form></form>'));
-  }
-
-  function layoutPageAsStoryboard(page) {
-
-    // create storyboard navigation
-    var nav = $('<div class="storyboard-nav"></div>');
-
-    // add navigation buttons
-    var prev = $('<button class="sbprev"><i class="fa fa-angle-left"></i></button>');
-    nav.append(prev);
-    var next= $('<button class="sbnext"><i class="fa fa-angle-right"></i></button>');
-    nav.append(next);
-
-    // add navigation frame
-    var frameList = $('<div class="sbframelist"></div>');
-    nav.append(frameList);
-    var ul = $('<ul></ul>');
-    frameList.append(ul);
-
-     // find all the level3 sections (those are the storyboard frames)
-    var frames = page.find('div.section.level3');
-    frames.each(function() {
-
-      // mark it
-      $(this).addClass('sbframe');
-
-      // divide it into chart content and (optional) commentary
-      $(this).addClass('dashboard-column-orientation');
-
-      // stuff the chart into it's own div w/ flex
-      $(this).wrapInner('<div class="sbframe-component"></div>');
-      setFlex($(this), 1);
-      var frame = $(this).children('.sbframe-component');
-
-      // extract the title from the h3
-      var li = $('<li></li>');
-      var h3 = frame.children('h3');
-      li.append(h3.contents());
-      h3.detach();
-      ul.append(li);
-
-      // extract commentary
-      var hr = frame.children('hr');
-      if (hr.length) {
-        var commentary = hr.nextAll().detach();
-        hr.remove();
-        var commentaryFrame = $('<div class="sbframe-commentary"></div>');
-        commentaryFrame.addClass('flowing-content-shim');
-        commentaryFrame.addClass('flowing-content-container');
-        commentaryFrame.append(commentary);
-        $(this).append(commentaryFrame);
-
-        // look for a data-commentary-width attribute
-        var commentaryWidth = $(this).attr('data-commentary-width');
-        if (commentaryWidth)
-          commentaryFrame.css('width', commentaryWidth + 'px');
-      }
-
-      // layout the chart (force flex)
-      var result = layoutChart(frame, true);
-
-      // ice the notes if there are none
-      if (!result.notes)
-        frame.find('.chart-notes').remove();
-
-      // set flex on chart
-      setFlex(frame, 1);
-    });
-
-    // create a div to hold all the frames
-    var frameContent = $('<div class="sbframe-content"></div>');
-    frameContent.addClass('dashboard-row-orientation');
-    frameContent.append(frames.detach());
-
-    // row orientation to stack nav and frame content
-    page.addClass('dashboard-row-orientation');
-    page.append(nav);
-    page.append(frameContent);
-    setFlex(frameContent, 1);
-
-    // initialize sly
-    var sly = new Sly(frameList, {
-    		horizontal: true,
-    		itemNav: 'basic',
-    		smart: true,
-    		activateOn: 'click',
-    		startAt: 0,
-    		scrollBy: 1,
-    		activatePageOn: 'click',
-    		speed: 200,
-    		moveBy: 600,
-    		dragHandle: true,
-    		dynamicHandle: true,
-    		clickBar: true,
-    		keyboardNavBy: 'items',
-    		next: next,
-    		prev: prev
-    	}).init();
-
-    // make first frame active
-    frames.removeClass('active');
-    frames.first().addClass('active');
-
-    // subscribe to frame changed events
-    sly.on('active', function (eventName, itemIndex) {
-      frames.removeClass('active');
-      frames.eq(itemIndex).addClass('active')
-                          .trigger('shown');
-    });
-  }
-
-  function layoutPageByRows(page, fillPage) {
-
-    // row orientation
-    page.addClass('dashboard-row-orientation');
-
-    // find all the level2 sections (those are the rows)
-    var rows = page.find('div.section.level2');
-
-    // if there are no level2 sections then treat the
-    // entire page as if it's a level 2 section
-    if (rows.length === 0) {
-      page.wrapInner('<div class="section level2"></div>');
-      rows = page.find('div.section.level2');
-    }
-
-    rows.each(function () {
-
-      // flags
-      var haveNotes = false;
-      var haveFlexHeight = true;
-
-      // remove the h2
-      $(this).children('h2').remove();
-
-      // check for a tabset
-      var isTabset = $(this).hasClass('tabset');
-      if (isTabset)
-        layoutTabset($(this));
-
-      // give it row layout semantics if it's not a tabset
-      if (!isTabset)
-        $(this).addClass('dashboard-row');
-
-      // find all of the level 3 subheads
-      var columns = $(this).find('div.section.level3');
-
-      // determine figureSizes sizes
-      var figureSizes = chartFigureSizes(columns);
-
-      // fixup the columns
-      columns.each(function(index) {
-
-        // layout the chart (force flex if we are in a tabset)
-        var result = layoutChart($(this), isTabset);
-
-        // update flexHeight state
-        if (!result.flex)
-          haveFlexHeight = false;
-
-        // update state
-        if (result.notes)
-          haveNotes = true;
-
-        // set the column flex based on the figure width
-        // (value boxes will just get the default figure width)
-        var chartWidth = figureSizes[index].width;
-        setFlex($(this), chartWidth + ' ' + chartWidth + ' 0px');
-
-      });
-
-      // remove empty chart note divs
-      if (isTabset)
-        $(this).find('.chart-notes').filter(function() {
-            return $(this).html() === "&nbsp;";
-        }).remove();
-      if (!haveNotes)
-        $(this).find('.chart-notes').remove();
-
-       // make it a flexbox row
-      if (haveFlexHeight)
-        $(this).addClass('dashboard-row-flex');
-
-      // now we can set the height on all the wrappers (based on maximum
-      // figure height + room for title and notes, or data-height on the
-      // container if specified). However, don't do this if there is
-      // no flex on any of the constituent columns
-      var flexHeight = null;
-      var dataHeight = parseInt($(this).attr('data-height'));
-      if (dataHeight)
-        flexHeight = adjustedHeight(dataHeight, columns.first());
-      else if (haveFlexHeight)
-        flexHeight = maxChartHeight(figureSizes, columns);
-      if (flexHeight) {
-        if (fillPage)
-          setFlex($(this), flexHeight + ' ' + flexHeight + ' 0px');
-        else {
-          $(this).css('height', flexHeight + 'px');
-          setFlex($(this), '0 0 ' + flexHeight + 'px');
-        }
-      }
-
-    });
-  }
-
-  function layoutPageByColumns(page, fillPage) {
-
-    // column orientation
-    page.addClass('dashboard-column-orientation');
-
-    // find all the level2 sections (those are the columns)
-    var columns = page.find('div.section.level2');
-
-    // if there are no level2 sections then treat the
-    // entire page as if it's a level 2 section
-    if (columns.length === 0) {
-      page.wrapInner('<div class="section level2"></div>');
-      columns = page.find('div.section.level2');
-    }
-
-    // layout each column
-    columns.each(function (index) {
-
-      // remove the h2
-      $(this).children('h2').remove();
-
-      // make it a flexbox column
-      $(this).addClass('dashboard-column');
-
-      // check for a tabset
-      var isTabset = $(this).hasClass('tabset');
-      if (isTabset)
-        layoutTabset($(this));
-
-      // find all the h3 elements
-      var rows = $(this).find('div.section.level3');
-
-      // get the figure sizes for the rows
-      var figureSizes = chartFigureSizes(rows);
-
-      // column flex is the max row width (or data-width if specified)
-      var flexWidth;
-      var dataWidth = parseInt($(this).attr('data-width'));
-      if (dataWidth)
-        flexWidth = dataWidth;
-      else
-        flexWidth = maxChartWidth(figureSizes);
-      setFlex($(this), flexWidth + ' ' + flexWidth + ' 0px');
-
-      // layout each chart
-      rows.each(function(index) {
-
-        // perform the layout
-        var result = layoutChart($(this), false);
-
-        // ice the notes if there are none
-        if (!result.notes)
-          $(this).find('.chart-notes').remove();
-
-        // set flex height based on figHeight, then adjust
-        if (result.flex) {
-          var chartHeight = figureSizes[index].height;
-          chartHeight = adjustedHeight(chartHeight, $(this));
-          if (fillPage)
-            setFlex($(this), chartHeight + ' ' + chartHeight + ' 0px');
-          else {
-            $(this).css('height', chartHeight + 'px');
-            setFlex($(this), chartHeight + ' ' + chartHeight + ' ' + chartHeight + 'px');
-          }
-        }
-      });
-    });
-  }
-
-  function chartFigureSizes(charts) {
-
-    // sizes
-    var figureSizes = new Array(charts.length);
-
-    // check each chart
-    charts.each(function(index) {
-
-      // start with default
-      figureSizes[index] = {
-        width: _options.defaultFigWidth,
-        height: _options.defaultFigHeight
-      };
-
-      // look for data-height or data-width then knit options
-      var dataWidth = parseInt($(this).attr('data-width'));
-      var dataHeight = parseInt($(this).attr('data-height'));
-      var knitrOptions = $(this).find('.knitr-options:first');
-      var knitrWidth, knitrHeight;
-      if (knitrOptions) {
-        knitrWidth = parseInt(knitrOptions.attr('data-fig-width'));
-        knitrHeight =  parseInt(knitrOptions.attr('data-fig-height'));
-      }
-
-      // width
-      if (dataWidth)
-        figureSizes[index].width = dataWidth;
-      else if (knitrWidth)
-        figureSizes[index].width = knitrWidth;
-
-      // height
-      if (dataHeight)
-        figureSizes[index].height = dataHeight;
-      else if (knitrHeight)
-        figureSizes[index].height = knitrHeight;
-    });
-
-    // return sizes
-    return figureSizes;
-  }
-
-  function maxChartHeight(figureSizes, charts) {
-
-    // first compute the maximum height
-    var maxHeight = _options.defaultFigHeight;
-    for (var i = 0; i<figureSizes.length; i++)
-      if (figureSizes[i].height > maxHeight)
-        maxHeight = figureSizes[i].height;
-
-    // now add offests for chart title and chart notes
-    if (charts.length)
-      maxHeight = adjustedHeight(maxHeight, charts.first());
-
-    return maxHeight;
-  }
-
-  function adjustedHeight(height, chart) {
-    if (chart.length > 0) {
-      var chartTitle = chart.find('.chart-title');
-      if (chartTitle.length)
-        height += chartTitle.first().outerHeight();
-      var chartNotes = chart.find('.chart-notes');
-      if (chartNotes.length)
-        height += chartNotes.first().outerHeight();
-    }
-    return height;
-  }
-
-  function maxChartWidth(figureSizes) {
-    var maxWidth = _options.defaultFigWidth;
-    for (var i = 0; i<figureSizes.length; i++)
-      if (figureSizes[i].width > maxWidth)
-        maxWidth = figureSizes[i].width;
-    return maxWidth;
-  }
-
-  // layout a chart
-  function layoutChart(chart, forceFlex) {
-
-    // state to return
-    var result = {
-      notes: false,
-      flex: false
-    };
-
-    // extract the title
-    var title = extractTitle(chart);
-
-    // find components that apply to this container
-    var components = componentsFind(chart);
-
-    // if it's a custom component then call it and return
-    var customComponents = componentsCustom(components);
-    if (customComponents.length) {
-      componentsLayout(customComponents, title, chart);
-      result.notes = false;
-      result.flex = forceFlex || componentsFlex(customComponents);
-      return result;
-    }
-
-    // put all the content in a chart wrapper div
-    chart.addClass('chart-wrapper');
-    chart.wrapInner('<div class="chart-stage"></div>');
-    var chartContent = chart.children('.chart-stage');
-
-    // flex the content if appropriate
-    result.flex = forceFlex || componentsFlex(components);
-    if (result.flex) {
-      // add flex classes
-      chart.addClass('chart-wrapper-flex');
-      chartContent.addClass('chart-stage-flex');
-
-      // additional shim to break out of flexbox sizing
-      chartContent.wrapInner('<div class="chart-shim"></div>');
-      chartContent = chartContent.children('.chart-shim');
-    }
-
-    // set custom data-padding attribute
-    var pad = chart.attr('data-padding');
-    if (pad) {
-      if (pad === "0")
-        chart.addClass('no-padding');
-      else {
-        pad = pad + 'px';
-        chartContent.css('left', pad)
-                    .css('top', pad)
-                    .css('right', pad)
-                    .css('bottom', pad)
-      }
-    }
-
-    // call compoents
-    componentsLayout(components, title, chartContent);
-
-    // also activate components on shiny output
-    findShinyOutput(chartContent).on('shiny:value',
-      function(event) {
-        var element = $(event.target);
-        setTimeout(function() {
-
-          // see if we opted out of flex based on our output (for shiny
-          // we can't tell what type of output we have until after the
-          // value is bound)
-          var components = componentsFind(element);
-          var flex = forceFlex || componentsFlex(components);
-          if (!flex) {
-            chart.css('height', "");
-            setFlex(chart, "");
-            chart.removeClass('chart-wrapper-flex');
-            chartContent.removeClass('chart-stage-flex');
-            chartContent.children().unwrap();
-          }
-
-          // perform layout
-          componentsLayout(components, title, element.parent());
-        }, 10);
-      });
-
-    // add the title
-    var chartTitle = $('<div class="chart-title"></div>');
-    chartTitle.append(title);
-    chart.prepend(chartTitle);
-
-    // add the notes section
-    var chartNotes = $('<div class="chart-notes"></div>');
-    chartNotes.html('&nbsp;');
-    chart.append(chartNotes);
-
-    // attempt to extract notes if we have a component
-    if (components.length)
-      result.notes = extractChartNotes(chartContent, chartNotes);
-
-    // return result
-    return result;
-  }
-
-  // build a tabset from a section div with the .tabset class
-  function layoutTabset(tabset) {
-
-    // check for fade option
-    var fade = tabset.hasClass("tabset-fade");
-    var pills = tabset.hasClass("tabset-pills");
-    var navClass = pills ? "nav-pills" : "nav-tabs";
-
-    // determine the heading level of the tabset and tabs
-    var match = tabset.attr('class').match(/level(\d) /);
-    if (match === null)
-      return;
-    var tabsetLevel = Number(match[1]);
-    var tabLevel = tabsetLevel + 1;
-
-    // find all subheadings immediately below
-    var tabs = tabset.find("div.section.level" + tabLevel);
-    if (!tabs.length)
-      return;
-
-    // create tablist and tab-content elements
-    var tabList = $('<ul class="nav ' + navClass + '" role="tablist"></ul>');
-    $(tabs[0]).before(tabList);
-    var tabContent = $('<div class="tab-content"></div>');
-    $(tabs[0]).before(tabContent);
-
-    // build the tabset
-    var activeTab = 0;
-    tabs.each(function(i) {
-
-      // get the tab div
-      var tab = $(tabs[i]);
-
-      // get the id then sanitize it for use with bootstrap tabs
-      var id = tab.attr('id');
-
-      // see if this is marked as the active tab
-      if (tab.hasClass('active'))
-        activeTab = i;
-
-      // sanitize the id for use with bootstrap tabs
-      id = id.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_');
-      tab.attr('id', id);
-
-      // get the heading element within it and grab it's text
-      var heading = tab.find('h' + tabLevel + ':first');
-      var headingDom = heading.contents();
-
-      // build and append the tab list item
-      var a = $('<a role="tab" data-toggle="tab" class="nav-link"></a>');
-      a.append(headingDom);
-      a.attr('href', '#' + id);
-      a.attr('aria-controls', id);
-      var li = $('<li role="presentation" class="nav-item"></li>');
-      li.append(a);
-      tabList.append(li);
-
-      // set it's attributes
-      tab.attr('role', 'tabpanel');
-      tab.addClass('tab-pane');
-      tab.addClass('tabbed-pane');
-      tab.addClass('no-title');
-      if (fade)
-        tab.addClass('fade');
-
-      // move it into the tab content div
-      tab.detach().appendTo(tabContent);
-    });
-
-    // set active tab
-    $(tabList.children()[activeTab]).tab("show");
-    var active = $(tabContent.children('div.section')[activeTab]);
-    active.addClass('active');
-    if (fade)
-      active.addClass('in');
-
-    // add nav-tabs-custom
-    tabset.addClass('nav-tabs-custom');
-
-    // internal layout is dashboard-column with tab-content flexing
-    tabset.addClass('dashboard-column');
-    setFlex(tabContent, 1);
-  }
-
-  // one time global initialization for components
-  function componentsInit(dashboardContainer) {
-    for (var i=0; i<window.FlexDashboardComponents.length; i++) {
-      var component = window.FlexDashboardComponents[i];
-      if (component.init)
-        component.init(dashboardContainer);
-    }
-  }
-
-  // find components that apply within a container
-  function componentsFind(container) {
-
-    // look for components
-    var components = [];
-    for (var i=0; i<window.FlexDashboardComponents.length; i++) {
-      var component = window.FlexDashboardComponents[i];
-      if (component.find(container).length)
-        components.push(component);
-    }
-
-    // if there were none then use a special flowing content component
-    // that just adds a scrollbar in fillPage mode
-    if (components.length == 0) {
-      components.push({
-        find: function(container) {
-          return container;
-        },
-
-        flex: function(fillPage) {
-          return fillPage;
-        },
-
-        layout: function(title, container, element, fillPage) {
-          if (fillPage) {
-            container.addClass('flowing-content-shim');
-            container.addClass('flowing-content-container');
-          }
-        }
-      });
-    }
-
-    return components;
-  }
-
-  // if there is a custom component then pick it out
-  function componentsCustom(components) {
-    var customComponent = [];
-    for (var i=0; i<components.length; i++)
-      if (components[i].type === "custom") {
-        customComponent.push(components[i]);
-        break;
-      }
-    return customComponent;
-  }
-
-  // query all components for flex
-  function componentsFlex(components) {
-
-    // no components at all means no flex
-    if (components.length === 0)
-      return false;
-
-    // otherwise query components (assume true unless we see false)
-    var isMobile = isMobilePhone();
-    for (var i=0; i<components.length; i++)
-      if (components[i].flex && !components[i].flex(_options.fillPage))
-        return false;
-    return true;
-  }
-
-  // layout all components
-  function componentsLayout(components, title, container) {
-    var isMobile = isMobilePhone();
-    for (var i=0; i<components.length; i++) {
-      var element = components[i].find(container);
-      if (components[i].layout) {
-        // call layout (don't call other components if it returns false)
-        var result = components[i].layout(title, container, element, _options.fillPage);
-        if (result === false)
-          return;
-      }
-    }
-  }
-
-  // get a reference to the h3, discover it's inner html, and remove it
-  function extractTitle(container) {
-    var h3 = container.children('h3').first();
-    var title = '';
-    if (!container.hasClass('no-title'))
-      title = h3.contents();
-    h3.detach();
-    return title;
-  }
-
-  // extract chart notes
-  function extractChartNotes(chartContent, chartNotes) {
-    // look for a terminating blockquote or image caption
-    var blockquote = chartContent.children('blockquote:last-child');
-    var caption = chartContent.children('div.image-container')
-                              .children('p.caption');
-    if (blockquote.length) {
-      chartNotes.empty().append(blockquote.children('p:first-child').contents());
-      blockquote.remove();
-      return true;
-    } else if (caption.length) {
-      chartNotes.empty().append(caption.contents());
-      caption.remove();
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function findShinyOutput(chartContent) {
-    return chartContent.find('.shiny-text-output, .shiny-html-output');
-  }
-
-  // safely detect rendering on a mobile phone
-  function isMobilePhone() {
-    try
-    {
-      return ! window.matchMedia("only screen and (min-width: 768px)").matches;
-    }
-    catch(e) {
-      return false;
-    }
-  }
-
-  function isFillPage() {
-    return _options.fillPage;
-  }
-
-  // detect portrait mode
-  function isPortrait() {
-    return ($(window).width() < $(window).height());
-  }
-
-  // safely detect rendering on a tablet
-  function isTablet() {
-    try
-    {
-      return window.matchMedia("only screen and (min-width: 769px) and (max-width: 992px)").matches;
-    }
-    catch(e) {
-      return false;
-    }
-  }
-
-  // test whether this is a shiny doc
-  function isShinyDoc() {
-    return (typeof(window.Shiny) !== "undefined" && !!window.Shiny.outputBindings);
-  }
-
-  // set flex using vendor specific prefixes
-  function setFlex(el, flex) {
-    el.css('-webkit-box-flex', flex)
-      .css('-webkit-flex', flex)
-      .css('-ms-flex', flex)
-      .css('flex', flex);
-  }
-
-  // support bookmarking of pages
-  function handleLocationHash() {
-
-    // restore tab/page from bookmark
-    var hash = window.decodeURIComponent(window.location.hash);
-    if (hash.length > 0)
-      $('ul.nav a[href="' + hash + '"]').tab('show');
-    FlexDashboardUtils.manageActiveNavbarMenu();
-
-    // navigate to a tab when the history changes
-    window.addEventListener("popstate", function(e) {
-      var hash = window.decodeURIComponent(window.location.hash);
-      var activeTab = $('ul.nav a[href="' + hash + '"]');
-      if (activeTab.length) {
-        activeTab.tab('show');
-      } else {
-        $('ul.nav a:first').tab('show');
-      }
-      FlexDashboardUtils.manageActiveNavbarMenu();
-    });
-
-    // add a hash to the URL when the user clicks on a tab/page
-    $('.navbar-nav a[data-toggle="tab"]').on('click', function(e) {
-      var baseUrl = FlexDashboardUtils.urlWithoutHash(window.location.href);
-      var hash = FlexDashboardUtils.urlHash($(this).attr('href'));
-      var href = baseUrl + hash;
-      FlexDashboardUtils.setLocation(href);
-    });
-
-    // handle clicks of other links that should activate pages
-    var navPages = $('ul.navbar-nav li a[data-toggle=tab]');
-    navPages.each(function() {
-      var href =  $(this).attr('href');
-      var links = $('a[href="' + href + '"][data-toggle!=tab]');
-      links.each(function() {
-        $(this).on('click', function(e) {
-          window.FlexDashboardUtils.showPage(href);
-        });
-      });
-    });
-  }
-
-  // tweak Prism highlighting
-  function initPrismHighlighting() {
-
-    if (window.Prism) {
-      Prism.languages.insertBefore('r', 'comment', {
-        'heading': [
-          {
-            // title 1
-        	  // =======
-
-        	  // title 2
-        	  // -------
-        	  pattern: /\w+.*(?:\r?\n|\r)(?:====+|----+)/,
-            alias: 'operator'
-          },
-          {
-            // ### title 3
-            pattern: /(^\s*)###[^#].+/m,
-            lookbehind: true,
-            alias: 'operator'
-          }
-        ]
-      });
-
-      // prism highlight
-      Prism.highlightAll();
-    }
-  }
-
-  FlexDashboard.prototype = {
-    constructor: FlexDashboard,
-    init: init,
-    isMobilePhone: isMobilePhone,
-    isFillPage: isFillPage
-  };
-
-  return FlexDashboard;
-
-})();
-
-// utils
-window.FlexDashboardUtils = {
-  resizableImage: function(img) {
-    var src = img.attr('src');
-    var url = 'url("' + src + '")';
-    img.parent().css('background', url)
-                .css('background-size', 'contain')
-                .css('background-repeat', 'no-repeat')
-                .css('background-position', 'center')
-                .addClass('image-container');
-  },
-  setLocation: function(href) {
-    if (history && history.pushState) {
-      history.pushState(null, null, href);
-    } else {
-      window.location.replace(href);
-    }
-    setTimeout(function() {
-        window.scrollTo(0, 0);
-    }, 10);
-    this.manageActiveNavbarMenu();
-  },
-  showPage: function(href) {
-    $('ul.navbar-nav li a[href="' + href + '"]').tab('show');
-    var baseUrl = this.urlWithoutHash(window.location.href);
-    var loc = baseUrl + href;
-    this.setLocation(loc);
-  },
-  showLinkedValue: function(href) {
-    // check for a page link
-    if ($('ul.navbar-nav li a[data-toggle=tab][href="' + href + '"]').length > 0)
-      this.showPage(href);
-    else
-      window.open(href);
-  },
-  urlWithoutHash: function(url) {
-    var hashLoc = url.indexOf('#');
-    if (hashLoc != -1)
-      return url.substring(0, hashLoc);
-    else
-      return url;
-  },
-  urlHash: function(url) {
-    var hashLoc = url.indexOf('#');
-    if (hashLoc != -1)
-      return url.substring(hashLoc);
-    else
-      return "";
-  },
-  manageActiveNavbarMenu: function () {
-    // remove active from currently active tabs
-    $('.navbar ul.nav .active').removeClass('active');
-    // find the active tab
-    var activeTab = $('.dashboard-page-wrapper.tab-pane.active');
-    if (activeTab.length > 0) {
-      var tabId = activeTab.attr('id');
-      if (tabId)
-        $(".navbar ul.nav a[href='#" + tabId + "']").tab("show");
-    }
-  }
-};
-
-window.FlexDashboard = new FlexDashboard();
-
-// empty content
-window.FlexDashboardComponents.push({
-  find: function(container) {
-    if (container.find('p').length == 0)
-      return container;
-    else
-      return $();
-  }
-})
-
-// plot image
-window.FlexDashboardComponents.push({
-
-  find: function(container) {
-    return container.children('p')
-                    .children('img:only-child');
-  },
-
-  layout: function(title, container, element, fillPage) {
-    FlexDashboardUtils.resizableImage(element);
-  }
-});
-
-// plot image (figure style)
-window.FlexDashboardComponents.push({
-
-  find: function(container) {
-    return container.children('div.figure').children('img');
-  },
-
-  layout: function(title, container, element, fillPage) {
-    FlexDashboardUtils.resizableImage(element);
-  }
-});
-
-// htmlwidget
-window.FlexDashboardComponents.push({
-
-  init: function(dashboardContainer) {
-    // trigger "shown" after initial layout to force static htmlwidgets
-    // in runtime: shiny to be resized after the dom has been transformed
-    dashboardContainer.on('flexdashboard:layoutcomplete', function(event) {
-      setTimeout(function() {
-        dashboardContainer.trigger('shown');
-      }, 200);
-    });
-  },
-
-  find: function(container) {
-    return container.children('div[id^="htmlwidget-"],div.html-widget');
-  }
-});
-
-// gauge
-window.FlexDashboardComponents.push({
-
-  find: function(container) {
-    return container.children('div.html-widget.gauge');
-  },
-
-  flex: function(fillPage) {
-    return false;
-  },
-
-  layout: function(title, container, element, fillPage) {
-
-
-  }
-
-});
-
-// shiny output
-window.FlexDashboardComponents.push({
-  find: function(container) {
-    return container.children('div[class^="shiny-"]');
-  }
-});
-
-// bootstrap table
-window.FlexDashboardComponents.push({
-
-  find: function(container) {
-    var bsTable = container.find('table.table');
-    if (bsTable.length !== 0)
-      return bsTable;
-    else
-      return container.find('tr.header').parent('thead').parent('table');
-  },
-
-  flex: function(fillPage) {
-    return fillPage;
-  },
-
-  layout: function(title, container, element, fillPage) {
-
-    // alias variables
-    var bsTable = element;
-
-    // fixup xtable generated tables with a proper thead
-    var headerRow = bsTable.find('tbody > tr:first-child > th').parent();
-    if (headerRow.length > 0) {
-      var thead = $('<thead></thead>');
-      bsTable.prepend(thead);
-      headerRow.detach().appendTo(thead);
-    }
-
-    // improve appearance
-    container.addClass('bootstrap-table');
-
-    // for fill page provide scrolling w/ sticky headers
-    if (fillPage) {
-      // force scrollbar on overflow
-      container.addClass('flowing-content-shim');
-
-      // stable table headers when scrolling
-      bsTable.stickyTableHeaders({
-        scrollableArea: container
-      });
-    }
-  }
-});
-
-// embedded shiny app
-window.FlexDashboardComponents.push({
-
-  find: function(container) {
-    return container.find('iframe.shiny-frame');
-  },
-
-  flex: function(fillPage) {
-    return fillPage;
-  },
-
-  layout: function(title, container, element, fillPage) {
-    if (fillPage) {
-      element.attr('height', '100%');
-    } else {
-      // provide default height if necessary
-      var height = element.get(0).style.height;
-      if (!height)
-        height = element.attr('height');
-      if (!height)
-        element.attr('height', 500);
-    }
-  }
-});
-
-// shiny fillRow or fillCol
-window.FlexDashboardComponents.push({
-
-  find: function(container) {
-    return container.find('.flexfill-container');
-  },
-
-  flex: function(fillPage) {
-    return fillPage;
-  },
-
-  layout: function(title, container, element, fillPage) {
-    if (fillPage)
-      element.css('height', '100%');
-    else {
-      // provide default height if necessary
-      var height = element.get(0).style.height;
-      if (height === "100%" || height === "auto" || height === "initial" ||
-          height === "inherit" || !height) {
-        element.css('height', 500);
-      }
-    }
-  }
-});
-
-// valueBox
-window.FlexDashboardComponents.push({
-
-  type: "custom",
-
-  find: function(container) {
-    if (container.find('span.value-output, .shiny-valuebox-output').length)
-      return container;
-    else
-      return $();
-  },
-
-  flex: function(fillPage) {
-    return false;
-  },
-
-  layout: function(title, container, element, fillPage) {
-
-    // alias variables
-    var chartTitle = title;
-    var valueBox = element;
-
-    // add value-box class to container
-    container.addClass('value-box');
-
-    // value paragraph
-    var value = $('<p class="value"></p>');
-
-    // if we have shiny-text-output then just move it in
-    var valueOutputSpan = [];
-    var shinyOutput = valueBox.find('.shiny-valuebox-output').detach();
-    if (shinyOutput.length) {
-      valueBox.children().remove();
-      shinyOutput.html("&mdash;");
-      value.append(shinyOutput);
-    } else {
-      // extract the value (remove leading vector index)
-      var chartValue = valueBox.text().trim();
-      chartValue = chartValue.replace("[1] ", "");
-      valueOutputSpan = valueBox.find('span.value-output').detach();
-      valueBox.children().remove();
-      value.text(chartValue);
-    }
-
-    // caption
-    var caption = $('<p class="caption"></p>');
-    caption.append(chartTitle);
-
-    // build inner div for value box and add it
-    var inner = $('<div class="inner"></div>');
-    inner.append(value);
-    inner.append(caption);
-    valueBox.append(inner);
-
-    // add icon if specified
-    var icon = $('<div class="icon"><i></i></div>');
-    valueBox.append(icon);
-    function setIcon(chartIcon) {
-      var iconLib = "";
-      var iconSplit = chartIcon.split(" ");
-      if (iconSplit.length > 1) {
-        iconLib = iconSplit[0];
-        chartIcon = iconSplit.slice(1).join(" ");
-      } else {
-        var components = chartIcon.split("-");
-        if (components.length > 1)
-          iconLib = components[0];
-      }
-      icon.children('i').attr('class', iconLib + ' ' + chartIcon);
-    }
-    var chartIcon = valueBox.attr('data-icon');
-    if (chartIcon)
-      setIcon(chartIcon);
-
-    // handle data attributes in valueOutputSpan
-    function handleValueOutput(valueOutput) {
-
-      // caption
-      var dataCaption = valueOutput.attr('data-caption');
-      if (dataCaption)
-        caption.html(dataCaption);
-
-      // icon
-      var dataIcon = valueOutput.attr('data-icon');
-      if (dataIcon)
-        setIcon(dataIcon);
-
-      // If valueBox(color=) was an accent color, this attr should
-      // be populated with the accent color and the relevant CSS comes
-      // in through HTML dependencies
-      var dataColorAccent = valueOutput.attr('data-color-accent');
-      var valueBoxClasses = "value-box-" + (["primary", "info", "danger", "warning", "success"].join(" value-box-"));
-      if (dataColorAccent) {
-        valueBox.removeClass(valueBoxClasses);
-        valueBox.addClass('value-box-' + dataColorAccent);
-      }
-
-      // If valueBox(color=) was a CSS color, these other data-color-*
-      // attrs will be populated
-      var dataColor = valueOutput.attr('data-color');
-      if (dataColor) {
-        valueBox.removeClass(valueBoxClasses);
-        valueBox.css('background-color', dataColor);
-      }
-      var dataColorText = valueOutput.attr('data-color-text');
-      if (dataColorText) {
-        valueBox.find(".inner").css('color', dataColorText);
-      }
-      var dataColorIcon = valueOutput.attr('data-color-icon');
-      if (dataColorIcon) {
-        valueBox.find(".icon").css('color', dataColorIcon);
-      }
-
-      // url
-      var dataHref = valueOutput.attr('data-href');
-      if (dataHref) {
-        valueBox.addClass('linked-value');
-        valueBox.off('click.value-box');
-        valueBox.on('click.value-box', function(e) {
-          window.FlexDashboardUtils.showLinkedValue(dataHref);
-        });
-      }
-    }
-
-    // check for a valueOutputSpan
-    if (valueOutputSpan.length > 0) {
-      handleValueOutput(valueOutputSpan);
-    }
-
-    // if we have a shinyOutput then bind a listener to handle
-    // new valueOutputSpan values
-    shinyOutput.on('shiny:value',
-      function(event) {
-        var element = $(event.target);
-        setTimeout(function() {
-          var valueOutputSpan = element.find('span.value-output');
-          if (valueOutputSpan.length > 0)
-            handleValueOutput(valueOutputSpan);
-        }, 10);
-      }
-    );
-  }
-});
-</script>
-
-<div id="dashboard-container">
 
 <div
-id="state-level-prevalence-of-self-reported-past-diagnosis-of-depression-by-gender"
+id="state-level-prevalence-of-self-reported-past-depression-by-gender"
 class="section level3">
-<h3>State-level prevalence of self-reported past diagnosis of depression
-by gender</h3>
-<div
-id="prevalence-of-self-reported-past-diagnosis-of-depression-among-women"
+<h3>State-level prevalence of self-reported past depression by
+gender</h3>
+<div id="prevalence-of-self-reported-past-depression-among-women"
 class="section level4">
-<h4>Prevalence of self-reported past diagnosis of depression (%) among
-women</h4>
-<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+<h4>Prevalence of self-reported past depression (%) among women</h4>
+<pre class="r"><code>depr_prev_bystate_f_graph = plot_geo(depr_prev_bystate_f, 
+                                     locationmode = &quot;USA-states&quot;,
+                                     text = ~paste(&#39;95% CI: (&#39;, 
+                                                   round(depression_prev_low,3),
+                                                   round(depression_prev_upp,3),
+                                                   &quot;)&quot;)) %&gt;%
+  add_trace(locations = ~state_code,
+            z = ~depression_prev,
+            color = ~depression_prev,
+            colors = &quot;Purples&quot;) %&gt;%
+  layout(geo = list(scope = &quot;usa&quot;)) %&gt;%
+         #legend = list(title = list(text = &quot;&lt;b&gt;Cylinders&lt;/b&gt;&quot;)),
+         #title = &quot;Prevalence of diagnosis of depression (%) among women&quot;) %&gt;%
+  colorbar(ticksuffix = &quot;%&quot;) 
 
+
+depr_prev_bystate_f_graph</code></pre>
+<div id="htmlwidget-0013688a4e8eebd964f6" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0013688a4e8eebd964f6">{"x":{"visdat":{"a5f2bb7c987":["function () ","plotlyVisDat"]},"cur_data":"a5f2bb7c987","attrs":{"a5f2bb7c987":{"locationmode":"USA-states","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"locations":{},"z":{},"color":{},"colors":"Purples","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa"},"scene":{"zaxis":{"title":"depression_prev"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"depression_prev","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top","ticksuffix":"%"},"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":true,"locationmode":"USA-states","text":["95% CI: ( 22.167 27.495 )","95% CI: ( 25.815 30.686 )","95% CI: ( 27.388 32.773 )","95% CI: ( 20.898 24.076 )","95% CI: ( 16.291 19.825 )","95% CI: ( 25.047 28.104 )","95% CI: ( 20.41 23.914 )","95% CI: ( 20.982 26.494 )","95% CI: ( 18.05 22.871 )","95% CI: ( 19.991 23.715 )","95% CI: ( 11.907 14.766 )","95% CI: ( 21.548 24.848 )","95% CI: ( 26.865 30.89 )","95% CI: ( 18.363 23.753 )","95% CI: ( 30.232 33.488 )","95% CI: ( 25.612 28.044 )","95% CI: ( 32.01 37.213 )","95% CI: ( 28.305 32.986 )","95% CI: ( 20.674 24.088 )","95% CI: ( 20.264 23.009 )","95% CI: ( 28.115 31.611 )","95% CI: ( 26.941 30.293 )","95% CI: ( 25.284 27.674 )","95% CI: ( 27.121 30.705 )","95% CI: ( 23.452 28.125 )","95% CI: ( 27.806 32.184 )","95% CI: ( 24.025 28.394 )","95% CI: ( 24.105 28.872 )","95% CI: ( 20.794 23.557 )","95% CI: ( 27.235 31.793 )","95% CI: ( 18.387 21.938 )","95% CI: ( 22.859 27.068 )","95% CI: ( 18.489 25.167 )","95% CI: ( 19.076 20.975 )","95% CI: ( 25.983 29.07 )","95% CI: ( 28.454 32.902 )","95% CI: ( 29.096 33.406 )","95% CI: ( 21.481 25.272 )","95% CI: ( 24.915 29.118 )","95% CI: ( 23.484 27 )","95% CI: ( 19.113 25.462 )","95% CI: ( 29.488 34.312 )","95% CI: ( 22.122 26.234 )","95% CI: ( 30.558 33.952 )","95% CI: ( 23.226 26.57 )","95% CI: ( 28.162 32.839 )","95% CI: ( 28.444 31.463 )","95% CI: ( 25.798 30.487 )","95% CI: ( 32.681 36.591 )","95% CI: ( 24.659 30.598 )"],"locations":["AK","AL","AR","AZ","CA","CO","CT","DC","DE","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],"z":[24.8311789469841,28.2506519547944,30.0809089466364,22.4870358805347,18.0582144049614,26.5751294404781,22.1620687210811,23.7382725723321,20.4605708902827,21.8526216911618,13.3363748003366,23.1978039282297,28.8776131287934,21.0580997049505,31.8599898856878,26.8282706008772,34.6113031767517,30.6453163648573,22.3811560148928,21.6363714905082,29.8626733671774,28.6170147965802,26.4790693464664,28.9132363957243,25.7882647779463,29.9952244979855,26.2093311351113,26.4884739230651,22.1754634293274,29.5140077538701,20.1627321464366,24.9634900558666,21.8280197610649,20.0252732627944,27.5265821487444,30.677924490415,31.2510665610867,23.3762239721548,27.0166161170754,25.2420687064299,22.2877248840237,31.9003076397722,24.1779656047657,32.2553065700779,24.8983426576629,30.500701294927,29.9532797603985,28.14236265379,34.6361754848757,27.6288068685539],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":13.3363748003366,"cmax":34.6361754848757,"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":false,"color":[24.8311789469841,28.2506519547944,30.0809089466364,22.4870358805347,18.0582144049614,26.5751294404781,22.1620687210811,23.7382725723321,20.4605708902827,21.8526216911618,13.3363748003366,23.1978039282297,28.8776131287934,21.0580997049505,31.8599898856878,26.8282706008772,34.6113031767517,30.6453163648573,22.3811560148928,21.6363714905082,29.8626733671774,28.6170147965802,26.4790693464664,28.9132363957243,25.7882647779463,29.9952244979855,26.2093311351113,26.4884739230651,22.1754634293274,29.5140077538701,20.1627321464366,24.9634900558666,21.8280197610649,20.0252732627944,27.5265821487444,30.677924490415,31.2510665610867,23.3762239721548,27.0166161170754,25.2420687064299,22.2877248840237,31.9003076397722,24.1779656047657,32.2553065700779,24.8983426576629,30.500701294927,29.9532797603985,28.14236265379,34.6361754848757,27.6288068685539]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="htmlwidget-d1418be88240c1e9b338" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d1418be88240c1e9b338">{"x":{"visdat":{"83aa10bd556e":["function () ","plotlyVisDat"]},"cur_data":"83aa10bd556e","attrs":{"83aa10bd556e":{"locationmode":"USA-states","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"locations":{},"z":{},"color":{},"colors":"Purples","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa"},"scene":{"zaxis":{"title":"depression_prev"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"depression_prev","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top","ticksuffix":"%"},"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":true,"locationmode":"USA-states","text":["95% CI: ( 22.167 27.495 )","95% CI: ( 25.815 30.686 )","95% CI: ( 27.388 32.773 )","95% CI: ( 20.898 24.076 )","95% CI: ( 16.291 19.825 )","95% CI: ( 25.047 28.104 )","95% CI: ( 20.41 23.914 )","95% CI: ( 20.982 26.494 )","95% CI: ( 18.05 22.871 )","95% CI: ( 19.991 23.715 )","95% CI: ( 11.907 14.766 )","95% CI: ( 21.548 24.848 )","95% CI: ( 26.865 30.89 )","95% CI: ( 18.363 23.753 )","95% CI: ( 30.232 33.488 )","95% CI: ( 25.612 28.044 )","95% CI: ( 32.01 37.213 )","95% CI: ( 28.305 32.986 )","95% CI: ( 20.674 24.088 )","95% CI: ( 20.264 23.009 )","95% CI: ( 28.115 31.611 )","95% CI: ( 26.941 30.293 )","95% CI: ( 25.284 27.674 )","95% CI: ( 27.121 30.705 )","95% CI: ( 23.452 28.125 )","95% CI: ( 27.806 32.184 )","95% CI: ( 24.025 28.394 )","95% CI: ( 24.105 28.872 )","95% CI: ( 20.794 23.557 )","95% CI: ( 27.235 31.793 )","95% CI: ( 18.387 21.938 )","95% CI: ( 22.859 27.068 )","95% CI: ( 18.489 25.167 )","95% CI: ( 19.076 20.975 )","95% CI: ( 25.983 29.07 )","95% CI: ( 28.454 32.902 )","95% CI: ( 29.096 33.406 )","95% CI: ( 21.481 25.272 )","95% CI: ( 24.915 29.118 )","95% CI: ( 23.484 27 )","95% CI: ( 19.113 25.462 )","95% CI: ( 29.488 34.312 )","95% CI: ( 22.122 26.234 )","95% CI: ( 30.558 33.952 )","95% CI: ( 23.226 26.57 )","95% CI: ( 28.162 32.839 )","95% CI: ( 28.444 31.463 )","95% CI: ( 25.798 30.487 )","95% CI: ( 32.681 36.591 )","95% CI: ( 24.659 30.598 )"],"locations":["AK","AL","AR","AZ","CA","CO","CT","DC","DE","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],"z":[24.8311789469841,28.2506519547944,30.0809089466364,22.4870358805347,18.0582144049614,26.5751294404781,22.1620687210811,23.7382725723321,20.4605708902827,21.8526216911618,13.3363748003366,23.1978039282297,28.8776131287934,21.0580997049505,31.8599898856878,26.8282706008772,34.6113031767517,30.6453163648573,22.3811560148928,21.6363714905082,29.8626733671774,28.6170147965802,26.4790693464664,28.9132363957243,25.7882647779463,29.9952244979855,26.2093311351113,26.4884739230651,22.1754634293274,29.5140077538701,20.1627321464366,24.9634900558666,21.8280197610649,20.0252732627944,27.5265821487444,30.677924490415,31.2510665610867,23.3762239721548,27.0166161170754,25.2420687064299,22.2877248840237,31.9003076397722,24.1779656047657,32.2553065700779,24.8983426576629,30.500701294927,29.9532797603985,28.14236265379,34.6361754848757,27.6288068685539],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":13.3363748003366,"cmax":34.6361754848757,"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":false,"color":[24.8311789469841,28.2506519547944,30.0809089466364,22.4870358805347,18.0582144049614,26.5751294404781,22.1620687210811,23.7382725723321,20.4605708902827,21.8526216911618,13.3363748003366,23.1978039282297,28.8776131287934,21.0580997049505,31.8599898856878,26.8282706008772,34.6113031767517,30.6453163648573,22.3811560148928,21.6363714905082,29.8626733671774,28.6170147965802,26.4790693464664,28.9132363957243,25.7882647779463,29.9952244979855,26.2093311351113,26.4884739230651,22.1754634293274,29.5140077538701,20.1627321464366,24.9634900558666,21.8280197610649,20.0252732627944,27.5265821487444,30.677924490415,31.2510665610867,23.3762239721548,27.0166161170754,25.2420687064299,22.2877248840237,31.9003076397722,24.1779656047657,32.2553065700779,24.8983426576629,30.500701294927,29.9532797603985,28.14236265379,34.6361754848757,27.6288068685539]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="prevalence-of-self-reported-past-depression-among-men"
+class="section level4">
+<h4>Prevalence of self-reported past depression (%) among men</h4>
+<pre class="r"><code>depr_prev_bystate_m_graph = plot_geo(depr_prev_bystate_m, 
+                                     locationmode = &quot;USA-states&quot;,
+                                     text = ~paste(&#39;95% CI: (&#39;, 
+                                                   round(depression_prev_low,3),
+                                                   round(depression_prev_upp,3),
+                                                   &quot;)&quot;)) %&gt;%
+  add_trace(locations = ~state_code,
+            z = ~depression_prev,
+            color = ~depression_prev,
+            colors = &quot;Purples&quot;) %&gt;%
+  layout(geo = list(scope = &quot;usa&quot;)) %&gt;%
+         #legend = list(title = list(text = &quot;&lt;b&gt;Cylinders&lt;/b&gt;&quot;)),
+  colorbar(ticksuffix = &quot;%&quot;) 
+
+
+depr_prev_bystate_m_graph</code></pre>
+<div id="htmlwidget-b4f1c7decb2fdc00cb1f" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b4f1c7decb2fdc00cb1f">{"x":{"visdat":{"a5f21411e3f2":["function () ","plotlyVisDat"]},"cur_data":"a5f21411e3f2","attrs":{"a5f21411e3f2":{"locationmode":"USA-states","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"locations":{},"z":{},"color":{},"colors":"Purples","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa"},"scene":{"zaxis":{"title":"depression_prev"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"depression_prev","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top","ticksuffix":"%"},"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666666","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333334","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":true,"locationmode":"USA-states","text":["95% CI: ( 12.705 16.819 )","95% CI: ( 13.285 17.824 )","95% CI: ( 16.337 21.244 )","95% CI: ( 11.192 13.713 )","95% CI: ( 10.641 13.436 )","95% CI: ( 13.154 15.423 )","95% CI: ( 12.074 15.153 )","95% CI: ( 14.194 19.828 )","95% CI: ( 9.424 14.058 )","95% CI: ( 11.331 14.953 )","95% CI: ( 7.326 9.999 )","95% CI: ( 10.525 12.979 )","95% CI: ( 14.706 18.019 )","95% CI: ( 9.795 13.778 )","95% CI: ( 14.439 17.268 )","95% CI: ( 13.054 15.114 )","95% CI: ( 16.216 20.392 )","95% CI: ( 15.473 19.917 )","95% CI: ( 12.387 15.298 )","95% CI: ( 10.141 12.35 )","95% CI: ( 15.033 18.166 )","95% CI: ( 14.759 17.771 )","95% CI: ( 13.305 15.199 )","95% CI: ( 14.603 17.54 )","95% CI: ( 11.162 15.563 )","95% CI: ( 13.822 17.086 )","95% CI: ( 14.023 17.995 )","95% CI: ( 11.212 14.516 )","95% CI: ( 11.533 13.884 )","95% CI: ( 14.395 18.386 )","95% CI: ( 12.499 15.587 )","95% CI: ( 12.242 15.747 )","95% CI: ( 9.985 14.757 )","95% CI: ( 12.617 14.364 )","95% CI: ( 14.81 17.416 )","95% CI: ( 15.028 19.111 )","95% CI: ( 15.606 19.035 )","95% CI: ( 12.437 15.665 )","95% CI: ( 16.072 20.268 )","95% CI: ( 12.409 15.527 )","95% CI: ( 8.067 12.878 )","95% CI: ( 16.279 20.503 )","95% CI: ( 11.197 14.418 )","95% CI: ( 15.537 18.224 )","95% CI: ( 12.723 15.737 )","95% CI: ( 17.755 22.31 )","95% CI: ( 15.5 18.034 )","95% CI: ( 10.845 14.399 )","95% CI: ( 17.858 21.527 )","95% CI: ( 12.011 16.612 )"],"locations":["AK","AL","AR","AZ","CA","CO","CT","DC","DE","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],"z":[14.7621032550992,15.5548183474558,18.7904755078044,12.4523788418871,12.0387331750801,14.2887808618963,13.6138963076575,17.0108403582283,11.7410180943198,13.1418764352943,8.66210244422365,11.7519544410573,16.362785630916,11.7868654573886,15.8533599198094,14.084318467751,18.3042850856929,17.6952281036652,13.8423093691436,11.2455569923277,16.5994233007489,16.265043707447,14.2520005281539,16.0715192150843,13.3623539806535,15.453905744299,16.0093629841033,12.8641751956008,12.7085362688158,16.3904089975037,14.043381552533,13.9946309788359,12.3709014052167,13.4905280973552,16.1131863527716,17.0698473564085,17.3204690307041,14.0509374558641,18.1703366909514,13.9680154022514,10.4728484716236,18.3911199140926,12.8071198342587,16.8806693928308,14.2299862950084,20.0322721712838,16.767131767197,12.6218805694108,19.6926500370409,14.3111451291587],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":8.66210244422365,"cmax":20.0322721712838,"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666666","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333334","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":false,"color":[14.7621032550992,15.5548183474558,18.7904755078044,12.4523788418871,12.0387331750801,14.2887808618963,13.6138963076575,17.0108403582283,11.7410180943198,13.1418764352943,8.66210244422365,11.7519544410573,16.362785630916,11.7868654573886,15.8533599198094,14.084318467751,18.3042850856929,17.6952281036652,13.8423093691436,11.2455569923277,16.5994233007489,16.265043707447,14.2520005281539,16.0715192150843,13.3623539806535,15.453905744299,16.0093629841033,12.8641751956008,12.7085362688158,16.3904089975037,14.043381552533,13.9946309788359,12.3709014052167,13.4905280973552,16.1131863527716,17.0698473564085,17.3204690307041,14.0509374558641,18.1703366909514,13.9680154022514,10.4728484716236,18.3911199140926,12.8071198342587,16.8806693928308,14.2299862950084,20.0322721712838,16.767131767197,12.6218805694108,19.6926500370409,14.3111451291587]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div
-id="prevalence-of-self-reported-past-diagnosis-of-depression-among-men"
+id="gender-difference-in-prevalence-of-self-reported-past-depression-f-minus-m"
 class="section level4">
-<h4>Prevalence of self-reported past diagnosis of depression (%) among
-men</h4>
-<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+<h4>Gender difference in prevalence (%) of self-reported past depression
+(F minus M)</h4>
+<pre class="r"><code>depr_prev_bystate_diff_graph = plot_geo(depr_prev_bystate_diff, 
+                                     locationmode = &quot;USA-states&quot;,
+                                     text = ~paste(&quot;Difference in prevalence: &quot;,
+                                                   round(difference,3))) %&gt;%
+  add_trace(locations = ~state_code,
+            z = ~round(difference,3),
+            color = ~difference,
+            colors = &quot;Purples&quot;) %&gt;%
+  layout(geo = list(scope = &quot;usa&quot;)) %&gt;%
+  colorbar(ticksuffix = &quot;%&quot;) 
 
-</div>
-<div id="htmlwidget-92c472b8159b7d88faaf" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-92c472b8159b7d88faaf">{"x":{"visdat":{"83aa73c0077b":["function () ","plotlyVisDat"]},"cur_data":"83aa73c0077b","attrs":{"83aa73c0077b":{"locationmode":"USA-states","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"locations":{},"z":{},"color":{},"colors":"Purples","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa"},"scene":{"zaxis":{"title":"depression_prev"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"depression_prev","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top","ticksuffix":"%"},"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666666","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333334","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":true,"locationmode":"USA-states","text":["95% CI: ( 12.705 16.819 )","95% CI: ( 13.285 17.824 )","95% CI: ( 16.337 21.244 )","95% CI: ( 11.192 13.713 )","95% CI: ( 10.641 13.436 )","95% CI: ( 13.154 15.423 )","95% CI: ( 12.074 15.153 )","95% CI: ( 14.194 19.828 )","95% CI: ( 9.424 14.058 )","95% CI: ( 11.331 14.953 )","95% CI: ( 7.326 9.999 )","95% CI: ( 10.525 12.979 )","95% CI: ( 14.706 18.019 )","95% CI: ( 9.795 13.778 )","95% CI: ( 14.439 17.268 )","95% CI: ( 13.054 15.114 )","95% CI: ( 16.216 20.392 )","95% CI: ( 15.473 19.917 )","95% CI: ( 12.387 15.298 )","95% CI: ( 10.141 12.35 )","95% CI: ( 15.033 18.166 )","95% CI: ( 14.759 17.771 )","95% CI: ( 13.305 15.199 )","95% CI: ( 14.603 17.54 )","95% CI: ( 11.162 15.563 )","95% CI: ( 13.822 17.086 )","95% CI: ( 14.023 17.995 )","95% CI: ( 11.212 14.516 )","95% CI: ( 11.533 13.884 )","95% CI: ( 14.395 18.386 )","95% CI: ( 12.499 15.587 )","95% CI: ( 12.242 15.747 )","95% CI: ( 9.985 14.757 )","95% CI: ( 12.617 14.364 )","95% CI: ( 14.81 17.416 )","95% CI: ( 15.028 19.111 )","95% CI: ( 15.606 19.035 )","95% CI: ( 12.437 15.665 )","95% CI: ( 16.072 20.268 )","95% CI: ( 12.409 15.527 )","95% CI: ( 8.067 12.878 )","95% CI: ( 16.279 20.503 )","95% CI: ( 11.197 14.418 )","95% CI: ( 15.537 18.224 )","95% CI: ( 12.723 15.737 )","95% CI: ( 17.755 22.31 )","95% CI: ( 15.5 18.034 )","95% CI: ( 10.845 14.399 )","95% CI: ( 17.858 21.527 )","95% CI: ( 12.011 16.612 )"],"locations":["AK","AL","AR","AZ","CA","CO","CT","DC","DE","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],"z":[14.7621032550992,15.5548183474558,18.7904755078044,12.4523788418871,12.0387331750801,14.2887808618963,13.6138963076575,17.0108403582283,11.7410180943198,13.1418764352943,8.66210244422365,11.7519544410573,16.362785630916,11.7868654573886,15.8533599198094,14.084318467751,18.3042850856929,17.6952281036652,13.8423093691436,11.2455569923277,16.5994233007489,16.265043707447,14.2520005281539,16.0715192150843,13.3623539806535,15.453905744299,16.0093629841033,12.8641751956008,12.7085362688158,16.3904089975037,14.043381552533,13.9946309788359,12.3709014052167,13.4905280973552,16.1131863527716,17.0698473564085,17.3204690307041,14.0509374558641,18.1703366909514,13.9680154022514,10.4728484716236,18.3911199140926,12.8071198342587,16.8806693928308,14.2299862950084,20.0322721712838,16.767131767197,12.6218805694108,19.6926500370409,14.3111451291587],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":8.66210244422365,"cmax":20.0322721712838,"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666666","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333334","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":false,"color":[14.7621032550992,15.5548183474558,18.7904755078044,12.4523788418871,12.0387331750801,14.2887808618963,13.6138963076575,17.0108403582283,11.7410180943198,13.1418764352943,8.66210244422365,11.7519544410573,16.362785630916,11.7868654573886,15.8533599198094,14.084318467751,18.3042850856929,17.6952281036652,13.8423093691436,11.2455569923277,16.5994233007489,16.265043707447,14.2520005281539,16.0715192150843,13.3623539806535,15.453905744299,16.0093629841033,12.8641751956008,12.7085362688158,16.3904089975037,14.043381552533,13.9946309788359,12.3709014052167,13.4905280973552,16.1131863527716,17.0698473564085,17.3204690307041,14.0509374558641,18.1703366909514,13.9680154022514,10.4728484716236,18.3911199140926,12.8071198342587,16.8806693928308,14.2299862950084,20.0322721712838,16.767131767197,12.6218805694108,19.6926500370409,14.3111451291587]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-</div>
-<div
-id="gender-difference-in-prevalence-of-self-reported-past-diagnosis-of-depression-f-minus-m"
-class="section level4">
-<h4>Gender difference in prevalence (%) of self-reported past diagnosis
-of depression (F minus M)</h4>
-<div class="knitr-options" data-fig-width="576" data-fig-height="460">
 
-</div>
-<div id="htmlwidget-3cb9f9ad27cef8b56021" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3cb9f9ad27cef8b56021">{"x":{"visdat":{"83aa7984a413":["function () ","plotlyVisDat"]},"cur_data":"83aa7984a413","attrs":{"83aa7984a413":{"locationmode":"USA-states","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"locations":{},"z":{},"color":{},"colors":"Purples","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa"},"scene":{"zaxis":{"title":"round(difference, 3)"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"difference","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top","ticksuffix":"%"},"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333333","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":true,"locationmode":"USA-states","text":["Difference in prevalence:  10.069","Difference in prevalence:  12.696","Difference in prevalence:  11.29","Difference in prevalence:  10.035","Difference in prevalence:  6.019","Difference in prevalence:  12.286","Difference in prevalence:  8.548","Difference in prevalence:  6.727","Difference in prevalence:  8.72","Difference in prevalence:  8.711","Difference in prevalence:  4.674","Difference in prevalence:  11.446","Difference in prevalence:  12.515","Difference in prevalence:  9.271","Difference in prevalence:  16.007","Difference in prevalence:  12.744","Difference in prevalence:  16.307","Difference in prevalence:  12.95","Difference in prevalence:  8.539","Difference in prevalence:  10.391","Difference in prevalence:  13.263","Difference in prevalence:  12.352","Difference in prevalence:  12.227","Difference in prevalence:  12.842","Difference in prevalence:  12.426","Difference in prevalence:  14.541","Difference in prevalence:  10.2","Difference in prevalence:  13.624","Difference in prevalence:  9.467","Difference in prevalence:  13.124","Difference in prevalence:  6.119","Difference in prevalence:  10.969","Difference in prevalence:  9.457","Difference in prevalence:  6.535","Difference in prevalence:  11.413","Difference in prevalence:  13.608","Difference in prevalence:  13.931","Difference in prevalence:  9.325","Difference in prevalence:  8.846","Difference in prevalence:  11.274","Difference in prevalence:  11.815","Difference in prevalence:  13.509","Difference in prevalence:  11.371","Difference in prevalence:  15.375","Difference in prevalence:  10.668","Difference in prevalence:  10.468","Difference in prevalence:  13.186","Difference in prevalence:  15.52","Difference in prevalence:  14.944","Difference in prevalence:  13.318"],"locations":["AK","AL","AR","AZ","CA","CO","CT","DC","DE","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],"z":[10.069,12.696,11.29,10.035,6.019,12.286,8.548,6.727,8.72,8.711,4.674,11.446,12.515,9.271,16.007,12.744,16.307,12.95,8.539,10.391,13.263,12.352,12.227,12.842,12.426,14.541,10.2,13.624,9.467,13.124,6.119,10.969,9.457,6.535,11.413,13.608,13.931,9.325,8.846,11.274,11.815,13.509,11.371,15.375,10.668,10.468,13.186,15.52,14.944,13.318],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":4.67427235611292,"cmax":16.3070180910588,"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333333","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":false,"color":[10.0690756918849,12.6958336073386,11.290433438832,10.0346570386476,6.0194812298813,12.2863485785818,8.54817241342365,6.72743221410382,8.71955279596292,8.71074525586745,4.67427235611292,11.4458494871724,12.5148274978774,9.27123424756188,16.0066299658784,12.7439521331261,16.3070180910588,12.9500882611922,8.53884664574922,10.3908144981805,13.2632500664284,12.3519710891332,12.2270688183124,12.8417171806401,12.4259107972928,14.5413187536865,10.199968151008,13.6242987274643,9.46692716051159,13.1235987563664,6.11935059390359,10.9688590770306,9.45711835584823,6.53474516543922,11.4133957959728,13.6080771340066,13.9305975303826,9.32528651629071,8.84627942612403,11.2740533041785,11.8148764124001,13.5091877256796,11.3708457705069,15.374637177247,10.6683563626546,10.4684291236432,13.1861479932015,15.5204820843792,14.9435254478348,13.3176617393952]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+depr_prev_bystate_diff_graph</code></pre>
+<div id="htmlwidget-a428dddea5917ff90cd1" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a428dddea5917ff90cd1">{"x":{"visdat":{"a5f2216c3e77":["function () ","plotlyVisDat"]},"cur_data":"a5f2216c3e77","attrs":{"a5f2216c3e77":{"locationmode":"USA-states","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"locations":{},"z":{},"color":{},"colors":"Purples","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa"},"scene":{"zaxis":{"title":"round(difference, 3)"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"difference","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top","ticksuffix":"%"},"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333333","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":true,"locationmode":"USA-states","text":["Difference in prevalence:  10.069","Difference in prevalence:  12.696","Difference in prevalence:  11.29","Difference in prevalence:  10.035","Difference in prevalence:  6.019","Difference in prevalence:  12.286","Difference in prevalence:  8.548","Difference in prevalence:  6.727","Difference in prevalence:  8.72","Difference in prevalence:  8.711","Difference in prevalence:  4.674","Difference in prevalence:  11.446","Difference in prevalence:  12.515","Difference in prevalence:  9.271","Difference in prevalence:  16.007","Difference in prevalence:  12.744","Difference in prevalence:  16.307","Difference in prevalence:  12.95","Difference in prevalence:  8.539","Difference in prevalence:  10.391","Difference in prevalence:  13.263","Difference in prevalence:  12.352","Difference in prevalence:  12.227","Difference in prevalence:  12.842","Difference in prevalence:  12.426","Difference in prevalence:  14.541","Difference in prevalence:  10.2","Difference in prevalence:  13.624","Difference in prevalence:  9.467","Difference in prevalence:  13.124","Difference in prevalence:  6.119","Difference in prevalence:  10.969","Difference in prevalence:  9.457","Difference in prevalence:  6.535","Difference in prevalence:  11.413","Difference in prevalence:  13.608","Difference in prevalence:  13.931","Difference in prevalence:  9.325","Difference in prevalence:  8.846","Difference in prevalence:  11.274","Difference in prevalence:  11.815","Difference in prevalence:  13.509","Difference in prevalence:  11.371","Difference in prevalence:  15.375","Difference in prevalence:  10.668","Difference in prevalence:  10.468","Difference in prevalence:  13.186","Difference in prevalence:  15.52","Difference in prevalence:  14.944","Difference in prevalence:  13.318"],"locations":["AK","AL","AR","AZ","CA","CO","CT","DC","DE","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],"z":[10.069,12.696,11.29,10.035,6.019,12.286,8.548,6.727,8.72,8.711,4.674,11.446,12.515,9.271,16.007,12.744,16.307,12.95,8.539,10.391,13.263,12.352,12.227,12.842,12.426,14.541,10.2,13.624,9.467,13.124,6.119,10.969,9.457,6.535,11.413,13.608,13.931,9.325,8.846,11.274,11.815,13.509,11.371,15.375,10.668,10.468,13.186,15.52,14.944,13.318],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":4.67427235611292,"cmax":16.3070180910588,"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333333","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":false,"color":[10.0690756918849,12.6958336073386,11.290433438832,10.0346570386476,6.0194812298813,12.2863485785818,8.54817241342365,6.72743221410382,8.71955279596292,8.71074525586745,4.67427235611292,11.4458494871724,12.5148274978774,9.27123424756188,16.0066299658784,12.7439521331261,16.3070180910588,12.9500882611922,8.53884664574922,10.3908144981805,13.2632500664284,12.3519710891332,12.2270688183124,12.8417171806401,12.4259107972928,14.5413187536865,10.199968151008,13.6242987274643,9.46692716051159,13.1235987563664,6.11935059390359,10.9688590770306,9.45711835584823,6.53474516543922,11.4133957959728,13.6080771340066,13.9305975303826,9.32528651629071,8.84627942612403,11.2740533041785,11.8148764124001,13.5091877256796,11.3708457705069,15.374637177247,10.6683563626546,10.4684291236432,13.1861479932015,15.5204820843792,14.9435254478348,13.3176617393952]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <hr />
-<p>INSERT COMMENTS/TAKEAWAYS HERE</p>
+<p>In summary, states in the South (e.g., West Virginia, Kentucky,
+Tennessee), Northwest (e.g, Washington, Oregon), and North (e.g., Maine,
+New Hampshire) have the highest prevalence of self-reported past
+depression among women. The same pattern in geographic distribution
+holds in men, but they have lower prevalence of self-reported past
+depression than women. The gender difference in prevalence of
+self-reported past depression is the largest in the South, West (except
+California, Nevada, and Arizona) and the Midwest (except Illinois).</p>
 </div>
 </div>
 <div
@@ -1927,301 +431,118 @@ class="section level3">
 <h3>State-level average self-reported number of days mental health not
 good in the past 30 days by gender</h3>
 <div
-id="average-number-of-days-of-self-reported-bad-mental-health-in-the-past-30-days-among-women"
+id="average-number-of-days-of-mental-health-not-good-in-the-past-30-days-among-women"
 class="section level4">
-<h4>Average number of days of self-reported bad mental health in the
-past 30 days among women</h4>
-<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+<h4>Average number of days of mental health not good in the past 30 days
+among women</h4>
+<pre class="r"><code>avg_days_bad_mh_bystate_f_graph = plot_geo(days_bad_mh_bystate_f, 
+                                     locationmode = &quot;USA-states&quot;,
+                                     text = ~paste(&#39;95% CI: (&#39;, 
+                                                   round(days_low, 3),
+                                                   round(days_upp, 3),
+                                                   &quot;)&quot;)) %&gt;%
+  add_trace(locations = ~state_code,
+            z = ~round(days, 3),
+            color = ~days,
+            colors = &quot;Purples&quot;) %&gt;%
+  layout(geo = list(scope = &quot;usa&quot;)) 
 
-</div>
-<div id="htmlwidget-9577f42eb5b2b6d3ca5f" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9577f42eb5b2b6d3ca5f">{"x":{"visdat":{"83aa5ae8ba1c":["function () ","plotlyVisDat"]},"cur_data":"83aa5ae8ba1c","attrs":{"83aa5ae8ba1c":{"locationmode":"USA-states","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"locations":{},"z":{},"color":{},"colors":"Purples","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa"},"scene":{"zaxis":{"title":"round(days, 3)"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"days","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333334","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":true,"locationmode":"USA-states","text":["95% CI: ( 4.513 5.519 )","95% CI: ( 5.919 7.029 )","95% CI: ( 5.968 7.072 )","95% CI: ( 5.092 5.81 )","95% CI: ( 4.945 5.827 )","95% CI: ( 5.167 5.794 )","95% CI: ( 4.64 5.393 )","95% CI: ( 4.711 5.831 )","95% CI: ( 4.475 5.611 )","95% CI: ( 4.96 5.818 )","95% CI: ( 3.573 4.243 )","95% CI: ( 5.04 5.743 )","95% CI: ( 4.956 5.798 )","95% CI: ( 4.06 5.193 )","95% CI: ( 5.676 6.335 )","95% CI: ( 5.502 6.049 )","95% CI: ( 5.871 7.028 )","95% CI: ( 5.982 7.002 )","95% CI: ( 4.753 5.499 )","95% CI: ( 4.588 5.137 )","95% CI: ( 5.108 5.85 )","95% CI: ( 5.507 6.202 )","95% CI: ( 4.572 5.021 )","95% CI: ( 5.5 6.264 )","95% CI: ( 4.72 5.687 )","95% CI: ( 4.852 5.701 )","95% CI: ( 4.503 5.408 )","95% CI: ( 4.389 5.35 )","95% CI: ( 4.562 5.123 )","95% CI: ( 5.076 5.99 )","95% CI: ( 4.437 5.145 )","95% CI: ( 4.952 5.784 )","95% CI: ( 5.113 6.664 )","95% CI: ( 4.337 4.739 )","95% CI: ( 5.718 6.405 )","95% CI: ( 5.898 6.887 )","95% CI: ( 5.498 6.337 )","95% CI: ( 4.536 5.259 )","95% CI: ( 4.544 5.438 )","95% CI: ( 5.567 6.381 )","95% CI: ( 3.746 4.899 )","95% CI: ( 6.043 7.051 )","95% CI: ( 4.782 5.574 )","95% CI: ( 6.127 6.817 )","95% CI: ( 5.35 6.112 )","95% CI: ( 5.18 6.182 )","95% CI: ( 5.561 6.192 )","95% CI: ( 5.129 6.169 )","95% CI: ( 6.506 7.36 )","95% CI: ( 4.991 6.289 )"],"locations":["AK","AL","AR","AZ","CA","CO","CT","DC","DE","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],"z":[5.016,6.474,6.52,5.451,5.386,5.48,5.017,5.271,5.043,5.389,3.908,5.391,5.377,4.627,6.005,5.776,6.449,6.492,5.126,4.862,5.479,5.854,4.797,5.882,5.203,5.276,4.955,4.87,4.843,5.533,4.791,5.368,5.889,4.538,6.062,6.392,5.918,4.898,4.991,5.974,4.322,6.547,5.178,6.472,5.731,5.681,5.876,5.649,6.933,5.64],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":3.9082146090843,"cmax":6.93304747446327,"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333334","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":false,"color":[5.01584974784449,6.47394606879126,6.52001491053193,5.45117852177914,5.38578768353028,5.4801547862607,5.01674134248317,5.27071998617934,5.04315234799836,5.3889123767507,3.9082146090843,5.3912353652456,5.37665259291298,4.62667057092452,6.00546370989122,5.77556815614963,6.44949236920666,6.49204848801416,5.12588965775318,4.86225090598711,5.47919265641589,5.85448187115158,4.79654250734356,5.88210455264781,5.2033634143555,5.27636214246934,4.95530380654191,4.86961928255586,4.84276244723563,5.53295282993516,4.7910901772606,5.36795275909437,5.8885606369568,4.53773848369792,6.06176568066711,6.39249142197381,5.91758460248981,4.89757565356093,4.99101091271542,5.97403053723606,4.32228939383088,6.547027199206,5.17778205570106,6.47218037438901,5.73097402001614,5.68099853691646,5.87647808873848,5.64925104560531,6.93304747446327,5.63983852035593]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+avg_days_bad_mh_bystate_f_graph</code></pre>
+<div id="htmlwidget-1212cbd295aeb5e78eaf" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1212cbd295aeb5e78eaf">{"x":{"visdat":{"a5f228ed3c32":["function () ","plotlyVisDat"]},"cur_data":"a5f228ed3c32","attrs":{"a5f228ed3c32":{"locationmode":"USA-states","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"locations":{},"z":{},"color":{},"colors":"Purples","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa"},"scene":{"zaxis":{"title":"round(days, 3)"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"days","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333334","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":true,"locationmode":"USA-states","text":["95% CI: ( 4.513 5.519 )","95% CI: ( 5.919 7.029 )","95% CI: ( 5.968 7.072 )","95% CI: ( 5.092 5.81 )","95% CI: ( 4.945 5.827 )","95% CI: ( 5.167 5.794 )","95% CI: ( 4.64 5.393 )","95% CI: ( 4.711 5.831 )","95% CI: ( 4.475 5.611 )","95% CI: ( 4.96 5.818 )","95% CI: ( 3.573 4.243 )","95% CI: ( 5.04 5.743 )","95% CI: ( 4.956 5.798 )","95% CI: ( 4.06 5.193 )","95% CI: ( 5.676 6.335 )","95% CI: ( 5.502 6.049 )","95% CI: ( 5.871 7.028 )","95% CI: ( 5.982 7.002 )","95% CI: ( 4.753 5.499 )","95% CI: ( 4.588 5.137 )","95% CI: ( 5.108 5.85 )","95% CI: ( 5.507 6.202 )","95% CI: ( 4.572 5.021 )","95% CI: ( 5.5 6.264 )","95% CI: ( 4.72 5.687 )","95% CI: ( 4.852 5.701 )","95% CI: ( 4.503 5.408 )","95% CI: ( 4.389 5.35 )","95% CI: ( 4.562 5.123 )","95% CI: ( 5.076 5.99 )","95% CI: ( 4.437 5.145 )","95% CI: ( 4.952 5.784 )","95% CI: ( 5.113 6.664 )","95% CI: ( 4.337 4.739 )","95% CI: ( 5.718 6.405 )","95% CI: ( 5.898 6.887 )","95% CI: ( 5.498 6.337 )","95% CI: ( 4.536 5.259 )","95% CI: ( 4.544 5.438 )","95% CI: ( 5.567 6.381 )","95% CI: ( 3.746 4.899 )","95% CI: ( 6.043 7.051 )","95% CI: ( 4.782 5.574 )","95% CI: ( 6.127 6.817 )","95% CI: ( 5.35 6.112 )","95% CI: ( 5.18 6.182 )","95% CI: ( 5.561 6.192 )","95% CI: ( 5.129 6.169 )","95% CI: ( 6.506 7.36 )","95% CI: ( 4.991 6.289 )"],"locations":["AK","AL","AR","AZ","CA","CO","CT","DC","DE","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],"z":[5.016,6.474,6.52,5.451,5.386,5.48,5.017,5.271,5.043,5.389,3.908,5.391,5.377,4.627,6.005,5.776,6.449,6.492,5.126,4.862,5.479,5.854,4.797,5.882,5.203,5.276,4.955,4.87,4.843,5.533,4.791,5.368,5.889,4.538,6.062,6.392,5.918,4.898,4.991,5.974,4.322,6.547,5.178,6.472,5.731,5.681,5.876,5.649,6.933,5.64],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":3.9082146090843,"cmax":6.93304747446327,"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333334","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":false,"color":[5.01584974784449,6.47394606879126,6.52001491053193,5.45117852177914,5.38578768353028,5.4801547862607,5.01674134248317,5.27071998617934,5.04315234799836,5.3889123767507,3.9082146090843,5.3912353652456,5.37665259291298,4.62667057092452,6.00546370989122,5.77556815614963,6.44949236920666,6.49204848801416,5.12588965775318,4.86225090598711,5.47919265641589,5.85448187115158,4.79654250734356,5.88210455264781,5.2033634143555,5.27636214246934,4.95530380654191,4.86961928255586,4.84276244723563,5.53295282993516,4.7910901772606,5.36795275909437,5.8885606369568,4.53773848369792,6.06176568066711,6.39249142197381,5.91758460248981,4.89757565356093,4.99101091271542,5.97403053723606,4.32228939383088,6.547027199206,5.17778205570106,6.47218037438901,5.73097402001614,5.68099853691646,5.87647808873848,5.64925104560531,6.93304747446327,5.63983852035593]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div
-id="average-number-of-days-of-self-reported-bad-mental-health-in-the-past-30-days-among-men"
+id="average-number-of-days-mental-health-not-good-in-the-past-30-days-among-men"
 class="section level4">
-<h4>Average number of days of self-reported bad mental health in the
-past 30 days among men</h4>
-<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+<h4>Average number of days mental health not good in the past 30 days
+among men</h4>
+<pre class="r"><code>avg_days_bad_mh_bystate_m_graph = plot_geo(days_bad_mh_bystate_m, 
+                                     locationmode = &quot;USA-states&quot;,
+                                     text = ~paste(&#39;95% CI: (&#39;, 
+                                                   round(days_low, 3),
+                                                   round(days_upp, 3),
+                                                   &quot;)&quot;)) %&gt;%
+  add_trace(locations = ~state_code,
+            z = ~round(days, 3),
+            color = ~days,
+            colors = &quot;Purples&quot;) %&gt;%
+  layout(geo = list(scope = &quot;usa&quot;)) 
 
-</div>
-<div id="htmlwidget-8dd4cad7df98541e4d63" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8dd4cad7df98541e4d63">{"x":{"visdat":{"83aa2e9eca93":["function () ","plotlyVisDat"]},"cur_data":"83aa2e9eca93","attrs":{"83aa2e9eca93":{"locationmode":"USA-states","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"locations":{},"z":{},"color":{},"colors":"Purples","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa"},"scene":{"zaxis":{"title":"round(days, 3)"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"days","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":true,"locationmode":"USA-states","text":["95% CI: ( 3.535 4.571 )","95% CI: ( 3.965 5.051 )","95% CI: ( 4.015 5.148 )","95% CI: ( 3.677 4.328 )","95% CI: ( 3.385 4.056 )","95% CI: ( 3.588 4.087 )","95% CI: ( 2.979 3.615 )","95% CI: ( 3.655 4.896 )","95% CI: ( 2.587 3.535 )","95% CI: ( 3.536 4.396 )","95% CI: ( 2.716 3.375 )","95% CI: ( 2.897 3.439 )","95% CI: ( 3.212 3.912 )","95% CI: ( 2.922 3.867 )","95% CI: ( 3.5 4.103 )","95% CI: ( 3.456 3.934 )","95% CI: ( 3.775 4.71 )","95% CI: ( 4.015 4.996 )","95% CI: ( 3.064 3.668 )","95% CI: ( 3.163 3.665 )","95% CI: ( 3.408 4.081 )","95% CI: ( 3.679 4.327 )","95% CI: ( 3.089 3.483 )","95% CI: ( 3.622 4.28 )","95% CI: ( 3.006 4.158 )","95% CI: ( 3.259 3.991 )","95% CI: ( 3.078 3.952 )","95% CI: ( 2.655 3.404 )","95% CI: ( 3.119 3.647 )","95% CI: ( 3.211 4.058 )","95% CI: ( 3.278 3.957 )","95% CI: ( 3.225 3.976 )","95% CI: ( 4.112 5.492 )","95% CI: ( 3.336 3.74 )","95% CI: ( 3.94 4.544 )","95% CI: ( 3.497 4.402 )","95% CI: ( 3.76 4.566 )","95% CI: ( 3.472 4.245 )","95% CI: ( 3.405 4.352 )","95% CI: ( 3.788 4.571 )","95% CI: ( 2.586 3.986 )","95% CI: ( 4.137 5.217 )","95% CI: ( 3.538 4.333 )","95% CI: ( 3.943 4.514 )","95% CI: ( 3.293 4.011 )","95% CI: ( 3.882 4.874 )","95% CI: ( 3.873 4.415 )","95% CI: ( 2.915 3.769 )","95% CI: ( 4.146 4.981 )","95% CI: ( 3.096 4.155 )"],"locations":["AK","AL","AR","AZ","CA","CO","CT","DC","DE","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],"z":[4.053,4.508,4.582,4.003,3.721,3.837,3.297,4.275,3.061,3.966,3.045,3.168,3.562,3.395,3.801,3.695,4.242,4.506,3.366,3.414,3.744,4.003,3.286,3.951,3.582,3.625,3.515,3.029,3.383,3.635,3.617,3.6,4.802,3.538,4.242,3.949,4.163,3.859,3.878,4.18,3.286,4.677,3.936,4.228,3.652,4.378,4.144,3.342,4.563,3.625],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":3.02947971859996,"cmax":4.80200341531764,"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":false,"color":[4.0532942819493,4.50839348845505,4.58153519710374,4.00259578156771,3.72058965523034,3.83738593269543,3.29702801740074,4.27536322799186,3.06102609828352,3.96631607678396,3.04548826291936,3.16794964411507,3.56238317478619,3.39488778817056,3.8013839803134,3.69510008347265,4.24210230687253,4.50576822601531,3.36581363224476,3.41439404795492,3.74443546505442,4.00293194332559,3.28566986432522,3.9509247147286,3.58220772550002,3.62533890195613,3.5148480673181,3.02947971859996,3.38313899563782,3.63467495476012,3.61729115177636,3.60038495094269,4.80200341531764,3.53804989333341,4.2419943042115,3.94935560393705,4.16282522041625,3.85851851497189,3.87847989292218,4.17958146928691,3.28621780636661,4.67681674638279,3.93554191629696,4.22836752019764,3.65211568582769,4.3778238823905,4.14389134869842,3.34220705585925,4.56331423505202,3.62516383483378]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+avg_days_bad_mh_bystate_m_graph</code></pre>
+<div id="htmlwidget-9250e606273aa84ea3f6" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9250e606273aa84ea3f6">{"x":{"visdat":{"a5f23e272611":["function () ","plotlyVisDat"]},"cur_data":"a5f23e272611","attrs":{"a5f23e272611":{"locationmode":"USA-states","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"locations":{},"z":{},"color":{},"colors":"Purples","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa"},"scene":{"zaxis":{"title":"round(days, 3)"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"days","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":true,"locationmode":"USA-states","text":["95% CI: ( 3.535 4.571 )","95% CI: ( 3.965 5.051 )","95% CI: ( 4.015 5.148 )","95% CI: ( 3.677 4.328 )","95% CI: ( 3.385 4.056 )","95% CI: ( 3.588 4.087 )","95% CI: ( 2.979 3.615 )","95% CI: ( 3.655 4.896 )","95% CI: ( 2.587 3.535 )","95% CI: ( 3.536 4.396 )","95% CI: ( 2.716 3.375 )","95% CI: ( 2.897 3.439 )","95% CI: ( 3.212 3.912 )","95% CI: ( 2.922 3.867 )","95% CI: ( 3.5 4.103 )","95% CI: ( 3.456 3.934 )","95% CI: ( 3.775 4.71 )","95% CI: ( 4.015 4.996 )","95% CI: ( 3.064 3.668 )","95% CI: ( 3.163 3.665 )","95% CI: ( 3.408 4.081 )","95% CI: ( 3.679 4.327 )","95% CI: ( 3.089 3.483 )","95% CI: ( 3.622 4.28 )","95% CI: ( 3.006 4.158 )","95% CI: ( 3.259 3.991 )","95% CI: ( 3.078 3.952 )","95% CI: ( 2.655 3.404 )","95% CI: ( 3.119 3.647 )","95% CI: ( 3.211 4.058 )","95% CI: ( 3.278 3.957 )","95% CI: ( 3.225 3.976 )","95% CI: ( 4.112 5.492 )","95% CI: ( 3.336 3.74 )","95% CI: ( 3.94 4.544 )","95% CI: ( 3.497 4.402 )","95% CI: ( 3.76 4.566 )","95% CI: ( 3.472 4.245 )","95% CI: ( 3.405 4.352 )","95% CI: ( 3.788 4.571 )","95% CI: ( 2.586 3.986 )","95% CI: ( 4.137 5.217 )","95% CI: ( 3.538 4.333 )","95% CI: ( 3.943 4.514 )","95% CI: ( 3.293 4.011 )","95% CI: ( 3.882 4.874 )","95% CI: ( 3.873 4.415 )","95% CI: ( 2.915 3.769 )","95% CI: ( 4.146 4.981 )","95% CI: ( 3.096 4.155 )"],"locations":["AK","AL","AR","AZ","CA","CO","CT","DC","DE","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],"z":[4.053,4.508,4.582,4.003,3.721,3.837,3.297,4.275,3.061,3.966,3.045,3.168,3.562,3.395,3.801,3.695,4.242,4.506,3.366,3.414,3.744,4.003,3.286,3.951,3.582,3.625,3.515,3.029,3.383,3.635,3.617,3.6,4.802,3.538,4.242,3.949,4.163,3.859,3.878,4.18,3.286,4.677,3.936,4.228,3.652,4.378,4.144,3.342,4.563,3.625],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":3.02947971859996,"cmax":4.80200341531764,"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666667","rgba(248,246,250,1)"],["0.0833333333333334","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":false,"color":[4.0532942819493,4.50839348845505,4.58153519710374,4.00259578156771,3.72058965523034,3.83738593269543,3.29702801740074,4.27536322799186,3.06102609828352,3.96631607678396,3.04548826291936,3.16794964411507,3.56238317478619,3.39488778817056,3.8013839803134,3.69510008347265,4.24210230687253,4.50576822601531,3.36581363224476,3.41439404795492,3.74443546505442,4.00293194332559,3.28566986432522,3.9509247147286,3.58220772550002,3.62533890195613,3.5148480673181,3.02947971859996,3.38313899563782,3.63467495476012,3.61729115177636,3.60038495094269,4.80200341531764,3.53804989333341,4.2419943042115,3.94935560393705,4.16282522041625,3.85851851497189,3.87847989292218,4.17958146928691,3.28621780636661,4.67681674638279,3.93554191629696,4.22836752019764,3.65211568582769,4.3778238823905,4.14389134869842,3.34220705585925,4.56331423505202,3.62516383483378]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div
-id="gender-difference-in-average-number-of-days-of-self-reported-bad-mental-health-in-the-past-30-days-f-minus-m"
+id="gender-difference-in-average-number-of-days-mental-health-not-good-in-the-past-30-days-f-minus-m"
 class="section level4">
-<h4>Gender difference in average number of days of self-reported bad
-mental health in the past 30 days (F minus M)</h4>
-<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+<h4>Gender difference in average number of days mental health not good
+in the past 30 days (F minus M)</h4>
+<pre class="r"><code>avg_day_bad_mh_bystate_diff_graph = plot_geo(days_bad_mh_bystate_diff, 
+                                     locationmode = &quot;USA-states&quot;,
+                                     text = ~paste(&quot;Difference in average days: &quot;,
+                                                   round(difference,3))) %&gt;%
+  add_trace(locations = ~state_code,
+            z = ~round(difference,3),
+            color = ~difference,
+            colors = &quot;Purples&quot;) %&gt;%
+  layout(geo = list(scope = &quot;usa&quot;)) 
 
-</div>
-<div id="htmlwidget-66224fb18145a328fa55" style="width:576px;height:460.8px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-66224fb18145a328fa55">{"x":{"visdat":{"83aa6a65e2a7":["function () ","plotlyVisDat"]},"cur_data":"83aa6a65e2a7","attrs":{"83aa6a65e2a7":{"locationmode":"USA-states","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"locations":{},"z":{},"color":{},"colors":"Purples","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa"},"scene":{"zaxis":{"title":"round(difference, 3)"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"difference","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666666","rgba(248,246,250,1)"],["0.0833333333333333","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":true,"locationmode":"USA-states","text":["Difference in average days:  0.963","Difference in average days:  1.966","Difference in average days:  1.938","Difference in average days:  1.449","Difference in average days:  1.665","Difference in average days:  1.643","Difference in average days:  1.72","Difference in average days:  0.995","Difference in average days:  1.982","Difference in average days:  1.423","Difference in average days:  0.863","Difference in average days:  2.223","Difference in average days:  1.814","Difference in average days:  1.232","Difference in average days:  2.204","Difference in average days:  2.08","Difference in average days:  2.207","Difference in average days:  1.986","Difference in average days:  1.76","Difference in average days:  1.448","Difference in average days:  1.735","Difference in average days:  1.852","Difference in average days:  1.511","Difference in average days:  1.931","Difference in average days:  1.621","Difference in average days:  1.651","Difference in average days:  1.44","Difference in average days:  1.84","Difference in average days:  1.46","Difference in average days:  1.898","Difference in average days:  1.174","Difference in average days:  1.768","Difference in average days:  1.087","Difference in average days:  1","Difference in average days:  1.82","Difference in average days:  2.443","Difference in average days:  1.755","Difference in average days:  1.039","Difference in average days:  1.113","Difference in average days:  1.794","Difference in average days:  1.036","Difference in average days:  1.87","Difference in average days:  1.242","Difference in average days:  2.244","Difference in average days:  2.079","Difference in average days:  1.303","Difference in average days:  1.733","Difference in average days:  2.307","Difference in average days:  2.37","Difference in average days:  2.015"],"locations":["AK","AL","AR","AZ","CA","CO","CT","DC","DE","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],"z":[0.963,1.966,1.938,1.449,1.665,1.643,1.72,0.995,1.982,1.423,0.863,2.223,1.814,1.232,2.204,2.08,2.207,1.986,1.76,1.448,1.735,1.852,1.511,1.931,1.621,1.651,1.44,1.84,1.46,1.898,1.174,1.768,1.087,1,1.82,2.443,1.755,1.039,1.113,1.794,1.036,1.87,1.242,2.244,2.079,1.303,1.733,2.307,2.37,2.015],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":0.862726346164941,"cmax":2.44313581803677,"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666666","rgba(248,246,250,1)"],["0.0833333333333333","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":false,"color":[0.962555465895198,1.9655525803362,1.93847971342819,1.44858274021143,1.66519802829994,1.64276885356527,1.71971332508242,0.995356758187481,1.98212624971484,1.42259629996673,0.862726346164941,2.22328572113053,1.81426941812679,1.23178278275396,2.20407972957782,2.08046807267697,2.20739006233413,1.98628026199884,1.76007602550842,1.44785685803219,1.73475719136147,1.851549927826,1.51087264301834,1.93117983791921,1.62115568885549,1.65102324051321,1.44045573922381,1.8401395639559,1.45962345159781,1.89827787517503,1.17379902548424,1.76756780815168,1.08655722163916,0.999688590364504,1.81977137645561,2.44313581803677,1.75475938207356,1.03905713858905,1.11253101979324,1.79444906794916,1.03607158746427,1.87021045282321,1.2422401394041,2.24381285419137,2.07885833418844,1.30317465452596,1.73258674004007,2.30704398974605,2.36973323941125,2.01467468552215]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+
+avg_day_bad_mh_bystate_diff_graph</code></pre>
+<div id="htmlwidget-8a4fed871ee01eaade52" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8a4fed871ee01eaade52">{"x":{"visdat":{"a5f24bdd9ad5":["function () ","plotlyVisDat"]},"cur_data":"a5f24bdd9ad5","attrs":{"a5f24bdd9ad5":{"locationmode":"USA-states","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"locations":{},"z":{},"color":{},"colors":"Purples","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa"},"scene":{"zaxis":{"title":"round(difference, 3)"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"difference","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666666","rgba(248,246,250,1)"],["0.0833333333333333","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":true,"locationmode":"USA-states","text":["Difference in average days:  0.963","Difference in average days:  1.966","Difference in average days:  1.938","Difference in average days:  1.449","Difference in average days:  1.665","Difference in average days:  1.643","Difference in average days:  1.72","Difference in average days:  0.995","Difference in average days:  1.982","Difference in average days:  1.423","Difference in average days:  0.863","Difference in average days:  2.223","Difference in average days:  1.814","Difference in average days:  1.232","Difference in average days:  2.204","Difference in average days:  2.08","Difference in average days:  2.207","Difference in average days:  1.986","Difference in average days:  1.76","Difference in average days:  1.448","Difference in average days:  1.735","Difference in average days:  1.852","Difference in average days:  1.511","Difference in average days:  1.931","Difference in average days:  1.621","Difference in average days:  1.651","Difference in average days:  1.44","Difference in average days:  1.84","Difference in average days:  1.46","Difference in average days:  1.898","Difference in average days:  1.174","Difference in average days:  1.768","Difference in average days:  1.087","Difference in average days:  1","Difference in average days:  1.82","Difference in average days:  2.443","Difference in average days:  1.755","Difference in average days:  1.039","Difference in average days:  1.113","Difference in average days:  1.794","Difference in average days:  1.036","Difference in average days:  1.87","Difference in average days:  1.242","Difference in average days:  2.244","Difference in average days:  2.079","Difference in average days:  1.303","Difference in average days:  1.733","Difference in average days:  2.307","Difference in average days:  2.37","Difference in average days:  2.015"],"locations":["AK","AL","AR","AZ","CA","CO","CT","DC","DE","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],"z":[0.963,1.966,1.938,1.449,1.665,1.643,1.72,0.995,1.982,1.423,0.863,2.223,1.814,1.232,2.204,2.08,2.207,1.986,1.76,1.448,1.735,1.852,1.511,1.931,1.621,1.651,1.44,1.84,1.46,1.898,1.174,1.768,1.087,1,1.82,2.443,1.755,1.039,1.113,1.794,1.036,1.87,1.242,2.244,2.079,1.303,1.733,2.307,2.37,2.015],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":0.862726346164941,"cmax":2.44313581803677,"colorscale":[["0","rgba(252,251,253,1)"],["0.0416666666666666","rgba(248,246,250,1)"],["0.0833333333333333","rgba(243,242,248,1)"],["0.125","rgba(239,237,245,1)"],["0.166666666666667","rgba(232,231,242,1)"],["0.208333333333333","rgba(225,224,238,1)"],["0.25","rgba(218,218,235,1)"],["0.291666666666667","rgba(208,208,230,1)"],["0.333333333333333","rgba(198,199,225,1)"],["0.375","rgba(188,189,220,1)"],["0.416666666666667","rgba(178,177,213,1)"],["0.458333333333333","rgba(168,166,207,1)"],["0.5","rgba(158,154,200,1)"],["0.541666666666667","rgba(148,144,195,1)"],["0.583333333333333","rgba(138,135,191,1)"],["0.625","rgba(128,125,186,1)"],["0.666666666666667","rgba(121,110,178,1)"],["0.708333333333333","rgba(114,96,171,1)"],["0.75","rgba(106,81,163,1)"],["0.791666666666667","rgba(99,67,156,1)"],["0.833333333333333","rgba(92,54,150,1)"],["0.875","rgba(84,39,143,1)"],["0.916666666666667","rgba(77,28,137,1)"],["0.958333333333333","rgba(70,16,131,1)"],["1","rgba(63,0,125,1)"]],"showscale":false,"color":[0.962555465895198,1.9655525803362,1.93847971342819,1.44858274021143,1.66519802829994,1.64276885356527,1.71971332508242,0.995356758187481,1.98212624971484,1.42259629996673,0.862726346164941,2.22328572113053,1.81426941812679,1.23178278275396,2.20407972957782,2.08046807267697,2.20739006233413,1.98628026199884,1.76007602550842,1.44785685803219,1.73475719136147,1.851549927826,1.51087264301834,1.93117983791921,1.62115568885549,1.65102324051321,1.44045573922381,1.8401395639559,1.45962345159781,1.89827787517503,1.17379902548424,1.76756780815168,1.08655722163916,0.999688590364504,1.81977137645561,2.44313581803677,1.75475938207356,1.03905713858905,1.11253101979324,1.79444906794916,1.03607158746427,1.87021045282321,1.2422401394041,2.24381285419137,2.07885833418844,1.30317465452596,1.73258674004007,2.30704398974605,2.36973323941125,2.01467468552215]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <hr />
-<p>INSERT COMMENTS/TAKEAWAYS HERE</p>
+<p>In summary, women in Southern states report the highest average
+number of days mental health not good in the past 30 days. Similar
+patterns hold for men, but they on average report fewer bad mental
+health days. The gender difference is the largest in the South and the
+Midwest.</p>
 </div>
 </div>
+
+
+
 
 </div>
 
 <script>
-$(document).ready(function() {
-  // add bootstrap table styles to pandoc tables
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed table-sm');
 
-  // initialize mathjax
-  var script = document.createElement("script");
-  script.type = "text/javascript";
-  script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-  document.getElementsByTagName("head")[0].appendChild(script);
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
 
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
 });
 </script>
 
-<div id="flexdashboard-source-code">
-<pre class="line-numbers"><code class="language-r">---
-title: "State-level mental health outcome by gender"
-output: 
-  flexdashboard::flex_dashboard:
-    storyboard: true
-    source: embed
----
-
-```{r setup, include=FALSE}
-library(flexdashboard)
-library(tidyverse)
-library(ggplot2)
-library(survey)
-library(srvyr)
-library(readr)
-library(forcats)
-library(plotly)
-```
-
-```{r include = FALSE}
-brfss21_data = read_csv("./data/cleaned_brfss21.csv") %&gt;%
-  mutate(mh_cat3 = factor(mh_cat3, levels = c("none", "&lt;=15 days", "&gt;15 days")),
-         mh_bin = factor(mh_bin, levels = c("&lt;=15 days", "&gt;15 days")),
-         depression = factor(depression, levels = c("no", "yes")),
-         sex = factor(sex, levels = c("male", "female")),
-         children = factor(children, levels = c("none", "one or two", "three or more")),
-         state = factor(state),
-         race = factor(race, levels = c("white", "black", "asian", "hispanic", "other")),
-         education = factor(education, levels = c("less than high school", "high school or some college", "bachelors or higher")),
-         income = factor(income, levels = c("&lt;=35000", "35000-75000", "&gt;75000")),
-         employment = factor(employment, levels = c("employed", "homemaker/student/retired", "unemployed")),
-         age = factor(age, levels = c("18-29", "30-49", "50-64", "65+")),
-         general_health = factor(general_health, levels = c("excellent", "very good/good", "fair/poor")),
-         exercise = factor(exercise, levels = c("yes", "no")))
-```
-
-```{r include = FALSE}
-# Set options for allowing a single observation per stratum 
-options(survey.lonely.psu = "adjust")
-
-# Create survey design 
-brfss_design = as_survey_design(brfss21_data, id = 1, strata = ststr, weight = llcpwt)
-```
-
-```{r include = FALSE}
-depr_prev_bystate_gender = brfss_design %&gt;%
-  group_by(state_code, sex, depression) %&gt;%
-  summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c("ci")))
-  #summarize(depression_prev = 100*survey_mean(na.rm = T, vartype = c("ci"), proportion = T))
-
-depr_prev_bystate_f = depr_prev_bystate_gender %&gt;%
-  filter(sex == "female", depression == "yes")
-
-depr_prev_bystate_m = depr_prev_bystate_gender %&gt;%
-  filter(sex == "male", depression == "yes")
-
-# construct new data frame for plotting
-depr_prev_bystate_diff = depr_prev_bystate_gender %&gt;%
-  select(state_code, depression_prev, sex, depression) %&gt;%
-  filter(depression == "yes") %&gt;%
-  pivot_wider(names_from = "sex",
-              values_from = "depression_prev") %&gt;%
-  mutate(difference = female - male)
-
-```
-
-```{r include = FALSE}
-days_bad_mh_bystate_gender = brfss_design %&gt;%
-  group_by(state_code, sex) %&gt;%
-  summarize(days = survey_mean(days_bad_mental_health, na.rm = T, vartype = c("ci")))
-
-days_bad_mh_bystate_f = days_bad_mh_bystate_gender %&gt;%
-  filter(sex == "female")
-
-days_bad_mh_bystate_m = days_bad_mh_bystate_gender %&gt;%
-  filter(sex == "male")
-
-# construct new data frame for plotting
-days_bad_mh_bystate_diff = days_bad_mh_bystate_gender %&gt;%
-  select(state_code, sex, days) %&gt;%
-  pivot_wider(names_from = "sex",
-              values_from = "days") %&gt;%
-  mutate(difference = female - male)
-```
+<!-- code folding -->
 
 
-### State-level prevalence of self-reported past diagnosis of depression by gender
-
-#### Prevalence of self-reported past diagnosis of depression (%) among women
-
-```{r}
-depr_prev_bystate_f_graph = plot_geo(depr_prev_bystate_f, 
-                                     locationmode = "USA-states",
-                                     text = ~paste('95% CI: (', 
-                                                   round(depression_prev_low,3),
-                                                   round(depression_prev_upp,3),
-                                                   ")")) %&gt;%
-  add_trace(locations = ~state_code,
-            z = ~depression_prev,
-            color = ~depression_prev,
-            colors = "Purples") %&gt;%
-  layout(geo = list(scope = "usa")) %&gt;%
-         #legend = list(title = list(text = "&lt;b&gt;Cylinders&lt;/b&gt;")),
-         #title = "Prevalence of diagnosis of depression (%) among women") %&gt;%
-  colorbar(ticksuffix = "%") 
-
-
-depr_prev_bystate_f_graph
-```
-
-
-#### Prevalence of self-reported past diagnosis of depression (%) among men
-
-```{r}
-depr_prev_bystate_m_graph = plot_geo(depr_prev_bystate_m, 
-                                     locationmode = "USA-states",
-                                     text = ~paste('95% CI: (', 
-                                                   round(depression_prev_low,3),
-                                                   round(depression_prev_upp,3),
-                                                   ")")) %&gt;%
-  add_trace(locations = ~state_code,
-            z = ~depression_prev,
-            color = ~depression_prev,
-            colors = "Purples") %&gt;%
-  layout(geo = list(scope = "usa")) %&gt;%
-         #legend = list(title = list(text = "&lt;b&gt;Cylinders&lt;/b&gt;")),
-  colorbar(ticksuffix = "%") 
-
-
-depr_prev_bystate_m_graph
-```
-
-#### Gender difference in prevalence (%) of self-reported past diagnosis of depression (F minus M)
-
-```{r}
-depr_prev_bystate_diff_graph = plot_geo(depr_prev_bystate_diff, 
-                                     locationmode = "USA-states",
-                                     text = ~paste("Difference in prevalence: ",
-                                                   round(difference,3))) %&gt;%
-  add_trace(locations = ~state_code,
-            z = ~round(difference,3),
-            color = ~difference,
-            colors = "Purples") %&gt;%
-  layout(geo = list(scope = "usa")) %&gt;%
-  colorbar(ticksuffix = "%") 
-
-
-depr_prev_bystate_diff_graph
-```
-
-***
-
-INSERT COMMENTS/TAKEAWAYS HERE 
-
-
-### State-level average self-reported number of days mental health not good in the past 30 days by gender
-
-#### Average number of days of self-reported bad mental health in the past 30 days among women
-
-```{r}
-avg_days_bad_mh_bystate_f_graph = plot_geo(days_bad_mh_bystate_f, 
-                                     locationmode = "USA-states",
-                                     text = ~paste('95% CI: (', 
-                                                   round(days_low, 3),
-                                                   round(days_upp, 3),
-                                                   ")")) %&gt;%
-  add_trace(locations = ~state_code,
-            z = ~round(days, 3),
-            color = ~days,
-            colors = "Purples") %&gt;%
-  layout(geo = list(scope = "usa")) 
-
-avg_days_bad_mh_bystate_f_graph
-```
-
-#### Average number of days of self-reported bad mental health in the past 30 days among men
-```{r}
-avg_days_bad_mh_bystate_m_graph = plot_geo(days_bad_mh_bystate_m, 
-                                     locationmode = "USA-states",
-                                     text = ~paste('95% CI: (', 
-                                                   round(days_low, 3),
-                                                   round(days_upp, 3),
-                                                   ")")) %&gt;%
-  add_trace(locations = ~state_code,
-            z = ~round(days, 3),
-            color = ~days,
-            colors = "Purples") %&gt;%
-  layout(geo = list(scope = "usa")) 
-
-avg_days_bad_mh_bystate_m_graph
-```
-
-#### Gender difference in average number of days of self-reported bad mental health in the past 30 days (F minus M)
-```{r}
-avg_day_bad_mh_bystate_diff_graph = plot_geo(days_bad_mh_bystate_diff, 
-                                     locationmode = "USA-states",
-                                     text = ~paste("Difference in average days: ",
-                                                   round(difference,3))) %&gt;%
-  add_trace(locations = ~state_code,
-            z = ~round(difference,3),
-            color = ~difference,
-            colors = "Purples") %&gt;%
-  layout(geo = list(scope = "usa")) 
-
-
-avg_day_bad_mh_bystate_diff_graph
-```
-
-***
-
-INSERT COMMENTS/TAKEAWAYS HERE 
-
-</code></pre>
-</div>
-<script type="text/javascript">
-$(document).ready(function () {
-  FlexDashboard.init({
-    fillPage: true,
-    orientation: "columns",
-    storyboard: true,
-    defaultFigWidth: 576,
-    defaultFigHeight: 460,
-    defaultFigWidthMobile: 360,
-    defaultFigHeightMobile: 460,
-    resize_reload: true
-  });
-  var navbar = $(".navbar").first();
-  var body = $("body").first();
-  var sidebar = $(".section.sidebar").first();
-  function addNavbarPadding() {
-    var navHeight = navbar.outerHeight();
-    body.css("padding-top", (navHeight + 8) + "px");
-    sidebar.css("top", navHeight + "px");
-    var resizeEvent = window.document.createEvent("UIEvents");
-    resizeEvent.initUIEvent("resize", true, false, window, 0);
-    window.dispatchEvent(resizeEvent);
-  }
-  if (!window.Shiny) setTimeout(addNavbarPadding, 100);
-  $(document).on("shiny:idle", function() {
-    setTimeout(addNavbarPadding, 50);
-  });
-});
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
 </script>
 
 </body>

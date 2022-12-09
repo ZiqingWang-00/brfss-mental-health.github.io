@@ -84,9 +84,9 @@ days_bad_mh_bystate_diff = days_bad_mh_bystate_gender %>%
 ```
 
 
-### State-level prevalence of self-reported past diagnosis of depression by gender
+### State-level prevalence of self-reported past depression by gender
 
-#### Prevalence of self-reported past diagnosis of depression (%) among women
+#### Prevalence of self-reported past depression (%) among women
 
 ```{r}
 depr_prev_bystate_f_graph = plot_geo(depr_prev_bystate_f, 
@@ -109,7 +109,7 @@ depr_prev_bystate_f_graph
 ```
 
 
-#### Prevalence of self-reported past diagnosis of depression (%) among men
+#### Prevalence of self-reported past depression (%) among men
 
 ```{r}
 depr_prev_bystate_m_graph = plot_geo(depr_prev_bystate_m, 
@@ -130,7 +130,7 @@ depr_prev_bystate_m_graph = plot_geo(depr_prev_bystate_m,
 depr_prev_bystate_m_graph
 ```
 
-#### Gender difference in prevalence (%) of self-reported past diagnosis of depression (F minus M)
+#### Gender difference in prevalence (%) of self-reported past depression (F minus M)
 
 ```{r}
 depr_prev_bystate_diff_graph = plot_geo(depr_prev_bystate_diff, 
@@ -150,12 +150,12 @@ depr_prev_bystate_diff_graph
 
 ***
 
-INSERT COMMENTS/TAKEAWAYS HERE 
+In summary, states in the South (e.g., West Virginia, Kentucky, Tennessee), Northwest (e.g, Washington, Oregon), and North (e.g., Maine, New Hampshire) have the highest prevalence of self-reported past depression among women. The same pattern in geographic distribution holds in men, but they have lower prevalence of self-reported past depression than women. The gender difference in prevalence of self-reported past depression is the largest in the South, West (except California, Nevada, and Arizona) and the Midwest (except Illinois). 
 
 
 ### State-level average self-reported number of days mental health not good in the past 30 days by gender
 
-#### Average number of days of self-reported bad mental health in the past 30 days among women
+#### Average number of days of mental health not good in the past 30 days among women
 
 ```{r}
 avg_days_bad_mh_bystate_f_graph = plot_geo(days_bad_mh_bystate_f, 
@@ -173,7 +173,7 @@ avg_days_bad_mh_bystate_f_graph = plot_geo(days_bad_mh_bystate_f,
 avg_days_bad_mh_bystate_f_graph
 ```
 
-#### Average number of days of self-reported bad mental health in the past 30 days among men
+#### Average number of days mental health not good in the past 30 days among men
 ```{r}
 avg_days_bad_mh_bystate_m_graph = plot_geo(days_bad_mh_bystate_m, 
                                      locationmode = "USA-states",
@@ -190,7 +190,7 @@ avg_days_bad_mh_bystate_m_graph = plot_geo(days_bad_mh_bystate_m,
 avg_days_bad_mh_bystate_m_graph
 ```
 
-#### Gender difference in average number of days of self-reported bad mental health in the past 30 days (F minus M)
+#### Gender difference in average number of days mental health not good in the past 30 days (F minus M)
 ```{r}
 avg_day_bad_mh_bystate_diff_graph = plot_geo(days_bad_mh_bystate_diff, 
                                      locationmode = "USA-states",
@@ -208,5 +208,4 @@ avg_day_bad_mh_bystate_diff_graph
 
 ***
 
-INSERT COMMENTS/TAKEAWAYS HERE 
-
+In summary, women in Southern states report the highest average number of days mental health not good in the past 30 days. Similar patterns hold for men, but they on average report fewer bad mental health days. The gender difference is the largest in the South and the Midwest. 
