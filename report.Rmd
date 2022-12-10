@@ -136,7 +136,7 @@ The biggest challenge is to make the Shiny app. The challenge was multi-fold: Fi
 ### Next steps
 The post-hoc analyses described before point in some potential directions for the next steps. For example, from the negative association between gender equality and prevalence of self-reported depression and recent bad mental health among women, we can further ask: How do specific policies impact women's mental health on a state level? For example, different abortion policies across states?  
 
-Another next step is to find the effect of belief, attitude, and behavior factors on self-reported mental health outcomes. Understanding the reasons behind the gender differences in self-reported mental health outcomes help ensure the disparity truely exists and informs public health actions to target vulnerable groups.  
+Another next step is to find the effect of belief, attitude, and behavior factors on self-reported mental health outcomes. Understanding the reasons behind the gender differences in self-reported mental health outcomes help ensure the disparity truly exists and informs public health actions to target vulnerable groups.  
 
 Another next step is to look deeper into differential impacts of caregiving in general on women and men's mental health. In this project, we only looked at children. However, care giving spans spouses and the elderlies in the household as well.  
 
