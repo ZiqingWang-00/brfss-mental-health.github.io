@@ -35,8 +35,7 @@ Based on results of former researches and EDA, we categorized variables selected
 * Health variables: general health, exercise
 
 ### Crude model with exposures only
- At the beginning, we constructed a crude model with these two exposures only:
-*crude_mod_mh: depression ~ sex + children.* 
+We start with a crude model with the two exposures only.
 ```{r}
 crude_mod_mh = svyglm(mh_bin ~ sex + children, # exposures
        brfss_design,
@@ -47,8 +46,7 @@ crude_mod_mh %>%
 ```
 
 ### Model controlling for demographic variables
-Then we wanted to take demographic covariates into account in our second model, including race, age and marital status: 
-*mod2_mh: depression ~ sex + children + race + age + marital_status* 
+Then we wanted to take demographic covariates into account in our second model, including race, age and marital status. 
 ```{r}
 mod2_mh = svyglm(mh_bin ~ sex + children + # exposures
          race + age + marital_status, # demographic covariates
@@ -60,8 +58,7 @@ mod2_mh %>%
 ```
 
 ### Model controlling for demographic and socioeconomic variables
-In the third model, we added socioeconomic covariates (education, income, employment) comparing to the second one:
-*mod3_mh: depression ~ sex + children + race + age + marital_status + education + income + employment*
+In the third model, we added socioeconomic covariates (education, income, employment) to the second one.
 ```{r}
 mod3_mh = svyglm(mh_bin ~ sex + children + # exposures
          race + age + marital_status + # demographic covariates
@@ -74,9 +71,8 @@ mod3_mh %>%
 ```
 
 
-### Model controlling for demographic, socioeconomic, and health variables
-Eventually, we fitted the full model considering all covariates:
-*full_mod_mh: depression ~ sex + children + race + age + marital_status + education + income + employment + general_health + exercise*
+### Full model 
+Eventually, we fitted the full model controlling for all demographic, socioeconomic, and health variables:
 ```{r}
 full_mod_mh = svyglm(mh_bin ~ sex + children + # exposures
            race + age + marital_status + # demographic covariates
@@ -111,12 +107,13 @@ df %>%
   knitr::kable(digits = 3)
 ```
 
-From the results of models comparison, we can conclude that the full model (model controlling for demographic, socioeconomic, and health variables) is the best model.
+From the results of models comparison, we can conclude that the full model (model controlling for demographic, socioeconomic, and health variables) is the best model. From the full model, we can see that, in the full sample, being female is associated with higher odds of reporting >15 days mental health not good in the past 30 days, and that having one or two children in the household is associated with lower odds of reporting >15 days mental health not good in the past 30 days. 
 
 ### Subsetted analysis by gender
-Here we are interested in our second exposure, the number of children in the household. Specifically, we are interested in if it affects the self-reported number of days with bad mental health days differently for men and women. 
+Here we are interested in our second exposure, the number of children in the household. Specifically, we are interested in if it affects the self-reported number of days with bad mental health differently for men and women.  
 
-For male: 
+
+The model fit for the male-only subset is as follows:
 ```{r}
  brfss_male = brfss_design %>%
    filter(sex == "male")
@@ -131,7 +128,7 @@ For male:
   knitr::kable(digits = 3)
 ```
 
-For female:
+The model fit for the female-only subset is as follows:
 ```{r}
  brfss_female = brfss_design %>%
    filter(sex == "female")
@@ -146,7 +143,10 @@ For female:
    knitr::kable(digits = 3)
 ```
 
-From subsetted regression, we can conclude that the number of children influences women and men in different ways because the p value for women now is much less than 0.05.
+From subsetted regression, we can conclude that the number of children in the household influences women and men in different ways. Specifically, among men, having children in the household is not significantly associated with the odds of self-reported >15 days mental health not good in the past 30 days. However, for women, having one or two children in the household (but not three or more) is significantly associated with lower odds of reporting >15 days mental health not good in the past 30 days. This might suggest that having one or two children in the household is beneficial to women's temperal mental health. However, causal relationships cannot be established.  
+
+### Additional findings
+According to the final model, we found that being non-white, older age, being married, higher annual income, being employed for salary, excellent physical health, and phisical exercise are associated with lower odds of self-reporting >15 days mental health not good in the past 30 days. 
 
 
 
