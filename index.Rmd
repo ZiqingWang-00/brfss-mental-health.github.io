@@ -19,10 +19,9 @@ Current literature provide inconsistent evidence on gender difference in mental 
 The main goals of this project are to 1) compare state-level differences in depression prevalence and average number of days with unwell mental health between US adult men and women and 2) examine factors that potentially affect mental health outcomes. 
 
 ### *Data Resources*
-The dataset we intend to use is “The 2021 BRFSS data”, which was downloaded from https://www.cdc.gov/brfss/annual_data/annual_2021.html.
+The dataset we intend to use is [The 2021 BRFSS data](https://www.cdc.gov/brfss/annual_data/annual_2021.html), which is used to collect prevalence data among adult U.S. residents regarding their risk behaviors and preventive health practices that can affect their health status. 
 
-### *Site navigation*
-This website contains the following sections...
+### *Screencast*
 
 ### *Collaborators*
 Yichen Lyu (yl5220)
