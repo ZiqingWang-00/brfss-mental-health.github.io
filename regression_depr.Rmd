@@ -1,5 +1,5 @@
 ---
-title: "Regression modelling of self-reported depression diagnosis"
+title: "Regression modelling of self-reported depression"
 output: 
  html_document:
     toc: true
