@@ -1,5 +1,5 @@
 ---
-title: "Gender differences in mental health outcomes"
+title: "Gender and Mental Health"
 author: ""
 date: ""
 output: 
@@ -11,19 +11,17 @@ output:
 <center>
 <img src="images/depression.png" style="width:50%">
 </center>
- 
-### *Background*
-Current literature provide inconsistent evidence on gender difference in mental health outcomes. According to WHO, “women are more likely to be treated for depression than men even though the rates of depression don’t differ greatly between the gender”. However, there are also research studies suggesting that women are more likely than men to have depression. It’s thus important to find out whether there indeed is a gender gap in mental health outcomes, which may in turn supply evidence that help answer other public health questions, such as whether women are overtreated for mental health disorders. 
 
-### *Motivation*
-The main goals of this project are to 1) compare state-level differences in depression prevalence and average number of days with unwell mental health between US adult men and women and 2) examine factors that potentially affect mental health outcomes. 
+### *Objectives*
+The main goals of this project are to
 
-### *Data Resources*
-The dataset we intend to use is [The 2021 BRFSS data](https://www.cdc.gov/brfss/annual_data/annual_2021.html), which is used to collect prevalence data among adult U.S. residents regarding their risk behaviors and preventive health practices that can affect their health status. 
+* examine whether there are gender differences in two mental health outcomes: self-reported depression and number of days mental health not good in the past 30 days.
+* examine whether presence of children in the household affects women and men differently.
+* compare state-level gender differences in the two mental health outcomes.
 
 ### *Screencast*
 
-### *Collaborators*
+### *Team*
 Yichen Lyu (yl5220)
 
 Ziqing Wang (zw2899)
