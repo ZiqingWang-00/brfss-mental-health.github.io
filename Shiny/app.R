@@ -36,7 +36,7 @@ ui <- fluidPage(
                         
                         selectInput(inputId = "group_factor",
                                     label = "The factor for which predictive means are wanted",
-                                    choices = c("Sex" = "sex",
+                                    choices = c("Gender" = "sex",
                                                 "Children" = "children",
                                                 "Race/Ethnicity" = "race",
                                                 "Age" = "age",
