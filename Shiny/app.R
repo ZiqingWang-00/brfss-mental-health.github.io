@@ -219,7 +219,7 @@ The predicted probability and its standard error are displayed below:
   output$pred_marg_intro <- renderText({
     "According to the author of the survey package, the predictive marginal mean for one level of a factor is the probability-weighted average of the fitted values for the model on new data where all the observations are set to that level of the factor but have whatever values of adjustment variables they really have.
     
-In our case where the outcome variable is binary and was fitted by a logistic regression model, this estimate shows the effect of a categorical variable on the predicted probability of the response variable, adjusting for all other covariates included in the model. This better demonstrates the magnitude of the variable's effect than the odds
+In our case where the outcome variable is binary and was fitted by a logistic regression model, this estimate shows the effect of a categorical variable on the predicted probability of the response variable, adjusting for all other covariates included in the model. This better demonstrates the magnitude of the variable's effect than the odds.
     
 The predictive marginal means for levels of the selected group factor and the corresponding standard errors are as follows.
     
