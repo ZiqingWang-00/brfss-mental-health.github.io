@@ -1,5 +1,5 @@
 ---
-title: "Regression modelling of self-reported depression diagnosis"
+title: "Regression modelling of self-reported depression"
 output: 
  html_document:
     toc: true
@@ -35,8 +35,9 @@ Based on results of former researches and EDA, we categorized variables selected
 * Health variables: general health, exercise
 
 ### Crude model with exposures only
- At the beginning, we constructed a crude model with these two exposures only:
-*crude_mod_depr: depression ~ sex + children.* 
+
+First, we constructed a crude model with the two exposures only:
+
 ```{r}
 crude_mod_depr = svyglm(depression ~ sex + children, # exposures
        brfss_design,
@@ -46,7 +47,6 @@ crude_mod_depr %>% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95) %>
 
 ### Model controlling for demographic variables
 Then we wanted to take demographic covariates into account in our second model, including race, age and marital status: 
-*mod2_depr: depression ~ sex + children + race + age + marital_status* 
 ```{r}
 mod2_depr = svyglm(depression ~ sex + children + # exposures
          race + age + marital_status, # demographic covariates
@@ -57,7 +57,6 @@ mod2_depr %>% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95) %>% kni
 
 ### Model controlling for demographic and socioeconomic variables
 In the third model, we added socioeconomic covariates (education, income, employment) comparing to the second one:
-*mod3_depr: depression ~ sex + children + race + age + marital_status + education + income + employment*
 ```{r}
 mod3_depr = svyglm(depression ~ sex + children + # exposures
          race + age + marital_status + # demographic covariates
@@ -70,7 +69,6 @@ mod3_depr %>% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95) %>% kni
 
 ### Model controlling for demographic, socioeconomic, and health variables
 Eventually, we fitted the full model considering all covariates:
-*full_mod_depr: depression ~ sex + children + race + age + marital_status + education + income + employment + general_health + exercise*
 ```{r}
 full_mod_depr = svyglm(depression ~ sex + children + # exposures
            race + age + marital_status + # demographic covariates
@@ -104,12 +102,12 @@ df %>%
   knitr::kable(digits = 3)
 ```
 
-From the results of models comparison, we can conclude that the full model (model controlling for demographic, socioeconomic, and health variables) is the best model.
+From the results of models comparison, we can conclude that the full model (model controlling for demographic, socioeconomic, and health variables) is the best model. We can see that being female is associated with higher odds of reporting past depression, adjusted for other covariates. 
 
 ### Subsetted analysis by gender
-Here we are interested in our second exposure, the number of children in the household. Specifically, we are interested in if it affects self-reported depression diagnosis differently for men and women. 
+Here we are interested in our second exposure, the number of children in the household. Specifically, we are interested in if it affects self-reported depression diagnosis differently for men and women. In the full sample, the fitted model indicates that having children in the household is associated with lower odds of reporting depression. We subsetted the data into a men-only set and a women-only set and examine the effect of children separately. 
 
-For male: 
+For men: 
 ```{r}
  brfss_male = brfss_design %>%
    filter(sex == "male")
@@ -124,7 +122,7 @@ For male:
   knitr::kable(digits = 3)
 ```
 
-For female:
+For women:
 ```{r}
  brfss_female = brfss_design %>%
    filter(sex == "female")
@@ -139,7 +137,11 @@ For female:
    knitr::kable(digits = 3)
 ```
 
-From subsetted regression, we can conclude that the number of children influences women and men in different ways because the p value for men now is much less than 0.05.
+From subsetted regression, we can conclude that the number of children influences women and men in different ways. Specifically, for men, having children in the household is associated with lower odds of reporting depression. However, for women, having children in the household is not associated with lower odds of reporting depression. 
+
+### Additional findings
+According to the final model, we found that being non-white, older age, being married, higher annual income, being employed for salary, excellent physical health, and phisical exercise are associated with lower odds of self-reported depression. 
+
 
 
 

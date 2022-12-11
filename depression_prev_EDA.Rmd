@@ -1,5 +1,5 @@
 ---
-title: "On prevalence of self-reported depression diagnosis"
+title: "On prevalence of self-reported depression"
 output: 
   html_document:
     toc: true

@@ -28,7 +28,7 @@ load(file = "./data/brfss_design.Rdata")
 
 ## State-level gender differences in mental health outcomes
 
-For a dash board of the geographical distribution of the two mental health outcomes, click {here}(). Note that the data set has no data from Florida. 
+For a dashboard of the geographical distribution of the two mental health outcomes, click [here](https://ziqingwang-00.github.io/brfss-mental-health.github.io/state_level_dashboard.html). Note that the data set has no data from Florida. 
 
 ### Outcome 1: self-reported past depression
 
@@ -331,8 +331,8 @@ ranking_table = cbind(top_10_depr_prev,
       top_10_badmh_prev, 
       top_10_badmh_diff) 
 
-colnames(ranking_table) = c("% past depression", "difference in % past depression", 
-                            "% bad mental health", "difference in % bad mental health ")
+colnames(ranking_table) = c("Highst % past depression", "Largest difference in % past depression", 
+                            "Highest % bad mental health", "Largest difference in % bad mental health ")
 
 ranking_table %>%  knitr::kable()
 ```

@@ -11,7 +11,7 @@
 
 
 
-<title>Regression modelling of self-reported depression diagnosis</title>
+<title>Regression modelling of self-reported depression</title>
 
 <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -420,7 +420,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Regression modelling of self-reported
-depression diagnosis</h1>
+depression</h1>
 
 </div>
 
@@ -436,9 +436,7 @@ health variables, and fitted model based on their category.</p>
 </ul>
 <div id="crude-model-with-exposures-only" class="section level3">
 <h3>Crude model with exposures only</h3>
-<p>At the beginning, we constructed a crude model with these two
-exposures only: <em>crude_mod_depr: depression ~ sex +
-children.</em></p>
+<p>First, we constructed a crude model with the two exposures only:</p>
 <pre class="r"><code>crude_mod_depr = svyglm(depression ~ sex + children, # exposures
        brfss_design,
        family = quasibinomial())
@@ -508,8 +506,7 @@ crude_mod_depr %&gt;% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95)
 class="section level3">
 <h3>Model controlling for demographic variables</h3>
 <p>Then we wanted to take demographic covariates into account in our
-second model, including race, age and marital status: <em>mod2_depr:
-depression ~ sex + children + race + age + marital_status</em></p>
+second model, including race, age and marital status:</p>
 <pre class="r"><code>mod2_depr = svyglm(depression ~ sex + children + # exposures
          race + age + marital_status, # demographic covariates
        brfss_design,
@@ -652,9 +649,7 @@ mod2_depr %&gt;% broom::tidy(exponentiate=T, conf.int = T, conf.level=0.95) %&gt
 class="section level3">
 <h3>Model controlling for demographic and socioeconomic variables</h3>
 <p>In the third model, we added socioeconomic covariates (education,
-income, employment) comparing to the second one: <em>mod3_depr:
-depression ~ sex + children + race + age + marital_status + education +
-income + employment</em></p>
+income, employment) comparing to the second one:</p>
 <pre class="r"><code>mod3_depr = svyglm(depression ~ sex + children + # exposures
          race + age + marital_status + # demographic covariates
          education + income + employment, # socioeconomic covariates, 
@@ -853,10 +848,7 @@ id="model-controlling-for-demographic-socioeconomic-and-health-variables"
 class="section level3">
 <h3>Model controlling for demographic, socioeconomic, and health
 variables</h3>
-<p>Eventually, we fitted the full model considering all covariates:
-<em>full_mod_depr: depression ~ sex + children + race + age +
-marital_status + education + income + employment + general_health +
-exercise</em></p>
+<p>Eventually, we fitted the full model considering all covariates:</p>
 <pre class="r"><code>full_mod_depr = svyglm(depression ~ sex + children + # exposures
            race + age + marital_status + # demographic covariates
            education + income + employment + # socioeconomic covariates
@@ -1145,14 +1137,20 @@ variables</td>
 </table>
 <p>From the results of models comparison, we can conclude that the full
 model (model controlling for demographic, socioeconomic, and health
-variables) is the best model.</p>
+variables) is the best model. We can see that being female is associated
+with higher odds of reporting past depression, adjusted for other
+covariates.</p>
 </div>
 <div id="subsetted-analysis-by-gender" class="section level3">
 <h3>Subsetted analysis by gender</h3>
 <p>Here we are interested in our second exposure, the number of children
 in the household. Specifically, we are interested in if it affects
-self-reported depression diagnosis differently for men and women.</p>
-<p>For male:</p>
+self-reported depression diagnosis differently for men and women. In the
+full sample, the fitted model indicates that having children in the
+household is associated with lower odds of reporting depression. We
+subsetted the data into a men-only set and a women-only set and examine
+the effect of children separately.</p>
+<p>For men:</p>
 <pre class="r"><code> brfss_male = brfss_design %&gt;%
    filter(sex == &quot;male&quot;)
  
@@ -1368,7 +1366,7 @@ self-reported depression diagnosis differently for men and women.</p>
 </tr>
 </tbody>
 </table>
-<p>For female:</p>
+<p>For women:</p>
 <pre class="r"><code> brfss_female = brfss_design %&gt;%
    filter(sex == &quot;female&quot;)
  
@@ -1585,8 +1583,17 @@ self-reported depression diagnosis differently for men and women.</p>
 </tbody>
 </table>
 <p>From subsetted regression, we can conclude that the number of
-children influences women and men in different ways because the p value
-for men now is much less than 0.05.</p>
+children influences women and men in different ways. Specifically, for
+men, having children in the household is associated with lower odds of
+reporting depression. However, for women, having children in the
+household is not associated with lower odds of reporting depression.</p>
+</div>
+<div id="additional-findings" class="section level3">
+<h3>Additional findings</h3>
+<p>According to the final model, we found that being non-white, older
+age, being married, higher annual income, being employed for salary,
+excellent physical health, and phisical exercise are associated with
+lower odds of self-reported depression.</p>
 </div>
 
 

@@ -436,8 +436,7 @@ health variables, and fitted model based on their category.</p>
 </ul>
 <div id="crude-model-with-exposures-only" class="section level3">
 <h3>Crude model with exposures only</h3>
-<p>At the beginning, we constructed a crude model with these two
-exposures only: <em>crude_mod_mh: depression ~ sex + children.</em></p>
+<p>We start with a crude model with the two exposures only.</p>
 <pre class="r"><code>crude_mod_mh = svyglm(mh_bin ~ sex + children, # exposures
        brfss_design,
        family = quasibinomial()) 
@@ -509,9 +508,13 @@ crude_mod_mh %&gt;%
 class="section level3">
 <h3>Model controlling for demographic variables</h3>
 <p>Then we wanted to take demographic covariates into account in our
+<<<<<<< HEAD
 second model, including race, age and marital status:</p>
 <p><em>mod2_mh: depression ~ sex + children + race + age +
 marital_status</em></p>
+=======
+second model, including race, age and marital status.</p>
+>>>>>>> 43940bf040e2b08c344e17486c711dd461a1c0dc
 <pre class="r"><code>mod2_mh = svyglm(mh_bin ~ sex + children + # exposures
          race + age + marital_status, # demographic covariates
        brfss_design,
@@ -656,9 +659,13 @@ mod2_mh %&gt;%
 class="section level3">
 <h3>Model controlling for demographic and socioeconomic variables</h3>
 <p>In the third model, we added socioeconomic covariates (education,
+<<<<<<< HEAD
 income, employment) comparing to the second one:</p>
 <p><em>mod3_mh: depression ~ sex + children + race + age +
 marital_status + education + income + employment</em></p>
+=======
+income, employment) to the second one.</p>
+>>>>>>> 43940bf040e2b08c344e17486c711dd461a1c0dc
 <pre class="r"><code>mod3_mh = svyglm(mh_bin ~ sex + children + # exposures
          race + age + marital_status + # demographic covariates
          education + income + employment, # socioeconomic covariates, 
@@ -854,6 +861,7 @@ mod3_mh %&gt;%
 </tbody>
 </table>
 </div>
+<<<<<<< HEAD
 <div
 id="model-controlling-for-demographic-socioeconomic-and-health-variables"
 class="section level3">
@@ -863,6 +871,12 @@ variables</h3>
 <p><em>full_mod_mh: depression ~ sex + children + race + age +
 marital_status + education + income + employment + general_health +
 exercise</em></p>
+=======
+<div id="full-model" class="section level3">
+<h3>Full model</h3>
+<p>Eventually, we fitted the full model controlling for all demographic,
+socioeconomic, and health variables:</p>
+>>>>>>> 43940bf040e2b08c344e17486c711dd461a1c0dc
 <pre class="r"><code>full_mod_mh = svyglm(mh_bin ~ sex + children + # exposures
            race + age + marital_status + # demographic covariates
            education + income + employment + # socioeconomic covariates
@@ -1152,15 +1166,20 @@ variables</td>
 </table>
 <p>From the results of models comparison, we can conclude that the full
 model (model controlling for demographic, socioeconomic, and health
-variables) is the best model.</p>
+variables) is the best model. From the full model, we can see that, in
+the full sample, being female is associated with higher odds of
+reporting &gt;15 days mental health not good in the past 30 days, and
+that having one or two children in the household is associated with
+lower odds of reporting &gt;15 days mental health not good in the past
+30 days.</p>
 </div>
 <div id="subsetted-analysis-by-gender" class="section level3">
 <h3>Subsetted analysis by gender</h3>
 <p>Here we are interested in our second exposure, the number of children
 in the household. Specifically, we are interested in if it affects the
-self-reported number of days with bad mental health days differently for
-men and women.</p>
-<p>For male:</p>
+self-reported number of days with bad mental health differently for men
+and women.</p>
+<p>The model fit for the male-only subset is as follows:</p>
 <pre class="r"><code> brfss_male = brfss_design %&gt;%
    filter(sex == &quot;male&quot;)
  
@@ -1376,7 +1395,7 @@ men and women.</p>
 </tr>
 </tbody>
 </table>
-<p>For female:</p>
+<p>The model fit for the female-only subset is as follows:</p>
 <pre class="r"><code> brfss_female = brfss_design %&gt;%
    filter(sex == &quot;female&quot;)
  
@@ -1593,8 +1612,23 @@ men and women.</p>
 </tbody>
 </table>
 <p>From subsetted regression, we can conclude that the number of
-children influences women and men in different ways because the p value
-for women now is much less than 0.05.</p>
+children in the household influences women and men in different ways.
+Specifically, among men, having children in the household is not
+significantly associated with the odds of self-reported &gt;15 days
+mental health not good in the past 30 days. However, for women, having
+one or two children in the household (but not three or more) is
+significantly associated with lower odds of reporting &gt;15 days mental
+health not good in the past 30 days. This might suggest that having one
+or two children in the household is beneficial to women’s temperal
+mental health. However, causal relationships cannot be established.</p>
+</div>
+<div id="additional-findings" class="section level3">
+<h3>Additional findings</h3>
+<p>According to the final model, we found that being non-white, older
+age, being married, higher annual income, being employed for salary,
+excellent physical health, and phisical exercise are associated with
+lower odds of self-reporting &gt;15 days mental health not good in the
+past 30 days.</p>
 </div>
 
 

@@ -29,8 +29,12 @@ options(survey.lonely.psu = "adjust")
 In this section, we briefly go over where we got the data and how we processed it for this ecological analysis. 
 
 ### Gender (in)equality index
+<<<<<<< HEAD
 
 We obtained the U.S. Women, Peace and Security (WPS) Index in 2020 calculated by Georgetown Institute for Women, Peace, and Security downloaded from {here}(https://giwps.georgetown.edu/usa-index/). We import the raw data (xlsx) and extract the WPS index below. We only need the overall WPS index and the states, so we select those two columns. We scaled the original index data by multiplying a factor of 100 for better readability.
+=======
+We obtained the U.S. Women, Peace and Security (WPS) Index in 2020 calculated by Georgetown Institute for Women, Peace, and Security downloaded from [here](https://giwps.georgetown.edu/usa-index/). We import the raw data (xlsx) and extract the WPS index below. We only need the overall WPS index and the states, so we select those two columns. We scaled the original index data by multiplying a factor of 100 for better readability. Below is a preview of the cleaned data file:
+>>>>>>> 43940bf040e2b08c344e17486c711dd461a1c0dc
 
 ```{r}
 index_data_colnames = read_excel("./data/US-Index-Data.xlsx",
@@ -51,8 +55,12 @@ head(index_data) %>% knitr::kable()
 ```
 
 ### GDP per capita by US state
+<<<<<<< HEAD
 
 We also obtained the per-capita GDP for each US state in 2021 from {here}(https://www.statista.com/statistics/248063/per-capita-us-real-gross-domestic-product-gdp-by-state/). We import the data below:
+=======
+We also obtained the per-capita GDP for each US state in 2021 from [here](https://www.statista.com/statistics/248063/per-capita-us-real-gross-domestic-product-gdp-by-state/). We import and preview the data below:
+>>>>>>> 43940bf040e2b08c344e17486c711dd461a1c0dc
 
 ```{r}
 gdp_data = read_excel("./data/us-per-capita-gdp-2021-by-state.xlsx",
