@@ -428,9 +428,8 @@ div.tocify {
 class="section level2">
 <h2>State-level gender differences in mental health outcomes</h2>
 <p>For a dashboard of the geographical distribution of the two mental
-health outcomes, click {here}(<a
-href="https://ziqingwang-00.github.io/brfss-mental-health.github.io/state_level_dashboard.html"
-class="uri">https://ziqingwang-00.github.io/brfss-mental-health.github.io/state_level_dashboard.html</a>).
+health outcomes, click <a
+href="https://ziqingwang-00.github.io/brfss-mental-health.github.io/state_level_dashboard.html">here</a>.
 Note that the data set has no data from Florida.</p>
 <div id="outcome-1-self-reported-past-depression"
 class="section level3">
@@ -526,9 +525,9 @@ estimated % of self-reported depression among men.</p>
        y = &quot;prevalence of self-reported past depression (%)&quot;,
        title = &quot;Top 10 states with the lowest estimated % of men self-reported past depression&quot;) +
   geom_text(aes(label = sprintf(&quot;%.2f&quot;, depression_prev), y = depression_prev),  vjust = 5) </code></pre>
-<p><img src="state_level_eda_files/figure-html/unnamed-chunk-5-1.png" width="672" />
-We can see that the top 10 states with the lowest estimated % of men who
-self-reported past depression are, in order, Hawaii, South Dakota,
+<p><img src="state_level_eda_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>We can see that the top 10 states with the lowest estimated % of men
+who self-reported past depression are, in order, Hawaii, South Dakota,
 Maryland, Delaware, Iowa, Illinois, California, Nevada, Arizona, and
 Wisconsin. Again, the difference in magnitude is small. Among these
 states, South Dakota, Iowa, Nevada, Arizona, and Wisconson were not
@@ -796,23 +795,23 @@ ranking_table = cbind(top_10_depr_prev,
       top_10_badmh_prev, 
       top_10_badmh_diff) 
 
-colnames(ranking_table) = c(&quot;% past depression&quot;, &quot;difference in % past depression&quot;, 
-                            &quot;% bad mental health&quot;, &quot;difference in % bad mental health &quot;)
+colnames(ranking_table) = c(&quot;Highst % past depression&quot;, &quot;Largest difference in % past depression&quot;, 
+                            &quot;Highest % bad mental health&quot;, &quot;Largest difference in % bad mental health &quot;)
 
 ranking_table %&gt;%  knitr::kable()</code></pre>
 <table>
 <colgroup>
-<col width="17%" />
-<col width="30%" />
-<col width="19%" />
-<col width="33%" />
+<col width="18%" />
+<col width="29%" />
+<col width="20%" />
+<col width="31%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">% past depression</th>
-<th align="left">difference in % past depression</th>
-<th align="left">% bad mental health</th>
-<th align="left">difference in % bad mental health</th>
+<th align="left">Highst % past depression</th>
+<th align="left">Largest difference in % past depression</th>
+<th align="left">Highest % bad mental health</th>
+<th align="left">Largest difference in % bad mental health</th>
 </tr>
 </thead>
 <tbody>

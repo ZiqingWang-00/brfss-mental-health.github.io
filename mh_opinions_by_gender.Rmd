@@ -117,6 +117,7 @@ mh_pub_stig %>%
 
 
 ```
+
 Interestingly, more % of men think that people are generally caring and sympathetic to people with mental illness. That is, men actually have more optimistic perception of the public views on people with mental health issues than women.  
 
 What about the people who are under risk of mental health issues, i.e., those who reported past depression or >15 days mental health not good in the past 30 days? Do men in this subgroup also have more optimistic perception of the public stigma? 

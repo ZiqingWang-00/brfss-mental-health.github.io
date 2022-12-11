@@ -29,13 +29,13 @@ ui <- fluidPage(
                  column(5, 
                         # User-specified factor levels for individual-level predicted probability calculation
                         selectInput(inputId = "which_outcome_group", 
-                                    label = strong("Outcome to Predict"), 
+                                    label = strong("Outcome of interest"), 
                                     choices = c("Self-reported past depression"  = "depression",
                                                 ">15 days of bad mental health in the past 30 days" = "mh_bin"),
                                     selected = "Self-reported depression diagnosis"),
                         
                         selectInput(inputId = "group_factor",
-                                    label = "The factor for which predictive means are wanted",
+                                    label = "The factor for which predictive marginal means are wanted",
                                     choices = c("Gender" = "sex",
                                                 "Children" = "children",
                                                 "Race/Ethnicity" = "race",
@@ -65,7 +65,7 @@ ui <- fluidPage(
                fluidRow(
                  column(5, 
                         selectInput(inputId = "which_outcome_ind", 
-                                    label = strong("Outcome to Predict"), 
+                                    label = strong("Outcome of interest"), 
                                     choices = c("Self-reported past depression"  = "depression",
                                                 ">15 days of bad mental health in the past 30 days" = "mh_bin"),
                                     selected = "Self-reported depression diagnosis"),
