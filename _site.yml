@@ -15,9 +15,9 @@ navbar:
           href: bad_mh_days_EDA.html
      - text: "Statistical Analysis"
        menu: 
-        - text: "Regression on self-reported past depression"
+        - text: "Weighted logistic regression on self-reported past depression"
           href: regression_depr.html
-        - text: "Regression on # of days mental health not good in the past 30 days"
+        - text: "Weighted logistic regression on # of days mental health not good in the past 30 days"
           href: regression_mh_days.html
      - text: "Post-hoc Explorations"
        menu: 

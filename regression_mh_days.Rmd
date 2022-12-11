@@ -1,5 +1,5 @@
 ---
-title: "Regression modelling of number of days with bad mental health"
+title: "Weighted logistic regression modelling of number of days with bad mental health"
 output: 
  html_document:
     toc: true
@@ -27,7 +27,7 @@ options(survey.lonely.psu = "adjust")
 load(file = "./data/brfss_design.Rdata")
 ```
 
-Based on results of former researches and EDA, we categorized variables selected into main exposures, demographic, socioeconomic, and health variables, and fitted model based on their category.
+Based on results of former researches and EDA, we categorized variables selected into main exposures, demographic, socioeconomic, and health variables, and fitted weighted logistic regression models based on their category.
 
 * Main exposures: sex, children
 * Demographic variables: race, age and marital status 
