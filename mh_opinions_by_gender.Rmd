@@ -42,6 +42,7 @@ The first question measures mental health service utilization. We hypothesize th
 
 ### Checking mental health outcome prevalences by gender in the 2012 BRFSS data 
 First, we check whether women also self-reported worse mental health outcomes than men in the 2012 BRFSS data set.
+
 ```{r}
 # depression
 depr_by_gender2012 = brfss_design2012 %>% 
@@ -57,9 +58,11 @@ knitr::kable(depr_by_gender2012,
                            "lower 95% CI",
                            "upper 95% CI"))
 ```
+
 Based on the 95% CI, we can see that in 2012, women still had significantly higher prevalence of self-reported past depression than men.  
 
 The mean number of days reported by women and men in 2012 were calculated as follows:
+
 ```{r}
 days_badmh_by_gender2012 = brfss_design2012 %>% 
   filter(!is.na(days_badmh)) %>% 
@@ -72,6 +75,7 @@ knitr::kable(days_badmh_by_gender2012,
                            "lower 95% CI",
                            "upper 95% CI"))
 ```
+
 It is not surprising that women reported higher numbers of days mental health not good in the past 30 days than men in 2012 as well. 
 
 ### Post-hoc exploration: mental health service utilization
@@ -93,6 +97,7 @@ knitr::kable(mh_treatment_by_gender,
                              "upper limit of 95% CI"))
 
 ```
+
 The table above shows that among those who are under risk of mental health issues, women are more likely to be currently using mental health services than men.  
 
 ### Perception of public stigma on mental health
@@ -117,6 +122,7 @@ mh_pub_stig %>%
 
 
 ```
+
 Interestingly, more % of men think that people are generally caring and sympathetic to people with mental illness. That is, men actually have more optimistic perception of the public views on people with mental health issues than women.  
 
 What about the people who are under risk of mental health issues, i.e., those who reported past depression or >15 days mental health not good in the past 30 days? Do men in this subgroup also have more optimistic perception of the public stigma? 

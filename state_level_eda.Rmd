@@ -80,6 +80,7 @@ depr_prev_bystate_gender %>%
 We can see that the top 10 states with the lowest estimated % of women self-reported past depression are in order, Hawaii, California, New York, New Jersey, Delaware, Illinois, Maryland, Nevada, Georgia, and Connecticut. Among these states, it seems like the prevalence of self-reported depression among women in Hawaii is much lower than the other 9 states.  
 
 Next, we look at the rankings for men. Below is a bar plot to visualize the 10 states with the highest estimated % of self-reported depression among men.
+
 ```{r}
 depr_prev_bystate_gender %>% 
   filter(depression == "yes", sex == "male") %>% 
@@ -98,6 +99,7 @@ depr_prev_bystate_gender %>%
 We can see that the top 10 states with the highest estimated % of men who self-reported past depression are in order, Vermont, West Virginia, Arkansas, Tennessee, Kentucky, Rhode Island, Louisiana, Oregon, Oklahoma, and Washinton DC. According to the graph, the estimated %s of self-reported depression among men are around 20% in all these states, with very small differences in magnitude. All these states also have the highest estimated % of self-reported depression among women, except for Rhodes Island and Washinton DC. This might indicate high disparity in mental health outcomes in the remaining 8 states.  
 
 Below is a bar plot to visualize the 10 states with the lowest estimated % of self-reported depression among men.
+
 ```{r}
 depr_prev_bystate_gender %>% 
   filter(depression == "yes", sex == "male") %>% 
@@ -112,6 +114,7 @@ depr_prev_bystate_gender %>%
        title = "Top 10 states with the lowest estimated % of men self-reported past depression") +
   geom_text(aes(label = sprintf("%.2f", depression_prev), y = depression_prev),  vjust = 5) 
 ```
+
 We can see that the top 10 states with the lowest estimated % of men who self-reported past depression are, in order, Hawaii, South Dakota, Maryland, Delaware, Iowa, Illinois, California, Nevada, Arizona, and Wisconsin. Again, the difference in magnitude is small. Among these states, South Dakota, Iowa, Nevada, Arizona, and Wisconson were not among the top 10 states that have the lowest estimated % of self-reported past depression among women. This observation reiterate the possibility of larger gender gap in this mental health outcome in certain states.  
 
 To present a summary for all states surveyed in the data set, we produced a grouped barplot of the prevalence of self-reported past diagnosis of depression by gender in each US state, arranged in descending order by the value of this estimate among women.
@@ -204,6 +207,7 @@ badmh_prev_bystate_gender %>%
 We can see that the top 10 states with the lowest estimated % of women self-reported > 15 days mental health not good in the past 30 days are in order, Hawaii, South Dakota, Washington DC, Minnesota, Alaska, New York, North Dakota, Nebraska, New Jersey, and Maryland. The differences in magnitude of this mental health outcome are small among these states.  
 
 Next, we look at the rankings for men. Below is a bar plot to visualize the 10 states with the highest estimated % of self-reported >15 days mental health not good in the past 30 days among men.
+
 ```{r}
 badmh_prev_bystate_gender %>% 
   filter(mh_bin == ">15 days", sex == "male") %>% 
@@ -222,6 +226,7 @@ badmh_prev_bystate_gender %>%
 We can see that the top 10 states with the highest estimated % of men who self-reported past depression are in order, Arkansas, Tennessee, West Virginia, Nevaa, Kentucky, South Carolina, Alabama, Vermont, Oklahoma, and Louisianna. According to the graph, the estimated %'s of self-reported >15 days mental health not good in the past 30 days among men are around 10% in all these states, which is closee in value to the 10 lowest %'s of this mental health outcome among women, as we saw above. It is also worth noting that these states overlap with the top 10 states where most %'s of women reporting >15 days mental health not good in the past 30 days, except for Rhodes Island and Washington DC. This indicates that the 8 overlapping states probably have the highest %'s of people reporting more than half of the past 30 days mental health not good.  
 
 Below is a bar plot to visualize the 10 states with the lowest estimated % of self-reported >15 days mental health not good among men.
+
 ```{r}
 badmh_prev_bystate_gender %>% 
   filter(mh_bin == ">15 days", sex == "male") %>% 

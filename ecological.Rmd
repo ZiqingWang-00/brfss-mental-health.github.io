@@ -25,9 +25,11 @@ options(survey.lonely.psu = "adjust")
 ```
 
 ## Data description, importing, and cleaning
+
 In this section, we briefly go over where we got the data and how we processed it for this ecological analysis. 
 
 ### Gender (in)equality index
+
 We obtained the U.S. Women, Peace and Security (WPS) Index in 2020 calculated by Georgetown Institute for Women, Peace, and Security downloaded from {here}(https://giwps.georgetown.edu/usa-index/). We import the raw data (xlsx) and extract the WPS index below. We only need the overall WPS index and the states, so we select those two columns. We scaled the original index data by multiplying a factor of 100 for better readability.
 
 ```{r}
@@ -49,7 +51,9 @@ head(index_data) %>% knitr::kable()
 ```
 
 ### GDP per capita by US state
+
 We also obtained the per-capita GDP for each US state in 2021 from {here}(https://www.statista.com/statistics/248063/per-capita-us-real-gross-domestic-product-gdp-by-state/). We import the data below:
+
 ```{r}
 gdp_data = read_excel("./data/us-per-capita-gdp-2021-by-state.xlsx",
                       sheet = "Data",
@@ -84,6 +88,7 @@ merged_female_depr_eco %>% knitr::kable()
 ### Scatterplot for spotting assoiation
 
 The following scatterplot shows that there might be a negative association between the depression prevalence among women and the WPS index:
+
 ```{r}
 plot_ly(merged_female_depr_eco, 
         x = ~scaled_index, y = ~depression_prev,
@@ -110,6 +115,7 @@ We check if the association between state-level prevalence of self-reported depr
 index_m12 = lm(depression_prev ~ scaled_index + gdp, data = merged_female_depr_eco)
 summary(index_m12) %>% broom::tidy() %>% knitr::kable()
 ```
+
 After adjusting for per-capita GDP, the negative association between prevalence of self-reported depression among women and the gender inequality index remains statistically significant. Therefore, we conclude that, on a state-level, the self-reported depression among women may indeed be associated with the level of gender inequality in their state of residence. 
 
 ## Mental health outcome 2: self-reported >15 days mental health not good in the past 30 days
